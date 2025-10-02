@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betting Deposit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+</head>
+
+<body class="bg-[#f4f4fa] font-sans">
+
+    <div class="py-1 bg-white fixed top-0 z-50 w-full">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-3 py-4 bg-white">
+        <div class="flex space-x-2">
+            <button onclick="history.back()">
+                <i class="fa fa-arrow-left text-gray-700 text-[15px]"></i>
+            </button>
+            <h1 class="flex-1 text-center font-semibold">Betting</h1>
+        </div>
+        <i class="fas fa-receipt text-sm text-gray-600"></i>
+    </div>
+
+    <!-- Info Banner -->
+    <div class=" bg-blue-100 text-blue-600 text-xs px-2 py-1 space-x-3 flex  text-center relative overflow-hidden h-6">
+        <div>
+            <i class="fa fa-volume-high text-[17px]"></i>
+        </div>
+        <div class="relative overflow-hidden flex-1">
+            <div id="scrollingText" class="absolute whitespace-nowrap">
+            <p>Dear user, Hallabet bill payment is currently unavailable due to technical issues.</p>
+            <p>Dear user, Hallabet bill payment is currently unavailable due to technical issues.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex justify-around bg-white">
+        <button
+            class="w-1/6 mx-14 py-3 text-blue-600 font-semibold border-b-2 border-blue-600 flex justify-center items-center gap-2">
+            <i class="fa-solid fa-futbol text-gray-400 text-[24px]"></i>Deposit
+        </button>
+        <button class="w-1/2 py-3 text-gray-800 flex justify-center items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="m18.935 13.945l-.67-3.648c-.29-1.576-.435-2.364-1.008-2.83S15.86 7 14.213 7H9.787c-1.647 0-2.47 0-3.044.467c-.573.466-.718 1.254-1.008 2.83l-.67 3.648c-.6 3.271-.901 4.907.024 5.98C6.014 21 7.724 21 11.142 21h1.716c3.418 0 5.128 0 6.053-1.074s.625-2.71.024-5.98Z"/><path stroke-linejoin="round" d="M12 10.5V17m-2.5-2l2.5 2.5l2.5-2.5"/><path d="M21 11a1.5 1.5 0 0 0 .414-.305C22 10.089 22 9.11 22 7.152s0-2.936-.586-3.544S19.886 3 18 3H6c-1.886 0-2.828 0-3.414.608S2 5.195 2 7.152s0 2.936.586 3.543q.18.188.414.305"/></g></svg>
+            Withdraw
+        </button>
+    </div>
+    </div>
+
+    <div class="max-w-sm mx-auto mt-36 p-4">
+
+        <!-- Promo Banner -->
+        <div id="slider" class="relative overflow-hidden border -mt-2 mb-3 rounded-lg relative">
+            <div id="slides" class="flex w-full h-[80px] transition-transform duration-700 ease-in-out">
+                <img src="./bet img1.jpg" class="w-full flex-shrink-0" alt="Slide 1" />
+                <img src="./bet img2.jpg" class="w-full flex-shrink-0" alt="Slide 2" />
+                <img src="./bet img3.jpg" class="w-full flex-shrink-0" alt="Slide 3" />
+            </div>
+        </div>
+
+        <div id="nav-dots"
+            class="flex justify-center  gap-2 absolute top-[33%] left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        </div>
+
+        <!-- Top bar with amount -->
+         <div class="flex items-center justify-between bg-white p-3 py-2 rounded-xl mb-4">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-ticket-alt text-blue-600 text-[20px]"></i>
+                <div>
+                    <i class="fa fa-ticket-alt text-blue-100 h-7 text-[20px] relative"></i>
+                    <span class="text-blue-600 font-semibold text-[10px] absolute top-[39.3%] left-[17%]">₦100</span>
+
+                    <i class="fa fa-ticket-alt text-blue-100 h-7 text-[20px] relative"></i>
+                    <span class="text-blue-600 font-semibold text-xs absolute top-[39.2%] left-[26.3%]">₦30</span>
+                </div>
+            </div>
+            <div>
+                <span class="text-sm text-gray-500">(1)</span>
+                <i class="fa fa-chevron-right text-xs text-gray-500"></i>
+            </div>
+        </div>
+
+        <!-- SportyBet Form -->
+        <div class="bg-white rounded-lg p-4">
+            <!-- Logo -->
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                    <img src="https://cdn-1.webcatalog.io/catalog/sportybet/sportybet-icon-filled-256.webp?v=1754872470606" class="h-10 rounded-lg" alt="">
+                    <span class="font-semibold text-gray-600">SportyBet</span>
+                </div>
+                <i class="fa fa-chevron-down text-xs text-gray-500"></i>
+            </div>
+
+            <div class="w-full border-t border border-gray-50"></div>
+
+            <!-- Info -->
+            <p class="text-xs text-gray-500 mt-2">
+                Enjoy faster and more reliable experience. Coupons & Flexi payments are not allowed on Sportybe at thi... <button class="ml-1 text-blue-600 border-0">More</button>
+            </p>
+
+            <!-- Input -->
+            <label class="block my-4 text-xs text-gray-800">User ID</label>
+            <div class="flex items-center space-x-2 mb-3">
+            <input type="text" placeholder="Enter Sportybet phone number"
+                class="flex-1 border-none focus:ring-0 focus:outline-none text-gray-700 text-sm font-sm">
+                <i class="far fa-address-card text-blue-600 p-1 bg-blue-100 rounded-lg"></i>
+            </div>
+
+                <div class="w-full border-t border border-gray-50"></div>
+
+            <!-- Deposit Amount -->
+            <p class="mt-4 text-xs font-sm text-gray-800">Deposit Amount</p>
+            <div class="grid grid-cols-3 gap-2 mt-2">
+                <button class="p-2 font-semibold border-0 bg-[#f5f5fa] rounded-lg"><span class="text-xs font-medium">₦</span>100</button>
+                <button class="p-2 font-semibold border-0 bg-[#f5f5fa] rounded-lg"><span class="text-xs font-medium">₦</span>500</button>
+                <button class="p-2 font-semibold border-0 bg-[#f5f5fa] rounded-lg"><span class="text-xs font-medium">₦</span>1,000</button>
+                <button class="p-2 font-semibold border-0 bg-[#f5f5fa] rounded-lg"><span class="text-xs font-medium">₦</span>2,000</button>
+                <button class="p-2 font-semibold border-0 bg-[#f5f5fa] rounded-lg"><span class="text-xs font-medium">₦</span>5,000</button>
+                <button class="p-2 font-semibold border-0 bg-[#f5f5fa] rounded-lg"><span class="text-xs font-medium">₦</span>10,000</button>
+            </div>
+
+            <!-- Pay Row -->
+            <div class="flex items-center justify-between mt-4">
+            <div class="space-x-2">
+                <span class="text-lg font-semibold">₦</span>
+                <input type="text" value="" placeholder="100-100,000"
+                    class="flex-1 border-none focus:ring-0 focus:outline-none text-gray-700 text-sm font-lg" />
+            </div>
+
+            <div class="mb-2">
+                <button
+                    class="px-4 py-1 bg-blue-100 text-blue-400 rounded-full font-semibold cursor-not-allowed">Pay</button>
+            </div>
+        </div>
+        <div class="w-full border-t border border-gray-50"></div>
+        </div>
+
+        <!-- Match Info -->
+        <div class="bg-white rounded-lg p-4 my-3">
+            <div class="flex justify-between items-center">
+            <p class="flex items-center gap-2 font-sm text-gray-600">
+                <i class="fa-solid fa-futbol text-[24px] text-green-600"></i> Premier League
+            </p>
+            <i class="fa fa-chevron-right text-xs text-gray-500"></i>
+            </div>
+            <div class="flex justify-between items-center p-2 bg-[#f5f5fa] rounded-lg mt-2">
+                <span class="text-gray-600 flex">West Ham
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWFg1HWjjQxhmfDj-ATpgdKEk5WUACrfNH1A&s" class="h-6 ml-1" alt="">
+                </span>
+                <div class="">
+                <span class="text-gray-600 font-medium ml-1 ">20:00</span>
+                <span class="block text-gray-800 -mt-2">Today</span>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc9ANRmv0nSRh8ROaJYrAByYcWpkSXdJ3GfA&s" class="h-6 -mr-5" alt="">
+                <span class="text-gray-600 flex">Chelsea</span>
+            </div>
+        </div>
+
+        <!-- More Services -->
+        <div class="bg-white rounded-lg p-4">
+            <p class="font-medium text-sm text-gray-700 mb-2">More Services</p>
+            <div class="flex justify-between mb-2 items-center p-2 bg-[#f5f5fa] rounded-lg">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-futbol text-blue-600 p-2 bg-blue-100 rounded-lg"></i>
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Top up Betting with *861
+                            84#
+                        </p>
+                        <p class="text-xs text-gray-500">If network is unavailable</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+            </div>
+            
+             <div class="flex justify-between items-center p-2 bg-[#f5f5fa] rounded-lg">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-piggy-bank text-blue-600 p-2 bg-blue-100 rounded-lg"></i>
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Grow Your Money</p>
+                        <p class="text-xs text-gray-500">Ear up to 20% Annual Yield</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const text = document.getElementById("scrollingText");
+        const container = text.parentElement;
+        let containerWidth = container.offsetWidth;
+        let textWidth = text.offsetWidth;
+        let x = containerWidth;
+
+        function animate() {
+            x--; // move left
+            if (x < -textWidth) {
+                x = containerWidth;
+            }
+            text.style.transform = `translateX(${x}px)`;
+            requestAnimationFrame(animate);
+        }
+
+        const slides = document.getElementById("slides");
+        const navDots = document.getElementById("nav-dots");
+        let index = 0;
+        const totalSlides = 3;
+
+        // Create nav dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement("button");
+            dot.className = "w-1 h-1 rounded-full bg-gray-400 hover:bg-white transition-all";
+            dot.dataset.index = i;
+            navDots.appendChild(dot);
+        }
+
+        const dots = navDots.querySelectorAll("button");
+
+        function showSlide(i) {
+            index = i;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("bg-gray-800", i === index);
+                dot.classList.toggle("bg-gray-400", i !== index);
+            });
+        }
+
+        // Auto-slide
+        setInterval(() => {
+            index = (index + 1) % totalSlides;
+            showSlide(index);
+        }, 3000);
+
+        // Dot click events
+        dots.forEach(dot => {
+            dot.addEventListener("click", () => {
+                showSlide(parseInt(dot.dataset.index));
+            });
+        });
+
+        animate();
+    </script>
+</body>
+
+</html>

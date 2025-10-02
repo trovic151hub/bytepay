@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PalmPay Clone - Mobile View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<style>
+    body{
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+</style>
+<body class="bg-[#f5f5fa] text-[#1a1a1a] font-system">
+
+    <!-- Header Section -->
+    <div class="flex justify-between items-center py-3 p-2 bg-[#f5f5fa] fixed top-0 w-full z-50">
+        <div class="flex items-center space-x-2">
+            <a href="user.html">
+                <div class="flex space-x-2 items-center">
+                    <!-- Profile Photo -->
+                    <img id="dashboardProfileImg" src="default-avatar.png" alt="Profile" class="w-9 h-9 rounded-full">
+                    <span id="greeting" class="profile-name font-medium text-[14px] text-gray-900">Sign Up/Login </span>
+                </div>
+            </a>
+        </div>
+        <div class="flex items-center text-red space-x-4">
+            <a href="">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5" viewBox="0 0 24 24">
+                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="1.5">
+                        <path
+                            d="M15 12a2 2 0 0 1 2-2a4 4 0 0 1 0 8a2 2 0 0 1-2-2zm-6 0a2 2 0 0 0-2-2a4 4 0 0 0 0 8a2 2 0 0 0 2-2z" />
+                        <path
+                            d="M3 14v-3a9 9 0 0 1 18 0v4.846c0 2.009 0 3.013-.352 3.796a4 4 0 0 1-2.006 2.006c-.783.352-1.787.352-3.796.352H12" />
+                    </g>
+                </svg>
+            </a>
+
+            <a href="">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5" viewBox="0 0 15 15">
+                    <path fill="none" stroke="currentColor"
+                        d="M1 10.5h13m-11.5 0v-5a5 5 0 0 1 10 0v5m-7 1.5v.5a2 2 0 1 0 4 0V12" stroke-width="1" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <div class="max-w-sm mx-auto px-4 py-2 mt-10 mb-24">
+
+        <!-- Balance Card -->
+        <div class="bg-blue-100 rounded-xl p-4 mt-4 flex justify-between items-center relative z-10">
+            <div>
+                <p class="text-xs text-gray-700 flex text-[#000000] items-center gap-1 font-[400]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 text-green-400" viewBox="0 0 20 20">
+                        <path fill="currentColor"
+                            d="M10.277 2.084a.5.5 0 0 0-.554 0a15.05 15.05 0 0 1-6.294 2.421A.5.5 0 0 0 3 5v4.5c0 3.891 2.307 6.73 6.82 8.467a.5.5 0 0 0 .36 0C14.693 16.23 17 13.39 17 9.5V5a.5.5 0 0 0-.43-.495a15.05 15.05 0 0 1-6.293-2.421m3.577 5.77l-4 4a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L9.5 10.793l3.646-3.647a.5.5 0 0 1 .708.708" />
+                    </svg>
+                    <a href="assets.html">
+                        Available Balance
+                    </a>
+                    <i class="toggleIcon fa fa-eye text-gray-400"></i>
+                </p>
+
+                <div class="flex space-x-2">
+                    <span id="userBalance" class="balance text-2xl font-medium text-l mt-2 text-gray-700"> </span>
+                    <i class="fa fa-chevron-right text-sm text-gray-700 mt-4"></i>
+                </div>
+            </div>
+            <div class="block text-sm text-[#000000] text-right">
+                <a href="add-money.html" class="block mb-3 text-[12px] font-[400]">
+                    Add...oney <i class="fa fa-chevron-right text-[12px] text-gray-500 ml-2"></i>
+                </a>
+                <a href="history.html" class="bg-blue-600 text-white font-semibold text-[10px] px-5 py-2 rounded-full">
+                    Transaction History
+                </a>
+            </div>
+        </div>
+        <div class="-mt-[17px] relative z-0">
+            <a href="#" class="flex justify-between py-1 px-2 bg-[#fff] mt-0 rounded-b-xl mt-2">
+                <span class="text-[12px] mt-2 font-[400]">
+                    <i class="fa fa-ticket-alt text-[#2B2B2B] text-blue-600"></i>
+                    Cash Alart! Earn <span class="text-blue-600 text-[12px] font-[500]">20% p.a.</span> interest
+                </span>
+
+                <span class="text-[12px] mt-2 font-[500] text-blue-600">
+                    Act Now <i
+                        class="fa fa-chevron-right text-blue text-[9px] p-1 rounded-full bg-blue-100 text-blue-600"></i>
+                </span>
+            </a>
+        </div>
+
+        <div class="flex justify-between py-3 text-center">
+            <a href="to-bank.html">
+                <div class="p-5 bg-[#fff] rounded-xl">
+                    <i class="fa fa-bank text-[25px] text-blue-600"></i>
+                    <p class="block text-[12px] text-[#000000] font-[400]">
+                        To Bank
+                    </p>
+            </a>
+        </div>
+
+        <div class="p-3 bg-[#fff] rounded-xl">
+            <a href="to-palmpay.html">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="mt-1 h-8 fa fa-bank text-[10px] text-blue-600 text-center" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M19 2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h4l3 3l3-3h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2m-7 3c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3M7.177 16c.558-1.723 2.496-3 4.823-3s4.266 1.277 4.823 3z" />
+                </svg>
+                <p class="block text-[12px] text-[#000000] font-[400]">
+                    To Bytepay
+                </p>
+            </a>
+        </div>
+
+        <div class="p-5 bg-[#fff] rounded-xl">
+            <a href="savings.html">
+                <i class="fas fa-piggy-bank text-[25px] text-blue-600"></i>
+                <a href="" class="block text-[12px] text-[#000000] font-[400]">
+                    Savings
+                </a>
+            </a>
+        </div>
+
+        <div class="p-4 bg-[#fff] rounded-xl">
+            <i class="fas fa-credit-card text-[25px] text-blue-600 mt-1"></i>
+            <a href="" class="block text-[12px] text-[#000000] font-[400]">
+                ATM Card
+            </a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-4 gap-4 text-center p-2 rounded-lg bg-[#fff]">
+        <div>
+            <a href="airtime.html">
+                <i
+                    class="fas fa-phone block text-[15px] py-2 px-2 w-[30px] bg-blue-600 ml-6 rounded-xl text-[#fff]"></i>
+                <a href="" class="text-[12px] text-[#000000]">
+                    Airtime
+                </a>
+            </a>
+        </div>
+
+        <div class="-mt-1">
+            <a href="data.html">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-9 text-blue-600 ml-4 -mb-1" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M9 8.85V12q0 .425.288.713T10 13t.713-.288T11 12V8.85l.9.875q.275.275.688.275t.712-.3q.275-.275.275-.7t-.275-.7l-2.575-2.575q-.3-.3-.712-.3t-.713.3L6.7 8.3q-.275.275-.288.688T6.7 9.7q.275.275.688.288t.712-.263zm4 6.3l-.9-.875Q11.825 14 11.413 14t-.713.3q-.275.275-.275.7t.275.7l2.6 2.6q.3.3.713.3t.712-.3l2.575-2.6q.275-.275.288-.687T17.3 14.3q-.275-.275-.687-.288t-.713.263l-.9.875V12q0-.425-.288-.712T14 11t-.712.288T13 12zM12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22" />
+                </svg>
+                <a href="" class="text-[12px] text-[#000000]">
+                    Data
+                </a>
+            </a>
+        </div>
+
+        <div>
+            <a href="betting.html">
+                <i class="fas fa-futbol block text-[28px] text-blue-600"></i>
+                <a href="" class="text-[12px] text-[#000000]">
+                    Betting
+                </a>
+            </a>
+        </div>
+
+        <div>
+            <a href="elect.html">
+                <i
+                    class="fas fa-bolt block text-[15px] py-2 px-2 w-[30px] bg-blue-600 ml-6 rounded-full text-[#fff]"></i>
+                <a href="" class="text-[12px] text-[#000000]">
+                    Electricity
+                </a>
+            </a>
+        </div>
+
+        <div class="-mt-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 text-blue-600 ml-4 " viewBox="0 0 48 48">
+                <path fill="currentColor" fill-rule="evenodd"
+                    d="M24.039 6c-4.517 0-8.632 1.492-11.067 2.711q-.33.165-.616.322c-.378.206-.7.398-.956.567l2.77 4.078l1.304.519c5.096 2.571 11.93 2.571 17.027 0l1.48-.768L36.6 9.6a16 16 0 0 0-1.689-.957C32.488 7.437 28.471 6 24.04 6m-6.442 4.616a25 25 0 0 1-2.901-.728C16.978 8.875 20.377 7.8 24.04 7.8c2.537 0 4.936.516 6.92 1.17c-2.325.327-4.806.882-7.17 1.565c-1.86.538-4.034.48-6.192.081m15.96 5.064l-.246.124c-5.606 2.828-13.042 2.828-18.648 0l-.233-.118C6.008 24.927-.422 41.997 24.039 41.997S41.913 24.61 33.557 15.68M23 24a2 2 0 1 0 0 4zm2-2v-1h-2v1a4 4 0 0 0 0 8v4c-.87 0-1.611-.555-1.887-1.333a1 1 0 1 0-1.885.666A4 4 0 0 0 23 36v1h2v-1a4 4 0 0 0 0-8v-4c.87 0 1.611.555 1.887 1.333a1 1 0 1 0 1.885-.666A4 4 0 0 0 25 22m0 8v4a2 2 0 1 0 0-4"
+                    clip-rule="evenodd" />
+            </svg>
+            <a href="" class="text-[12px] text-[#000000]">
+                Refer & Earn
+            </a>
+        </div>
+
+        <div class="-mt-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 text-blue-600 ml-4" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M12 8a1 1 0 0 1 1 1a1 1 0 0 1-1 1a1 1 0 0 1-1-1a1 1 0 0 1 1-1m9 3c0 5.55-3.84 10.74-9 12c-5.16-1.26-9-6.45-9-12V5l9-4l9 4zm-9-5a3 3 0 0 0-3 3c0 1.31.83 2.42 2 2.83V18h2v-2h2v-2h-2v-2.17c1.17-.41 2-1.52 2-2.83a3 3 0 0 0-3-3" />
+            </svg>
+            <a href="" class="text-[12px] text-[#000000]">
+                Insurance
+            </a>
+        </div>
+
+        <div>
+            <i class="fas fa-coins block text-[28px] text-blue-600"></i>
+            <a href="" class="text-[12px] text-[#000000]">
+                Loan
+            </a>
+        </div>
+
+        <div>
+            <i class="fas fa-ellipsis-h block text-[15px] p-2 w-[30px] bg-blue-600 ml-6 rounded-full text-[#fff]"></i>
+            <a href="" class="text-[12px] text-[#000000]">
+                More
+            </a>
+        </div>
+    </div>
+
+    <div class="py-3">
+        <div class="   p-2 bg-white rounded-lg">
+            <div class="flex rounded-[15px] h-[70px] border border-blue-200 bg-blue-100 relative overflow-hidden ">
+
+                <!-- Title Section -->
+                <div class="relative flex flex-col items-center justify-center w-[35%] md:w-[30%] p-2 text-center">
+                    <!-- Simulating ::before -->
+                    <div
+                        class="absolute -top-2.5 -right-2.5 w-[20px] h-[25px] bg-white rounded-full border border-blue-300">
+                    </div>
+
+                    <div
+                        class="absolute left-20 top-4 ml-9  -translate-x-0 h-9 border-l-[2px] border-dashed border-blue-200 z-10">
+                    </div>
+
+                    <div>
+                        <div class="text-blue-600 text-3xl font-bold font-serif mb-1 mt-3">
+                            <span class="text-sm">₦</span>49
+                        </div>
+                        <p class="text-xs font-semibold text-blue-900 px-2 bg-blue-200 rounded-t-lg">Coupon</p>
+                    </div>
+                </div>
+
+                <!-- Detail Section -->
+                <div class="relative flex flex-col justify-between w-[65%] md:w-[70%] p-2 pl-4">
+                    <!-- Simulating ::before -->
+                    <div
+                        class="absolute -bottom-2.5 -left-2.5 w-[20px] h-[25px] bg-white rounded-full border border-blue-200">
+                    </div>
+
+                    <div class="flex space-x-1 ">
+                        <div class="flex flex-col mt-2">
+                            <span class="text-sm font-semibold text-blue-900">DataBundle Coupon</span>
+                            <span class="text-xs text-[#555]">₦49 | Purchase over ₦50</span>
+                        </div>
+
+                        <button class="px-[15px] h-[25px] mt-4 text-xs text-white bg-blue-600 rounded-full">
+                            Claim
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-2 bg-[#fff] rounded-lg ">
+        <div class=" flex space-x-2">
+            <div class="p-2 rounded-lg w-[170px] bg-[#f5f5fa]">
+                <a href="" class=" ">
+                    <h3 class="text-[12px] text-blue-600 font-semibold">CashBox</h3>
+                    <div>
+                        <p class="text-[10px] text-[#000000]">Your Available Balance, <br>Earnings for You Daily!
+                        </p>
+                    </div>
+                    <span class="text-[15px] text-green-500 font-semibold">20.00%</span>
+                    <p class="text-[10px] text-[#555] ">Maximum Annual Yield</p>
+                    <p class="px-2 rounded-full w-fit bg-blue-600 text-[10px] text-[#fff] mt-2">₦1 to Start</p>
+                </a>
+            </div>
+
+            <div class="p-2 rounded-lg w-[170px] bg-[#f5f5fa]">
+                <a href="">
+                    <h3 class="text-[12px] text-blue-600 font-semibold">SmartEarn</h3>
+                    <div>
+                        <p class="text-[10px] text-[#000000]">Save Smarter, Earn PLUS <br>Return</p>
+                    </div>
+                    <span class="text-[15px] text-green-500 font-semibold">21.11%</span>
+                    <p class="text-[10px] text-[#555] ">Annual Yield</p>
+                    <p class="px-4 rounded-full w-fit bg-blue-600 text-[10px] text-[#fff] mt-2">Save</p>
+                </a>
+            </div>
+        </div>
+        <div class="flex justify-center text-[10px] mt-1 text-[#777]">
+            <a href="">More Wealth Yield <i class="fa fa-chevron-right text-gray-500 text-[10px]"></i></a>
+        </div>
+    </div>
+
+    <div id="slider" class="relative overflow-hidden border my-3 rounded-lg relative">
+        <div id="slides" class="gap-1 flex w-full h-[80px] transition-transform duration-700 ease-in-out">
+            <img src="./WhatsApp Image 2025-07-31 at 22.07.57_f28fa8a4.jpg" class="w-full flex-shrink-0"
+                alt="Slide 7" />
+            <img src="./WhatsApp Image 2025-07-31 at 21.53.31_b91499db.jpg" class="w-full flex-shrink-0"
+                alt="Slide 6" />
+            <img src="./WhatsApp Image 2025-07-31 at 21.53.30_f7fb7f39.jpg" class="w-full flex-shrink-0"
+                alt="Slide 5" />
+            <img src="./WhatsApp Image 2025-07-31 at 21.53.30_280d8261.jpg" class="w-full flex-shrink-0"
+                alt="Slide 3" />
+            <img src="./WhatsApp Image 2025-07-31 at 21.53.30_3d1b9ed9.jpg" class="w-full flex-shrink-0"
+                alt="Slide 4" />
+            <img src="./WhatsApp Image 2025-07-31 at 21.53.29_c52ae79f.jpg" class="w-full flex-shrink-0"
+                alt="Slide 2" />
+            <img src="./WhatsApp Image 2025-07-31 at 21.53.29_1be532b9.jpg" class="w-full flex-shrink-0"
+                alt="Slide 1" />
+        </div>
+    </div>
+
+    <div id="nav-dots"
+        class="flex justify-center mt-4 gap-2 absolute top-[116%] left-1/2 -translate-x-1/2 flex gap-2 z-10">
+
+    </div>
+    </div>
+
+    <!-- Base menu -->
+    <div class="px-2 bg-white fixed bottom-0 w-full z-50">
+        <div class="max-w-sm mx-auto px-4 py-2 flex justify-between items-center">
+            <div class="">
+                <a href="palmpay.html" class="text-blue-600 font-sm text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 ml-2 text-blue-600" viewBox="0 0 48 48">
+                        <path fill="currentColor" fill-rule="evenodd"
+                            d="M20.568 2.812a8.25 8.25 0 0 1 6.864 0c7.766 3.556 13.551 8.642 16.337 11.386c1.502 1.479 2.305 3.451 2.418 5.486c.138 2.507.313 6.573.313 11.159c0 3.236-.087 6.212-.187 8.564a7.145 7.145 0 0 1-6.927 6.854c-3.478.12-8.647.239-15.386.239s-11.908-.12-15.386-.239a7.145 7.145 0 0 1-6.927-6.854a204 204 0 0 1-.187-8.564c0-4.586.175-8.652.313-11.159c.113-2.035.916-4.007 2.418-5.486c2.786-2.744 8.572-7.83 16.337-11.386M16 36a2 2 0 1 0 0 4h16a2 2 0 1 0 0-4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    Home
+                </a>
+            </div>
+
+            <div>
+                <a href="" class="text-gray-700 font-sm text-sm">
+                    <i class="fas fa-coins block text-[28px] text-gray-700 ml-1"></i>
+                    Loan
+                </a>
+            </div>
+
+            <div>
+                <a href="" class="text-gray-700 font-sm text-sm">
+                    <i class="fa-solid fa-sack-dollar block text-[28px] ml-2 text-gray-700"></i>
+                    Wealth
+                </a>
+            </div>
+
+            <div>
+                <a href="" class="text-gray-700 font-sm text-sm">
+                    <i class="fas fa-gift block text-[28px] ml-2 text-gray-700"></i>
+                    Reward
+                </a>
+            </div>
+
+            <div>
+                <a href="" class="text-gray-700 font-sm text-sm">
+                    <i class="fas fa-face-smile block text-[28px] -ml-1 text-gray-700"></i>
+                    Me
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="loader" class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
+  <img src="./bytepayLogo.png" 
+       alt="Loading..." 
+       class="h-20 px-1 py-1 bg-white rounded-lg animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
+</div>
+
+
+    <script type="module">
+        document.addEventListener("DOMContentLoaded", () => {
+            const slides = document.getElementById("slides");
+            const navDots = document.getElementById("nav-dots");
+            let index = 0;
+            const totalSlides = 7;
+
+            // Create nav dots
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement("button");
+                dot.className = "w-1 h-1 rounded-full bg-gray-400 hover:bg-white transition-all";
+                dot.dataset.index = i;
+                navDots.appendChild(dot);
+            }
+
+            const dots = navDots.querySelectorAll("button");
+
+            function showSlide(i) {
+                index = i;
+                slides.style.transform = `translateX(-${index * 100}%)`;
+                updateDots();
+            }
+
+            function updateDots() {
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle("bg-gray-800", i === index);
+                    dot.classList.toggle("bg-gray-400", i !== index);
+                });
+            }
+
+            // Auto-slide
+            setInterval(() => {
+                index = (index + 1) % totalSlides;
+                showSlide(index);
+            }, 3000);
+
+            dots.forEach(dot => {
+                dot.addEventListener("click", () => {
+                    showSlide(parseInt(dot.dataset.index));
+                });
+            });
+
+            showSlide(0);
+        });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const balances = document.querySelectorAll(".balance");
+  const icons = document.querySelectorAll(".toggleIcon");
+
+  // Load toggle preference
+  let visible = localStorage.getItem("balanceVisible");
+  visible = visible === null ? true : visible === "true";
+
+  let latestBalance = "₦0.00"; // will update when Firestore loads
+
+  // 🔹 Update balances in UI
+  function updateBalances() {
+    balances.forEach(el => {
+      el.textContent = visible ? latestBalance : "•••••••";
+    });
+
+    icons.forEach(icon => {
+      icon.classList.toggle("fa-eye", visible);
+      icon.classList.toggle("fa-eye-slash", !visible);
+    });
+  }
+
+  // 🔹 Listen for toggle clicks
+  icons.forEach(icon => {
+    icon.addEventListener("click", () => {
+      visible = !visible;
+      localStorage.setItem("balanceVisible", visible);
+      updateBalances();
+    });
+  });
+
+  // 🔹 Fetch balance from Firestore in realtime
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+      onSnapshot(userRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          // Save latest balance
+          latestBalance = `₦${(data.accountBalance || 0).toLocaleString()}`;
+          updateBalances();
+        }
+      });
+    }
+  });
+
+  // Initialize with default
+  updateBalances();
+});
+        // ✅ Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
+// ✅ Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
+  authDomain: "testing-firebase-d7f88.firebaseapp.com",
+  projectId: "testing-firebase-d7f88",
+  storageBucket: "testing-firebase-d7f88.appspot.com",
+  messagingSenderId: "339099724691",
+  appId: "1:339099724691:web:83ead43e1d41d2e131d666"
+};
+
+// ✅ Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app)
+
+// UI elements
+const nameEl = document.querySelector(".profile-name");
+const balanceEl = document.querySelector(".balance");
+
+ // 🔹 Loader utility
+    const loader = document.getElementById("loader");
+    function showLoader() {
+      loader.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      setTimeout(() => loader.style.opacity = "1", 10);
+    }
+    function hideLoader() {
+      loader.style.opacity = "0";
+      setTimeout(() => {
+        loader.style.display = "none";
+        document.body.style.overflow = "";
+      }, 500);
+    }
+
+    // 🔹 Auth listener
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        showLoader(); // show loader while fetching
+
+        try {
+          const userRef = doc(db, "users", user.uid);
+          const snap = await getDoc(userRef);
+
+          if (snap.exists()) {
+            const data = snap.data();
+            nameEl.textContent = "Hi, " + (data.firstName || "User");
+            balanceEl.textContent = "₦" + ((data.balance || 0).toLocaleString());
+          } else {
+            console.error("No user document found");
+          }
+        } catch (err) {
+          console.error("Error loading dashboard:", err);
+        } finally {
+          hideLoader(); // hide loader when done
+        }
+      } else {
+        console.log("User not logged in");
+        hideLoader();
+      }
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "../palmpay/login/login.html";
+    return;
+  }
+
+  try {
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const data = userSnap.data();
+
+      // ✅ Load profile image
+      const dashboardProfileImg = document.getElementById("dashboardProfileImg");
+      dashboardProfileImg.src =
+        data.profileImg || user.photoURL || "default-avatar.png";
+    } else {
+      console.log("No Firestore record for this user.");
+    }
+  } catch (error) {
+    console.error("Error loading profile image:", error);
+  } finally {
+    hideLoader();
+  }
+});
+    </script>
+</body>
+</html>

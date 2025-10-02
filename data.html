@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Bundle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+</head>
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+
+<body class="bg-[#f4f4fa] font-sans">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between space-x-2 p-4 bg-white fixed top-0 z-50 w-full">
+        <div class="flex space-x-2">
+        <button onclick="history.back()">
+            <i class="fa fa-arrow-left text-gray-700 text-[15px]"></i>
+        </button>
+        <h1 class="text-lg font-semibold text-gray-700">Data</h1>
+        </div>
+        <i class="fas fa-receipt text-xl text-gray-600"></i>
+    </div>
+
+    <div class="max-w-sm mx-auto mt-14 p-4">
+
+        <!-- Image slide -->
+        <div id="slider" class="relative overflow-hidden border my-1 mb-3 rounded-lg relative">
+            <div id="slides" class="flex w-full h-[80px] transition-transform duration-700 ease-in-out">
+                <img src="./data img1.jpg" class="w-full flex-shrink-0" alt="Slide 1" />
+                <img src="./airtime img2.jpg" class="w-full flex-shrink-0" alt="Slide 2" />
+            </div>
+        </div>
+
+        <div id="nav-dots"
+            class="flex justify-center  gap-2 absolute top-[22%] left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        </div>
+
+        <!-- Top bar with amount -->
+        <div class="flex items-center justify-between bg-white p-3 py-2 rounded-xl mb-4">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-ticket-alt text-blue-600 text-[20px]"></i>
+                <div>
+                    <i class="fa fa-ticket-alt text-blue-100 h-7 text-[20px] relative"></i>
+                    <span class="text-blue-600 font-semibold text-xs absolute top-[27.6%] left-[17%]">₦49</span>
+                </div>
+            </div>
+            <div>
+                <span class="text-sm text-gray-500">(1)</span>
+                <i class="fa fa-chevron-right text-xs text-gray-500"></i>
+            </div>
+        </div>
+
+        <!-- Phone and Network -->
+        <div class="bg-white rounded-xl p-4 mb-4">
+            <div class="flex items-center space-x-2 mb-2">
+                <img src=" " class="w-8 h-8 rounded-full" />
+                <input type="text" value=" "
+                    class="flex-1 border-none focus:ring-0 focus:outline-none text-gray-700 text-lg font-medium" />
+                <i class="fas fa-user text-blue-500 p-2 bg-blue-100 text-[11px] rounded-full"></i>
+            </div>
+
+            <div class="w-full border-t border border-gray-50"></div>
+
+            <div>
+                <p class="text-xs text-gray-500 mb-4">Enjoy up to 2%, maximum ₦30 cashback on your <br>first two GLO
+                    bundle recharges daily.</p>
+            </div>
+
+            <!-- Airtime Amount Options -->
+            <div class="mb-2">
+                <h2 class="text-sm font-medium text-gray-500 mb-1">Flash
+                    sales
+                </h2>
+            </div>
+
+            <!-- Promo Banner -->
+            <div class="mb-2 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
+                <div class="flex gap-2 w-max">
+
+                    <!-- Card -->
+                    <div class="flex justify-between bg-blue-100 rounded-xl px-2 py-1 w-60 h-16 shrink-0 snap-start">
+                        <div>
+                            <p class="font-medium text-gray-800">
+                                200MB<span class="font-sm text-xs text-gray-600">/14 days</span>
+                            </p>
+                            <div class="flex gap-1">
+                                <span class="text-blue-600 font-sm text-xs">₦150</span>
+                                <span class="line-through text-gray-400 text-xs">₦200</span>
+                                <span class="text-blue-600 font-sm text-xs">| 25% OFF</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="bg-blue-600 text-white text-[10px] font-sm px-2 py-1 rounded-xl">
+                                Grab
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between bg-blue-100 rounded-xl px-2 py-1 w-60 h-16 shrink-0 snap-start">
+                        <div>
+                            <p class="font-medium text-gray-800">
+                                500MB<span class="font-sm text-xs text-gray-600">/30 days</span>
+                            </p>
+                            <div class="flex gap-1">
+                                <span class="text-blue-600 font-sm text-xs">₦250</span>
+                                <span class="line-through text-gray-400 text-xs">₦450</span>
+                                <span class="text-blue-600 font-sm text-xs">| 44% OFF</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="bg-blue-600 text-white text-[10px] font-sm px-2 py-1 rounded-xl">
+                                Grab
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between bg-blue-100 rounded-xl px-2 py-1 w-60 h-16 shrink-0 snap-start">
+                        <div>
+                            <p class="font-medium text-gray-800">
+                                1GB<span class="font-sm text-xs text-gray-600">/30 days</span>
+                            </p>
+                            <div class="flex gap-1">
+                                <span class="text-blue-600 font-sm text-xs">₦480</span>
+                                <span class="line-through text-gray-400 text-xs">₦850</span>
+                                <span class="text-blue-600 font-sm text-xs">| 43% OFF</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="bg-blue-600 text-white text-[10px] font-sm px-2 py-1 rounded-xl">
+                                Grab
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between bg-blue-100 rounded-xl px-2 py-1 w-60 h-16 shrink-0 snap-start">
+                        <div>
+                            <p class="font-medium text-gray-800">
+                                2GB<span class="font-sm text-xs text-gray-600">/30 days</span>
+                            </p>
+                            <div class="flex gap-1">
+                                <span class="text-blue-600 font-sm text-xs">₦950</span>
+                                <span class="line-through text-gray-400 text-xs">₦1500</span>
+                                <span class="text-blue-600 font-sm text-xs">| 36% OFF</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="bg-blue-600 text-white text-[10px] font-sm px-2 py-1 rounded-xl">
+                                Grab
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between bg-blue-100 rounded-xl px-2 py-1 w-60 h-16 shrink-0 snap-start">
+                        <div>
+                            <p class="font-medium text-gray-800">
+                                200MB<span class="font-sm text-xs text-gray-600">/14 days</span>
+                            </p>
+                            <div class="flex gap-1">
+                                <span class="text-blue-600 font-sm text-xs">₦150</span>
+                                <span class="line-through text-gray-400 text-xs">₦200</span>
+                                <span class="text-blue-600 font-sm text-xs">| 25% OFF</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="bg-blue-600 text-white text-[10px] font-sm px-2 py-1 rounded-xl">
+                                Grab
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between bg-blue-100 rounded-xl px-2 py-1 w-60 h-16 shrink-0 snap-start">
+                        <div>
+                            <p class="font-medium text-gray-800">
+                                200MB<span class="font-sm text-xs text-gray-600">/14 days</span>
+                            </p>
+                            <div class="flex gap-1">
+                                <span class="text-blue-600 font-sm text-xs">₦150</span>
+                                <span class="line-through text-gray-400 text-xs">₦200</span>
+                                <span class="text-blue-600 font-sm text-xs">| 25% OFF</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="bg-blue-600 text-white text-[10px] font-sm px-2 py-1 rounded-xl">
+                                Grab
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div>
+                <div class="flex  space-x-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
+
+                    <button class="tab-btn text-gray-600 text-sm font-medium border-b-2 border-gray-600 pb-1"
+                        data-tab="0">Best Offers</button>
+                    <button class="tab-btn text-gray-500 text-sm pb-1" data-tab="1">Daily</button>
+                    <button class="tab-btn text-gray-500 text-sm pb-1" data-tab="2">Weekly</button>
+                    <button class="tab-btn text-gray-500 text-sm pb-1" data-tab="3">Monthly</button>
+                    <button class="tab-btn text-gray-500 text-sm pb-1" data-tab="4">Social</button>
+                    <button class="tab-btn text-gray-500 text-sm pb-1" data-tab="5">Mega</button>
+                    <button class="tab-btn text-gray-500 text-sm pb-1" data-tab="6">Glo-TV</button>
+                    <button class="tab-btn text-gray-500 text-sm pb-1" data-tab="7">Campus</button>
+                    <button class="tab-btn text-gray-500 text-sm pb-1" data-tab="8">Always On</button>
+                </div>
+
+                <!-- Swipeable tab -->
+                <div id="tab-container" class="flex overflow-x-auto space-x-6 snap-x snap-mandatory scroll-smooth w-full no-scrollbar"
+                    style="scroll-snap-type: x mandatory;">
+                    <!-- Best offer -->
+                    <div class="min-w-full h-16 snap-start grid grid-cols-3 gap-3 mt-3 text-sm text-gray-600">
+                        <!-- 1 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦350</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦1,000</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">3 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦300</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">200<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦150</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">500<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦250</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦480</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦950</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 8 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦2,800</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 9 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAY</p>
+                            <p class="text-lg text-gray-700 font-medium ">45<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦50</p>
+                            <p class="text-xs text-gray-500">₦1 Cashback</p>
+                            <p class="text-xs text-gray-500 bg-blue-100 px-2 w-24 -ml-2 mt-5">Detail <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+
+                        <!-- 10 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+
+                        <!-- 11 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">8.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦2000</p>
+                            <p class="text-xs text-gray-500">₦30 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+
+                        <!-- 12 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1.1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦750</p>
+                            <p class="text-xs text-gray-500">₦11 Cashback</p>
+                        </div>
+
+                        <!-- 13 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2.6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+
+                        <!-- 14 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1,500</p>
+                            <p class="text-xs text-gray-500">₦23 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+                    </div>
+
+                    <!-- Daily -->
+                    <!-- 1 -->
+                    <div class="min-w-full  snap-start grid grid-cols-3 gap-3 mt-3 text-sm text-gray-600">
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 HOUR</p>
+                            <p class="text-lg text-gray-700 font-medium ">500<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦200</p>
+                            <p class="text-xs text-gray-500">₦3 Cashback</p>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">2 HOURS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦300</p>
+                            <p class="text-xs text-gray-500">₦5 Cashback</p>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAY</p>
+                            <p class="text-lg text-gray-700 font-medium ">45<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦50</p>
+                            <p class="text-xs text-gray-500">₦1 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAY</p>
+                            <p class="text-lg text-gray-700 font-medium ">105<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦100</p>
+                            <p class="text-xs text-gray-500">₦2 Cashback</p>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAY</p>
+                            <p class="text-lg text-gray-700 font-medium ">350<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦60</p>
+                            <p class="text-xs text-gray-500">₦1 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Night</p>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAY</p>
+                            <p class="text-lg text-gray-700 font-medium ">750<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦120</p>
+                            <p class="text-xs text-gray-500">₦2 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Night</p>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAY</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦500</p>
+                            <p class="text-xs text-gray-500">₦8 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Detail <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+
+                        <!-- 8 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAY</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦500</p>
+                            <p class="text-xs text-gray-500">₦8 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Special <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+
+                        <!-- 9 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">2 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">235<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦200</p>
+                            <p class="text-xs text-gray-500">₦3 Cashback</p>
+                        </div>
+
+                        <!-- 10 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">2 (Sat & Sun)</p>
+                            <p class="text-lg text-gray-700 font-medium ">875<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦200</p>
+                            <p class="text-xs text-gray-500">₦3 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">2 (Sat & Sun) <i class="fa fa-circle-info text-gray-400"></i></p>
+                        </div>
+
+                        <!-- 11 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">2 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦500</p>
+                            <p class="text-xs text-gray-500">₦8 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Weekend</p>
+                        </div>
+
+                        <!-- 12 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">2 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3.55<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦600</p>
+                            <p class="text-xs text-gray-500">₦9 Cashback</p>
+                        </div>
+
+                        <!-- 13 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">2 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">5.1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+                    </div>
+
+                    <!-- Weekly -->
+                     <!-- 1 -->
+                    <div class="min-w-full h-16 snap-start grid grid-cols-3 gap-3 mt-3 text-sm text-gray-600">
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦350</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦1,000</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">3 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦300</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">200<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦150</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">500<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦250</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦480</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦950</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+                    </div>
+
+                    <div class="min-w-full snap-start grid grid-cols-3 gap-3 mt-3 text-sm text-gray-600">
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦350</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦1,000</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">3 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦300</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">200<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦150</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">500<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦250</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦480</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦950</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 8 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦2,800</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 9 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">45<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦50</p>
+                            <p class="text-xs text-gray-500">₦1 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 10 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 11 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">8.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦2000</p>
+                            <p class="text-xs text-gray-500">₦30 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 12 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1.1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦750</p>
+                            <p class="text-xs text-gray-500">₦11 Cashback</p>
+                        </div>
+
+                        <!-- 13 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2.6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 14 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1,500</p>
+                            <p class="text-xs text-gray-500">₦23 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+                    </div>
+
+                    <div class="min-w-full snap-start grid grid-cols-3 gap-3 mt-3 text-sm text-gray-600">
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦350</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦1,000</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">3 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦300</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">200<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦150</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">500<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦250</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦480</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦950</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 8 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦2,800</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 9 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">45<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦50</p>
+                            <p class="text-xs text-gray-500">₦1 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 10 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 11 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">8.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦2000</p>
+                            <p class="text-xs text-gray-500">₦30 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 12 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1.1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦750</p>
+                            <p class="text-xs text-gray-500">₦11 Cashback</p>
+                        </div>
+
+                        <!-- 13 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2.6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 14 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1,500</p>
+                            <p class="text-xs text-gray-500">₦23 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+                    </div>
+
+                    <div class="min-w-full snap-start grid grid-cols-3 gap-3 mt-3 text-sm text-gray-600">
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦350</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦1,000</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">3 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦300</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">200<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦150</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">500<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦250</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦480</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦950</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 8 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦2,800</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 9 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">45<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦50</p>
+                            <p class="text-xs text-gray-500">₦1 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 10 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 11 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">8.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦2000</p>
+                            <p class="text-xs text-gray-500">₦30 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 12 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1.1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦750</p>
+                            <p class="text-xs text-gray-500">₦11 Cashback</p>
+                        </div>
+
+                        <!-- 13 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2.6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 14 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1,500</p>
+                            <p class="text-xs text-gray-500">₦23 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+                    </div>
+
+                    <div class="min-w-full snap-start grid grid-cols-3 gap-3 mt-3 text-sm text-gray-600">
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦350</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦1,000</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">3 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦300</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">200<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦150</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">500<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦250</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦480</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦950</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 8 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦2,800</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 9 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">45<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦50</p>
+                            <p class="text-xs text-gray-500">₦1 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 10 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 11 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">8.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦2000</p>
+                            <p class="text-xs text-gray-500">₦30 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 12 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1.1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦750</p>
+                            <p class="text-xs text-gray-500">₦11 Cashback</p>
+                        </div>
+
+                        <!-- 13 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2.6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 14 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1,500</p>
+                            <p class="text-xs text-gray-500">₦23 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+                    </div>
+
+                    <div class="min-w-full snap-start grid grid-cols-3 gap-3 mt-3 text-sm text-gray-600">
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦350</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 2 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦1,000</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 3 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">3 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦300</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 4 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">200<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦150</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 5 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">500<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦250</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 6 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦480</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 7 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦950</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 8 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm ">₦2,800</p>
+                            <p class="text-xs text-gray-500 mt-9 px-2 w-24 -ml-2 bg-blue-100 ">Best Price</p>
+                        </div>
+
+                        <!-- 9 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">1 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">45<span
+                                    class="text-xs font-sm text-gray-600">MB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦50</p>
+                            <p class="text-xs text-gray-500">₦1 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 10 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">3.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 11 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">7 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">8.5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦2000</p>
+                            <p class="text-xs text-gray-500">₦30 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 12 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">14 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">1.1<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦750</p>
+                            <p class="text-xs text-gray-500">₦11 Cashback</p>
+                        </div>
+
+                        <!-- 13 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">2.6<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1000</p>
+                            <p class="text-xs text-gray-500">₦15 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+
+                        <!-- 14 -->
+                        <div class="bg-[#f4f4fa] rounded-xl p-2 text-center flex-col">
+                            <p class="font-sm text-gray-600 text-sm">30 DAYS</p>
+                            <p class="text-lg text-gray-700 font-medium ">5<span
+                                    class="text-xs font-sm text-gray-600">GB</span></p>
+                            <p class="text-gray-600 font-medium text-sm">₦1,500</p>
+                            <p class="text-xs text-gray-500">₦23 Cashback</p>
+                            <p class="text-xs text-gray-500 mt-5 px-2 w-24 -ml-2 bg-blue-100 ">Detail</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- More Services -->
+        <div class="p-4 bg-white rounded-lg">
+            <h2 class="text-gray-600 text-sm font-medium mb-2">More Services</h2>
+            <div class="space-y-3">
+                <div class="flex justify-between bg-[#f4f4fa] rounded-xl p-2">
+                    <div class="flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-9 bg-blue-100 p-1 rounded-lg text-blue-600"
+                            viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M9 8.85V12q0 .425.288.713T10 13t.713-.288T11 12V8.85l.9.875q.275.275.688.275t.712-.3q.275-.275.275-.7t-.275-.7l-2.575-2.575q-.3-.3-.712-.3t-.713.3L6.7 8.3q-.275.275-.288.688T6.7 9.7q.275.275.688.288t.712-.263zm4 6.3l-.9-.875Q11.825 14 11.413 14t-.713.3q-.275.275-.275.7t.275.7l2.6 2.6q.3.3.713.3t.712-.3l2.575-2.6q.275-.275.288-.687T17.3 14.3q-.275-.275-.687-.288t-.713.263l-.9.875V12q0-.425-.288-.712T14 11t-.712.288T13 12zM12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22" />
+                        </svg>
+                        <div>
+                            <p class="text-sm font-medium text-gray-700">Top up Data Bundle with *861</p>
+                            <p class="text-xs font-sm text-gray-500">If network is unavailable</p>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-right font-sm text-xs text-gray-500 mt-3"></i>
+                </div>
+
+                <div class="flex justify-between bg-[#f4f4fa] rounded-xl p-2">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-hashtag text-blue-600 p-2 bg-blue-100 rounded-lg text-[18px]"></i>
+                        <div>
+                            <p class="text-sm font-medium text-gray-700">Short Code Enquiry</p>
+                            <p class="text-xs font-sm text-gray-500">Sim card basic information inquiry</p>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-right font-sm text-xs text-gray-500 mt-3"></i>
+                </div>
+
+                <div class="flex justify-between bg-[#f4f4fa] rounded-xl p-2">
+                    <div class="flex items-center space-x-2">
+                        
+                        <div>
+                            <p class="text-sm font-medium text-gray-700">Manage Renewal Enquiry</p>
+                            <p class="text-xs font-sm text-gray-500">Auto renw to enjoy discount</p>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-right font-sm text-xs text-gray-500 mt-3"></i>
+                </div>
+
+                <div class="flex justify-between bg-[#f4f4fa] rounded-xl p-2">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-gift text-blue-600 p-2 bg-blue-100 rounded-lg"></i>
+                        <div>
+                            <p class="text-sm font-medium text-gray-700">Betting Promo</p>
+                            <p class="text-xs font-sm text-gray-500">Win up to ₦1 million</p>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-right font-sm text-xs text-gray-500 mt-3"></i>
+                </div>
+
+                <div class="flex justify-between bg-[#f4f4fa] rounded-xl p-2">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-piggy-bank text-blue-600 p-2 bg-blue-100 rounded-lg"></i>
+                        <div>
+                            <p class="text-sm font-medium text-gray-700">Grow Your Money</p>
+                            <p class="text-xs font-sm text-gray-500">Earn up to 20% Annual Yield</p>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-right font-sm text-xs text-gray-500 mt-3"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.getElementById("slides");
+        const navDots = document.getElementById("nav-dots");
+        let index = 0;
+        const totalSlides = 2;
+
+        // Create nav dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement("button");
+            dot.className = "w-1 h-1 rounded-full bg-gray-400 hover:bg-white transition-all";
+            dot.dataset.index = i;
+            navDots.appendChild(dot);
+        }
+
+        const dots = navDots.querySelectorAll("button");
+
+        function showSlide(i) {
+            index = i;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("bg-gray-800", i === index);
+                dot.classList.toggle("bg-gray-400", i !== index);
+            });
+        }
+
+        // Auto-slide
+        setInterval(() => {
+            index = (index + 1) % totalSlides;
+            showSlide(index);
+        }, 3000);
+
+        // Dot click events
+        dots.forEach(dot => {
+            dot.addEventListener("click", () => {
+                showSlide(parseInt(dot.dataset.index));
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+    const tabContainer = document.getElementById("tab-container");
+    const tabs = document.querySelectorAll(".tab-btn");
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        const tabWidth = tabContainer.clientWidth;
+        tabContainer.scrollTo({
+          left: index * tabWidth,
+          behavior: "smooth"
+        });
+
+        // update active styles
+        tabs.forEach(t => {
+          t.classList.remove("text-gray-600", "border-b-2", "border-gray-600", "font-medium");
+          t.classList.add("text-gray-500");
+        });
+        tab.classList.add("text-gray-600", "border-b-2", "border-gray-600", "font-medium");
+        tab.classList.remove("text-gray-500");
+      });
+    });
+  });
+    </script>
+</body>
+
+</html>

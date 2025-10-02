@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User-page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="bg-gray-100 text-[#1C1C1C]">
+
+    <!-- Header -->
+    <div class="flex items-center gap-2 px-4 py-4 bg-white fixed top-0 w-full z-50">
+        <button onclick="history.back()">
+            <i class="fas fa-arrow-left text-gray-700"></i>
+        </button>
+        <h1 class="text-lg font-semibold text-gray-700">My Profile</h1>
+    </div>
+
+    <div class="max-w-sm mx-auto mt-20">
+
+        <!-- Profile Card -->
+        <div class="bg-white m-4 -mt-1 p-4 rounded-xl shadow">
+            <div class="flex items-center gap-3 mb-3">
+                <!-- Hidden file input -->
+                <input type="file" id="uploadInput" accept="image/*" style="display: none;">
+
+                <!-- Clickable image (profile picture) -->
+                <img id="profileImg" src="" alt=""
+                    style="width:50px; height:50px; border-radius:50%; cursor:pointer; object-fit:cover;">
+
+                <div>
+                    <h2 class="text-sm text-gray-600 font-medium"> </h2>
+                </div>
+            </div>
+
+            <div class="border-[0.5px] border-gray-100"></div>
+
+            <div class="mt-4 space-y-3">
+                <div class="flex justify-between items-center">
+                    <p class="text-sm text-gray-700">Account Number</p>
+                    <div class="flex space-x-3">
+                        <p class="text-sm text-gray-400 profile-account"> </p>
+                        <i class="fa fa-chevron-right text-[12px] text-gray-400 mt-1"></i>
+                    </div>
+                </div>
+
+                <div class="border-[0.5px] border-gray-100"></div>
+
+                <div class="flex justify-between items-center">
+                    <p class="text-sm text-gray-700">Email</p>
+                    <div class="flex space-x-1 align-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 text-green-600 text-sm font-medium text-green-400" viewBox="0 0 20 20">
+                            <path fill="currentColor"
+                                d="M10.277 2.084a.5.5 0 0 0-.554 0a15.05 15.05 0 0 1-6.294 2.421A.5.5 0 0 0 3 5v4.5c0 3.891 2.307 6.73 6.82 8.467a.5.5 0 0 0 .36 0C14.693 16.23 17 13.39 17 9.5V5a.5.5 0 0 0-.43-.495a15.05 15.05 0 0 1-6.293-2.421m3.577 5.77l-4 4a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L9.5 10.793l3.646-3.647a.5.5 0 0 1 .708.708" />
+                        </svg>
+                        <div class="flex space-x-3">
+                            <p class="text-sm text-gray-400 profile-email"> <!-- user.email --> </p>
+                            <i class="fa fa-chevron-right text-[12px] text-gray-400 mt-1"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-[0.5px] border-gray-100"></div>
+
+                <div class="flex justify-between items-center">
+                    <p class="text-sm text-gray-700">Nick Name</p>
+                    <div class="flex space-x-3">
+                        <p class="text-xs text-gray-400 profile-nickName"> </p>
+                        <i class="fa fa-chevron-right text-[12px] text-gray-400 mt-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Card -->
+        <div class="bg-white m-4 p-4 rounded-xl shadow space-y-3">
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-gray-700">KYC Levels</p>
+                <p class="text-sm font-medium"> </p>
+                <i class="fa fa-chevron-right text-[12px] text-gray-400"></i>
+            </div>
+
+            <div class="border-[0.5px] border-gray-100"></div>
+
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-gray-500 flex items-center gap-1">
+                    Full Name <i class="fas fa-info-circle text-xs text-gray-300"></i>
+                </p>
+                <div class="flex space-x-3">
+                    <p class="text-[15px] text-gray-400 profile-fullName"> </p>
+                    <i class="fa fa-chevron-right text-[12px] text-gray-400 mt-1"></i>
+                </div>
+            </div>
+
+            <div class="border-[0.5px] border-gray-100"></div>
+
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-gray-700">Gender</p>
+                <p class="text-sm font-medium"> </p>
+                <i class="fa fa-chevron-right text-[12px] text-gray-400"></i>
+            </div>
+
+            <div class="border-[0.5px] border-gray-100"></div>
+
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-gray-700">Date of Birth</p>
+                <p class="text-sm font-medium"> </p>
+                <i class="fa fa-chevron-right text-[12px] text-gray-400"></i>
+            </div>
+
+            <div class="border-[0.5px] border-gray-100"></div>
+
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-gray-700">Mobile Number</p>
+                <div class="flex space-x-3">
+                    <p class="text-sm text-gray-400 profile-number"> </p>
+                    <i class="fa fa-chevron-right text-[12px] text-gray-400 mt-1"></i>
+                </div>
+            </div>
+
+            <div class="border-[0.5px] border-gray-100"></div>
+
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-gray-700">Address</p>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+            </div>
+
+            <div class="border-[0.5px] border-gray-100"></div>
+
+            <div class="flex justify-between items-center">
+                <p class="text-sm text-gray-700">Occupation</p>
+                <i class="fa fa-chevron-right text-[12px] text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Management of Accounts -->
+        <div class="bg-white m-4 p-4 rounded-xl shadow flex justify-between items-center">
+            <p class="text-sm font-sm text-gray-700">Management of Accounts</p>
+            <i class="fa fa-chevron-right text-[12px] text-gray-400"></i>
+        </div>
+
+        <!-- footer -->
+        <div class="bg-white m-4 p-4 rounded-xl shadow space-y-3">
+            <div class="flex items-center gap-3 mb-3  flex justify-between">
+                <div>
+                    <p class="text-sm font-sm text-gray-700">Friends</p>
+                    <p class="text-[12px] font-sm text-gray-400">Manage relationships, get benefits.</p>
+                </div>
+                <i class="fa fa-chevron-right text-[12px] text-gray-400"></i>
+            </div>
+
+            <div class="border-[0.5px] border-gray-100"></div>
+
+            <div class="flex items-center gap-3 mb-3  flex justify-between">
+                <div>
+                    <p class="text-sm font-sm text-gray-700">PalmPay Tag <span
+                            class="px-2 bg-orange-300 rounded-br-lg rounded-tr-lg rounded-tl-lg text-[11px] text-white font-sm">New</span>
+                    </p>
+                    <p class="text-[12px] font-sm text-gray-400">Use unique tag to find your friends.</p>
+                </div>
+                <i class="fa fa-chevron-right text-[12px] text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader" class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
+  <img src="./bytepayLogo.png" 
+       alt="Loading..." 
+       class="h-20 px-1 py-1 bg-white rounded-lg animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
+</div>
+
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, collection, query, where, setDoc, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
+    authDomain: "testing-firebase-d7f88.firebaseapp.com",
+    projectId: "testing-firebase-d7f88",
+    storageBucket: "testing-firebase-d7f88.appspot.com",
+    messagingSenderId: "339099724691",
+    appId: "1:339099724691:web:83ead43e1d41d2e131d666"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+// ✅ Loader setup
+const loader = document.getElementById("loader");
+function showLoader() {
+    loader.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    setTimeout(() => loader.style.opacity = "1", 10);
+}
+function hideLoader() {
+    loader.style.opacity = "0";
+    setTimeout(() => {
+        loader.style.display = "none";
+        document.body.style.overflow = "";
+    }, 500);
+}
+showLoader();
+
+// ✅ Auth state
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        document.querySelector(".profile-email").textContent = user.email || "No email";
+
+        // 🔎 Fetch Firestore data by uid
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("uid", "==", user.uid));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+
+                document.querySelector("h2").textContent = `Hi, ${data.firstName}`;
+                document.querySelector(".profile-account").textContent = data.accountNumber || "No Account Number";
+                document.querySelector(".profile-fullName").textContent = (data.firstName + " " + data.lastName) || "No Full Name";
+                document.querySelector(".profile-nickName").textContent = data.firstName || "No Nick Name";
+                document.querySelector(".profile-number").textContent = data.phoneNumber || "No Mobile Number";
+
+                // ✅ Prefer Firestore photoURL if available, else fallback to Auth
+                const profileImg = document.getElementById("profileImg");
+                profileImg.src = data.profilePictureUrl || user.photoURL || "default-avatar.png";
+            });
+        } else {
+            console.log("No matching Firestore user record!");
+        }
+
+    } else {
+        window.location.href = "../palmpay/login/login.html";
+    }
+});
+
+// Get elements
+const uploadInput = document.getElementById("uploadInput");
+const profileImg = document.getElementById("profileImg");
+
+// When image is clicked, trigger the file input
+profileImg.addEventListener("click", () => {
+    uploadInput.click();
+});
+
+uploadInput.addEventListener("change", async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const user = auth.currentUser;
+  if (!user) {
+    alert("You must be logged in to upload a profile picture.");
+    return;
+  }
+
+  try {
+    // Upload to Firebase Storage
+    const storageRef = ref(storage, `profileImages/${user.uid}`);
+    await uploadBytes(storageRef, file);
+
+    // Get the file’s download URL
+    const downloadURL = await getDownloadURL(storageRef);
+
+    // Save URL to Firestore (users collection, doc = uid)
+    await setDoc(doc(db, "users", user.uid), {
+      profileImg: downloadURL
+    }, { merge: true });
+
+    // Show immediately
+    profileImg.src = downloadURL;
+
+    console.log("Profile picture updated successfully!");
+  } catch (error) {
+    console.error("Error uploading profile picture:", error);
+  }
+});
+
+showLoader(); // show loader immediately
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "../palmpay/login/login.html";
+    return;
+  }
+
+  document.querySelector(".profile-email").textContent = user.email || "No email";
+
+  try {
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("uid", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const docSnap = querySnapshot.docs[0]; // only take the first matching document
+      const data = docSnap.data();
+
+      document.querySelector("h2").textContent = `Hi, ${data.firstName}`;
+      document.querySelector(".profile-account").textContent = data.accountNumber || "No Account Number";
+      document.querySelector(".profile-fullName").textContent = `${data.firstName} ${data.lastName}` || "No Full Name";
+      document.querySelector(".profile-nickName").textContent = data.firstName || "No Nick Name";
+      document.querySelector(".profile-number").textContent = data.phoneNumber || "No Mobile Number";
+
+      const profileImgEl = document.getElementById("profileImg");
+profileImgEl.src = data.profileImg || user.photoURL || "default-avatar.png";
+   
+    } else {
+      console.log("No matching Firestore user record!");
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  } finally {
+    hideLoader(); // ✅ Always hide loader, even if Firestore query fails or is empty
+  }
+});
+
+// profileImg 
+uploadInput.addEventListener("change", async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const user = auth.currentUser;
+  if (!user) {
+    alert("You must be logged in to upload a profile picture.");
+    return;
+  }
+  try {
+    showLoader();
+
+    // 🔑 Replace these with your Cloudinary details
+    const cloudName = "dut2dpxuc";
+    const uploadPreset = "unsigned_preset";
+
+    // Build form data for Cloudinary
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", uploadPreset);
+
+    // Upload directly to Cloudinary
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || "Upload failed");
+
+    const imageUrl = data.secure_url;
+
+    // Save Cloudinary URL into Firestore user doc
+    await setDoc(
+      doc(db, "users", user.uid),
+      { profileImg: imageUrl },
+      { merge: true }
+    );
+
+    // Update UI immediately
+    profileImg.src = imageUrl;
+
+    console.log("✅ Profile picture uploaded via Cloudinary!");
+  } catch (error) {
+    console.error("❌ Error uploading profile picture:", error);
+    alert("Upload failed: " + error.message);
+  } finally {
+    hideLoader();
+  }
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <title>Transfer to PalmPay</title>
+</head>
+
+<body class="bg-[#f4f4fa] text-sm font-sans p-4">
+
+    <div class="max-w-sm mx-auto">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-3 py-4 fixed top-0 z-50 w-full">
+            <div class="flex items-center space-x-2">
+                <button onclick="history.back()">
+                    <i class="fas fa-arrow-left text-sm text-gray-700"></i>
+                </button>
+                <h1 class="text-[17px] font-semibold text-gray-800">Transfer to Bytepay</h1>
+            </div>
+            <i class="fas fa-ellipsis-v text-[18px] text-gray-600"></i>
+        </div>
+
+        <!-- Recipient Input Section -->
+        <div class="bg-white rounded-xl p-4 mt-12  mb-4">
+            <div class="flex items-center space-x-3 mb-2">
+                <span class="text-sm font-semibold text-gray-700">Recipient Account</span>
+                <span class="text-xs text-green-300 bg-green-50 px-2 py-0.5 font-medium">Instant, Zero
+                    Issues</span>
+            </div>
+            <div class="relative">
+                <input type="text" placeholder="Enter 10-digit Account No. or Phone No."
+                    class="w-full border border-0 rounded-xl py-3 px-4 pr-10 text-sm text-gray-500 focus:outline-none" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute right-3 top-3 text-gray-400" width="24"
+                    height="24" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0-8 0M6 21v-2a4 4 0 0 1 4-4h1.5m3.5 3a3 3 0 1 0 6 0a3 3 0 1 0-6 0m5.2 2.2L22 22" />
+                </svg>
+
+            </div>
+
+            <div class="w-full border-t border border-gray-50"></div>
+
+            <!-- Next button -->
+            <button
+                class="w-full mt-4 py-3 bg-blue-100 text-white font-semibold rounded-xl cursor-not-allowed">Next</button>
+        </div>
+
+        <!-- See who is using PalmPay -->
+        <div class="bg-white rounded-xl p-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-500" width="24" height="24"
+                    viewBox="0 0 24 24">
+                    <g fill="none" fill-rule="evenodd">
+                        <path
+                            d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z" />
+                        <path fill="currentColor"
+                            d="M12 2c5.523 0 10 4.477 10 10a9.96 9.96 0 0 1-2.258 6.33l.02.022l-.132.112A9.98 9.98 0 0 1 12 22c-2.95 0-5.6-1.277-7.43-3.307l-.2-.23l-.132-.11l.02-.024A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2m0 15c-1.86 0-3.541.592-4.793 1.406A7.97 7.97 0 0 0 12 20a7.97 7.97 0 0 0 4.793-1.594A8.9 8.9 0 0 0 12 17m0-13a8 8 0 0 0-6.258 12.984C7.363 15.821 9.575 15 12 15s4.637.821 6.258 1.984A8 8 0 0 0 12 4m0 2a4 4 0 1 1 0 8a4 4 0 0 1 0-8m0 2a2 2 0 1 0 0 4a2 2 0 0 0 0-4" />
+                    </g>
+                </svg>
+                <span class="text-sm font-medium text-gray-700">See who is using Bytepay</span>
+            </div>
+            <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
+        </div>
+
+        <div class="p-2 mt-3 mb-3 rounded-lg bg-white">
+            <!-- Tabs -->
+            <div class="flex justify-around space-x-6">
+                <div class="flex gap-4">
+                    <button class="tab-btn text-blue-600 font-semibold border-b-2 border-blue-600 pb-2"
+                        data-tab="0">Recent</button>
+                    <button class="tab-btn text-gray-500 pb-2" data-tab="1">Favorites</button>
+                    <button class="tab-btn text-gray-500 pb-2" data-tab="2">Local Contacts</button>
+                </div>
+                <i class="fas fa-search text-gray-400 mt-1"></i>
+            </div>
+
+            <div class="w-full border-t border border-gray-50 mt-1"></div>
+
+            <!-- Swipeable Content -->
+            <div id="tab-container" class="flex overflow-hidden transition-transform duration-300"
+                style="scroll-snap-type: x mandatory;">
+                <!-- Tab Panels -->
+                <div class="min-w-full p-6 scroll-snap-align-start">
+                    <p class="text-center text-[14px] text-gray-700">No Beneficiaries Yet</p>
+                    <p class="text-center text-[14px] text-gray-400 mt-1">Beneficiaries will be added automatically
+                        <br>if
+                        the transfer is successful</p>
+                </div>
+                <div class="min-w-full p-6 scroll-snap-align-start">
+                    <p class="text-center text-[14px] text-gray-700">No Favorites Yet</p>
+                    <p class="text-center text-[14px] text-gray-400 mt-1">Add your own frequent Beneficiaries as <br>to
+                        enjoy free transfer.</p>
+                    <a href=""
+                        class="flex justify-center text-[14px] rounded-lg  font-semibold mt-3 px-2 py-2 w-24 bg-blue-100 text-blue-600">Add
+                        Now</a>
+                </div>
+                <div class="min-w-full p-6 scroll-snap-align-start">
+                    <p class="text-center text-gray-700">- Sync -</p>
+                    <p class="text-center text-[14px] text-gray-400 mt-1">Beneficiaries will be add automatically <br>if
+                        the
+                        transfer is successful</p>
+                </div>
+            </div>
+
+            <div class="w-full border-t border border-gray-50 my-1"></div>
+
+            <div class="text-gray-500 text-center text-xs">
+                <a href="" class="text-gray-400 text-center">
+                    View All
+                </a>
+                <i class="fa fa-chevron-right text-[9px] font-sm text-gray-300 -mt-1"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContainer = document.getElementById('tab-container');
+
+        tabBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                // Scroll to selected tab
+                tabContainer.scrollTo({
+                    left: index * tabContainer.offsetWidth,
+                    behavior: 'smooth'
+                });
+
+                // Style tabs
+                tabBtns.forEach(b => {
+                    b.classList.remove('text-blue-600', 'font-semibold', 'border-b-2', 'border-blue-600');
+                    b.classList.add('text-gray-500');
+                });
+                btn.classList.add('text-blue-600', 'font-semibold', 'border-b-2', 'border-blue-600');
+            });
+        });
+    </script>
+</body>
+
+</html>

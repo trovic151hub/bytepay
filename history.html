@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="bg-[#f5f5fa] min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <div class="  bg-white fixed top-0 w-full z-50">
+        <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center space-x-2">
+                <button onclick="history.back()">
+                    <i class="fa-solid fa-arrow-left text-sm text-gray-600"></i>
+                </button>
+                <span class="font-semibold text-lg text-gray-800">Transaction History</span>
+            </div>
+            <button class="text-xs text-gray-700 font-sm">Download</button>
+        </div>
+
+        <div class="items-center">
+            <img src="history img.jpg" class="h-[80px] w-full" alt="">
+        </div>
+
+        <!-- Filters -->
+        <div class="flex items-center justify-between px-4 py-3 mx-8 border-b text-gray-500 text-sm">
+            <button class="flex items-center space-x-1">
+                <span>All Categories</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-[18px] text-gray-400" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M18 4H6c-1.105 0-2.026.91-1.753 1.98a8.02 8.02 0 0 0 4.298 5.238c.823.394 1.455 1.168 1.455 2.08v6.084a1 1 0 0 0 1.447.894l2-1a1 1 0 0 0 .553-.894v-5.084c0-.912.632-1.686 1.454-2.08a8.02 8.02 0 0 0 4.3-5.238C20.025 4.91 19.103 4 18 4z"/></svg>
+            </button>
+            <button class="flex items-center space-x-1">
+                <span>All Status</span>
+                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="max-w-sm mx-auto">
+
+        <!-- Empty State -->
+        <div class="flex flex-col items-center h-[100vh] justify-center flex-1">
+            <div class="w-20 h-20 opacity-40 ml-8">
+                <i class="fa-solid fa-clipboard-list text-6xl text-gray-300"></i>
+            </div>
+            <p class="text-gray-500 mt-3 text-xs">No transaction record</p>
+        </div>
+    </div>
+
+    <div id="loader" class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
+  <img src="./bytepayLogo.png" 
+       alt="Loading..." 
+       class="h-20 px-1 py-1 bg-white rounded-lg animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
+</div>
+
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
+  authDomain: "testing-firebase-d7f88.firebaseapp.com",
+  projectId: "testing-firebase-d7f88",
+  storageBucket: "testing-firebase-d7f88.appspot.com",
+  messagingSenderId: "339099724691",
+  appId: "1:339099724691:web:83ead43e1d41d2e131d666"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Loader logic
+const loader = document.getElementById("loader");
+function showLoader() {
+  loader.style.display = "flex";
+  document.body.style.overflow = "hidden";
+  setTimeout(() => loader.style.opacity = "1", 10);
+}
+function hideLoader() {
+  loader.style.opacity = "0";
+  setTimeout(() => {
+    loader.style.display = "none";
+    document.body.style.overflow = "";
+  }, 500);
+}
+
+showLoader();
+const historyContainer = document.querySelector(".max-w-sm");
+
+function formatDateGroup(date) {
+  const now = new Date();
+  const txDate = new Date(date);
+
+  const isToday = txDate.toDateString() === now.toDateString();
+  const yesterday = new Date();
+  yesterday.setDate(now.getDate() - 1);
+  const isYesterday = txDate.toDateString() === yesterday.toDateString();
+
+  if (isToday) return "Today";
+  if (isYesterday) return "Yesterday";
+  return txDate.toLocaleDateString();
+}
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const txRef = collection(db, "users", user.uid, "transactions");
+    const q = query(txRef, orderBy("date", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+      if (snapshot.empty) {
+        historyContainer.innerHTML = `
+          <div class="flex flex-col items-center justify-center h-[100vh]">
+            <i class="fa-solid fa-clipboard-list text-6xl text-gray-300 opacity-40"></i>
+            <p class="text-gray-500 mt-3 text-xs">No transaction record</p>
+          </div>
+        `;
+        hideLoader();
+      } else {
+        let groupedHtml = `<div class="flex flex-col items-center p-4 space-y-4 w-full mt-40">`;
+
+        let currentGroup = "";
+        snapshot.forEach((doc) => {
+          const tx = doc.data();
+          const amountColor = tx.type === "credit" ? "text-green-600" : "text-red-600";
+          const sign = tx.type === "credit" ? "+" : "-";
+          const txDate = tx.date?.toDate() || new Date();
+          const group = formatDateGroup(txDate);
+
+          // New group heading
+          if (group !== currentGroup) {
+            groupedHtml += `<h2 class="text-gray-600 font-semibold text-sm mt-4 w-full text-center">${group}</h2>`;
+            currentGroup = group;
+          }
+
+          groupedHtml += `
+            <div class="bg-white shadow rounded-lg p-3 w-[100%] max-w-md flex justify-between items-center">
+              <div>
+                <p class="text-sm font-medium text-gray-800">${tx.description}</p>
+                <p class="text-xs text-gray-500">${txDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+              </div>
+              <div class="text-right">
+                <p class="font-semibold ${amountColor}">${sign}₦${tx.amount.toLocaleString()}</p>
+                <p class="text-xs text-gray-400">${tx.status}</p>
+              </div>
+            </div>
+          `;
+        });
+
+        groupedHtml += `</div>`;
+        historyContainer.innerHTML = groupedHtml;
+        hideLoader();
+      }
+    });
+  } else {
+    historyContainer.innerHTML = `
+      <div class="flex flex-col items-center justify-center h-[100vh]">
+        <i class="fa-solid fa-circle-exclamation text-6xl text-gray-300 opacity-40"></i>
+        <p class="text-gray-500 mt-3 text-xs">Please log in to view transactions</p>
+      </div>
+    `;
+    hideLoader();
+  }
+});
+
+
+// // Show loader immediately
+// showLoader();
+// const historyContainer = document.querySelector(".max-w-sm");
+
+// function formatDateGroup(date) {
+//   const now = new Date();
+//   const txDate = new Date(date);
+
+//   const isToday = txDate.toDateString() === now.toDateString();
+//   const yesterday = new Date();
+//   yesterday.setDate(now.getDate() - 1);
+//   const isYesterday = txDate.toDateString() === yesterday.toDateString();
+
+//   if (isToday) return "Today";
+//   if (isYesterday) return "Yesterday";
+//   return txDate.toLocaleDateString();
+// }
+
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     const txRef = collection(db, "users", user.uid, "transactions");
+//     const q = query(txRef, orderBy("date", "desc"));
+
+//     onSnapshot(q, (snapshot) => {
+//       if (snapshot.empty) {
+//         historyContainer.innerHTML = `
+//           <div class="flex flex-col items-center h-[100vh] justify-center flex-1">
+//             <i class="fa-solid fa-clipboard-list text-6xl text-gray-300 opacity-40"></i>
+//             <p class="text-gray-500 mt-3 text-xs">No transaction record</p>
+//           </div>
+//         `;
+//         hideLoader(); // ✅ hide loader when no data
+//       } else {
+//         let groupedHtml = `<div class="mt-40 p-4 space-y-3 w-[140%]">`;
+
+//         let currentGroup = "";
+//         snapshot.forEach((doc) => {
+//           const tx = doc.data();
+//           const amountColor =
+//             tx.type === "credit" ? "text-green-600" : "text-red-600";
+//           const sign = tx.type === "credit" ? "+" : "-";
+//           const txDate = tx.date?.toDate() || new Date();
+//           const group = formatDateGroup(txDate);
+
+//           // Start new group heading if different
+//           if (group !== currentGroup) {
+//             groupedHtml += `<h2 class="text-gray-600 font-semibold text-sm mt-4">${group}</h2>`;
+//             currentGroup = group;
+//           }
+
+//           groupedHtml += `
+//             <div class="bg-white shadow rounded-lg p-3 w-full flex justify-between items-center">
+//               <div>
+//                 <p class="text-sm font-medium text-gray-800">${tx.description}</p>
+//                 <p class="text-xs text-gray-500">${txDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+//               </div>
+//               <div class="text-right">
+//                 <p class="font-semibold ${amountColor}">${sign}₦${tx.amount.toLocaleString()}</p>
+//                 <p class="text-xs text-gray-400">${tx.status}</p>
+//               </div>
+//             </div>
+//           `;
+//         });
+
+//         groupedHtml += `</div>`;
+//         historyContainer.innerHTML = groupedHtml;
+
+//         hideLoader(); // ✅ hide loader after rendering
+//       }
+//     });
+//   } else {
+//     historyContainer.innerHTML = `
+//       <div class="flex flex-col items-center h-[100vh] justify-center flex-1">
+//         <i class="fa-solid fa-circle-exclamation text-6xl text-gray-300 opacity-40"></i>
+//         <p class="text-gray-500 mt-3 text-xs">Please log in to view transactions</p>
+//       </div>
+//     `;
+//     hideLoader(); // ✅ hide loader if not logged in
+//   }
+// });
+
+// // Loader logic
+// const loader = document.getElementById("loader");
+// function showLoader() {
+//     loader.style.display = "flex";
+//     document.body.style.overflow = "hidden";
+//     setTimeout(() => loader.style.opacity = "1", 10);
+// }
+// function hideLoader() {
+//     loader.style.opacity = "0";
+//     setTimeout(() => {
+//         loader.style.display = "none";
+//         document.body.style.overflow = "";
+//     }, 500);
+// }
+
+// // Show loader immediately
+// showLoader();
+
+// const historyContainer = document.querySelector(".max-w-sm");
+
+
+// function formatDateGroup(date) {
+//   const now = new Date();
+//   const txDate = new Date(date);
+
+//   const isToday = txDate.toDateString() === now.toDateString();
+//   const yesterday = new Date();
+//   yesterday.setDate(now.getDate() - 1);
+//   const isYesterday = txDate.toDateString() === yesterday.toDateString();
+
+//   if (isToday) return "Today";
+//   if (isYesterday) return "Yesterday";
+//   return txDate.toLocaleDateString();
+// }
+
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     const txRef = collection(db, "users", user.uid, "transactions");
+//     const q = query(txRef, orderBy("date", "desc"));
+
+//     onSnapshot(q, (snapshot) => {
+//       if (snapshot.empty) {
+//         historyContainer.innerHTML = `
+//           <div class="flex flex-col items-center h-[100vh] justify-center flex-1">
+//             <i class="fa-solid fa-clipboard-list text-6xl text-gray-300 opacity-40"></i>
+//             <p class="text-gray-500 mt-3 text-xs">No transaction record</p>
+//           </div>
+//         `;
+//       } else {
+//         let html = `<div class="mt-44 p-4 space-y-3 flex flex-col items-center justify-center flex-1">`;
+//         snapshot.forEach((doc) => {
+//           const tx = doc.data();
+//           const amountColor = tx.type === "credit" ? "text-green-600" : "text-red-600";
+//           const sign = tx.type === "credit" ? "+" : "-";
+//           const date = tx.date?.toDate().toLocaleString() || "Unknown date";
+
+//           html += `
+//             <div class="bg-white shadow rounded-lg p-3 w-[140%] flex justify-between items-center">
+//               <div>
+//                 <p class="text-sm font-medium text-gray-800">${tx.description}</p>
+//                 <p class="text-xs text-gray-500">${date}</p>
+//               </div>
+//               <div class="text-right">
+//                 <p class="font-semibold ${amountColor}">${sign}₦${tx.amount.toLocaleString()}</p>
+//                 <p class="text-xs text-gray-400">${tx.status}</p>
+//               </div>
+//             </div>
+//           `;
+//         });
+//         html += `</div>`;
+//         historyContainer.innerHTML = html;
+
+//           // ✅ Hide loader after transactions load
+//       hideLoader();
+//       }
+//     });
+//   } else {
+//     historyContainer.innerHTML = `
+//       <div class="flex flex-col items-center h-[100vh] justify-center flex-1">
+//         <i class="fa-solid fa-circle-exclamation text-6xl text-gray-300 opacity-40"></i>
+//         <p class="text-gray-500 mt-3 text-xs">Please log in to view transactions</p>
+//       </div>
+//     `;
+//      hideLoader(); // ✅ hide loader if not logged in
+//   }
+// });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <title>Airtime - PalmPay Clone</title>
+</head>
+
+<body class="bg-[#f4f4fa] font-sans">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-4 mb-4 bg-white fixed top-0 z-50 w-full">
+        <div class="flex items-center space-x-2">
+            <button onclick="history.back()">
+                <i class="fas fa-arrow-left text-sm text-gray-800"></i>
+            </button>
+            <h1 class="text-lg font-semibold">Airtime</h1>
+        </div>
+        <i class="fas fa-receipt text-xl text-gray-600"></i>
+    </div>
+
+    <div class="max-w-sm mx-auto mt-14 p-4">
+
+        <div id="slider" class="relative overflow-hidden border my-1 mb-3 rounded-lg relative">
+            <div id="slides" class="flex w-full h-[80px] transition-transform duration-700 ease-in-out">
+                <img src="./airtime img1.jpeg" class="w-full flex-shrink-0" alt="Slide 1" />
+                <img src="./airtime img2.jpg" class="w-full flex-shrink-0" alt="Slide 2" />
+            </div>
+        </div>
+
+        <div id="nav-dots"
+            class="flex justify-center  gap-2 absolute top-[22%] left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        </div>
+
+    <!-- Top bar with amount -->
+    <div class="flex items-center justify-between bg-white p-3 py-2 rounded-xl mb-4">
+        <div class="flex items-center space-x-2">
+            <i class="fas fa-ticket-alt text-blue-600 text-[20px]"></i>
+            <div>
+                <i class="fa fa-ticket-alt text-blue-100 h-7 text-[20px] relative"></i>
+                <span class="text-blue-600 font-semibold text-xs absolute top-[27.5%] left-[17%]">₦50</span>
+            </div>
+        </div>
+        <div>
+            <span class="text-sm text-gray-500">(1)</span>
+            <i class="fa fa-chevron-right text-xs text-gray-500"></i>
+        </div>
+    </div>
+    
+    <!-- Phone and Network -->
+    <div class="bg-white rounded-xl p-4 mb-4">
+        <div class="flex items-center space-x-2 mb-2">
+            <img src=" " class="w-8 h-8 rounded-full" />
+            <input type="text" value=" "
+                class="flex-1 border-none focus:ring-0 focus:outline-none text-gray-700 text-lg font-medium" />
+            <i class="fas fa-user text-blue-500 p-2 bg-blue-100 text-[11px] rounded-full"></i>
+        </div>
+
+        <div class="w-full border-t border border-gray-50"></div>
+
+        <div>
+            <p class="text-xs text-gray-500 mb-4">Enjoy up to 4%, maximum ₦60 cashback on your first 2 <br>GLO
+                top-ups daily.</p>
+        </div>
+
+        <!-- Airtime Amount Options -->
+        <div class="mb-4 flex justify-between">
+            <h2 class="text-sm font-medium text-gray-500 mb-1">Top up Airtime</h2>
+            <i class="fa fa-chevron-right text-xs mt-1 text-blue-600"></i>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>50</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>100</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>200</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>500</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>1,000</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>2,000</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>120</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>320</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>520</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>820</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>1,020</button>
+            <button class="py-3 bg-gray-100 rounded-lg font-medium"><span class="text-xs">₦</span>1,220</button>
+        </div>
+
+        <!-- Range and Pay button -->
+        <div class="flex items-center justify-between mt-4">
+            <div class="space-x-2">
+                <span class="text-lg font-semibold">₦</span>
+                <input type="text" value="" placeholder="50-50,000"
+                    class="flex-1 border-none focus:ring-0 focus:outline-none text-gray-700 text-sm font-lg" />
+            </div>
+
+            <div class="mt-3">
+                <button
+                    class="px-4 py-1 bg-blue-100 text-blue-400 rounded-full font-semibold cursor-not-allowed">Pay</button>
+            </div>
+        </div>
+
+        <div class="w-full border-t border border-gray-50 mt-3"></div>
+
+    </div>
+
+    <!-- Airtime Services -->
+    <div class="bg-white rounded-xl p-4 mb-4">
+        <h3 class="text-sm font-sm text-gray-800 mb-3">Airtime services</h3>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between p-2 bg-gray-100 rounded-lg">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-sync-alt text-blue-600 p-2 bg-blue-100 rounded-lg"></i>
+                    <div>
+                        <p class="text-sm font-sm text-gray-800">Schedule Top-up</p>
+                        <p class="text-xs text-gray-500">Never run out of airtime</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 text-xs  "></i>
+            </div>
+
+            <div class="flex items-center justify-between p-2 bg-gray-100 rounded-lg">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-hashtag text-blue-600 p-2 bg-blue-100 rounded-lg"></i>
+                    <div>
+                        <p class="text-sm font-sm text-gray-800">USSD Enquiry</p>
+                        <p class="text-xs text-gray-500">Check phone balance and more</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- More Services -->
+    <div class="bg-white rounded-xl p-4">
+        <h3 class="text-sm font-sm text-gray-800 mb-3">More Services</h3>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between p-2 bg-gray-100 rounded-lg">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-gift text-blue-600 p-2 bg-blue-100 rounded-lg"></i>
+                    <div>
+                        <p class="text-sm font-sm text-gray-800">Betting Gifts</p>
+                        <p class="text-xs text-gray-500">+10% Rewards & Win iPhone</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+            </div>
+
+            <div class="flex items-center justify-between p-2 bg-gray-100 rounded-lg">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-piggy-bank text-blue-600 p-2 bg-blue-100 rounded-lg"></i>
+                    <div>
+                        <p class="text-sm font-sm text-gray-800">Grow Your Money</p>
+                        <p class="text-xs text-gray-500">Earn up to 20% Annual Yield</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const slides = document.getElementById("slides");
+        const navDots = document.getElementById("nav-dots");
+        let index = 0;
+        const totalSlides = 2;
+
+        // Create nav dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement("button");
+            dot.className = "w-1 h-1 rounded-full bg-gray-400 hover:bg-white transition-all";
+            dot.dataset.index = i;
+            navDots.appendChild(dot);
+        }
+
+        const dots = navDots.querySelectorAll("button");
+
+        function showSlide(i) {
+            index = i;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("bg-gray-800", i === index);
+                dot.classList.toggle("bg-gray-400", i !== index);
+            });
+        }
+
+        // Auto-slide
+        setInterval(() => {
+            index = (index + 1) % totalSlides;
+            showSlide(index);
+        }, 3000);
+
+        // Dot click events
+        dots.forEach(dot => {
+            dot.addEventListener("click", () => {
+                showSlide(parseInt(dot.dataset.index));
+            });
+        });
+    </script>
+</body>
+
+</html>

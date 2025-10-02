@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Savings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+</head>
+
+<body class="bg-gradient-to-b from-blue-200 to-white">
+
+    <div class="max-w-sm mx-auto">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center bg-blue-200  pt-4 pb-3 px-4 text-lg fixed top-0 z-50 w-full">
+            <button onclick="history.back()">
+                <i class="fa fa-arrow-left font-medium text-gray-800"></i>
+            </button>
+            <i class="fa fa-ellipsis-v text-gray-800 font-sm"></i>
+        </div>
+
+        <!-- Top Box -->
+        <div class="p-4 mt-10">
+            <div class="bg-white rounded-2xl p-4">
+                <div class="flex justify-between items-center -mt-3 -ml-3">
+                    <h1 class="text-blue-600 font-bold text-sm px-4 bg-blue-50 rounded-tl-lg rounded-br-lg">CashBox</h1>
+                    <span class="text-[11px] text-gray-400 mr-4">Your available balance with Interest!</span>
+                </div>
+                <div class="mt-4 text-center">
+                    <h2 class="text-3xl font-medium text-green-500">20.00%</h2>
+                    <p class="text-[12px] text-gray-500">Maximum Annual Yield</p>
+                    <button class="bg-blue-600 text-white font-semibold w-full mt-2 py-1 rounded-full">Save</button>
+                </div>
+                <div class="flex justify-between items-center text-xs text-gray-500 mt-4 px-2">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <i class="far fa-check-circle text-green-500"></i>
+                            <span class="text-xs font-medium text-gray-600">Transfer & Pay</span>
+                        </div>
+                        <span class="text-[10px] -ml-2">Pay like your PalmPay Balance</span>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 text-gray-600" viewBox="0 0 24 24">
+                                <g fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path
+                                        d="M19 20H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2Z" />
+                                    <path fill="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        d="M16.5 14a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1" />
+                                    <path d="M18 7V5.603a2 2 0 0 0-2.515-1.932l-11 2.933A2 2 0 0 0 3 8.537V9" />
+                                </g>
+                            </svg>
+                            <span class="text-xs font-medium text-gray-600">24/7 Access</span>
+                        </div>
+                        <span class="text-[10px]">Withdraw Anytime</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flexible Savings -->
+        <div class="px-4">
+            <h2 class="text-sm font-semibold mt-4 mb-2 text-gray-600">Flexible Savings</h2>
+            <div class="grid grid-cols-2 gap-3">
+                <!-- CashBox -->
+                <div class="bg-white p-3 rounded-xl shadow">
+                    <div class="flex space-x-2">
+                        <i class="fa fa-ticket-alt text-xs p-2 rounded-full bg-blue-100 text-xs text-blue-600"></i>
+                        <h3 class="text-sm font-semibold text-gray-600 mt-1">CashBox</h3>
+                    </div>
+                    <p class="text-[12px] text-gray-500 mt-1">Available balance earns daily interest, up to 20% p.a.</p>
+                    <a href="" class="text-blue-600 text-xs font-semibold mt-2">Save Now <i
+                            class="fa fa-chevron-right text-[10px] font-sm ml-2"></i></a>
+                </div>
+
+                <!-- SmartEarn -->
+                <div class="bg-white p-3 rounded-xl">
+                    <div class="flex space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="p-1 rounded-full bg-blue-100 text-blue-600 h-7"
+                            viewBox="0 0 15 15">
+                            <path fill="currentColor"
+                                d="M7 0v2h1V0zM3.354 3.646l-1.5-1.5l-.708.708l1.5 1.5zm9 .708l1.5-1.5l-.708-.708l-1.5 1.5zM7.5 3a3.96 3.96 0 0 0-3.92 3.4l-.01.07a3.95 3.95 0 0 0 .79 2.989c.383.495.64.968.64 1.442V12.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-1.599c0-.474.257-.947.64-1.442c.63-.814.948-1.875.79-2.99l-.01-.07A3.96 3.96 0 0 0 7.5 3M0 8h2V7H0zm13 0h2V7h-2zm-7 7h3v-1H6z" />
+                        </svg>
+                        <h3 class="text-sm font-semibold text-gray-600 mt-1">SmartEarn</h3>
+                    </div>
+                    <p class="text-[12px] text-gray-500 mt-1 mb-5">21.00% p.a. with safety & 24/7 access</p>
+                    <a href="" class="text-blue-600 text-xs mt-2 font-semibold">Save Now <i
+                            class="fa fa-chevron-right text-[10px] font-sm ml-2"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smart Savings -->
+        <div class="px-4">
+            <h2 class="text-sm font-semibold mt-6 mb-2 text-gray-600">Smart Savings</h2>
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Target Savings -->
+                <div class="bg-white p-3 rounded-xl shadow">
+                    <div class="flex space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="p-1 rounded-full bg-blue-100 text-blue-600 h-7"
+                            viewBox="0 0 24 24">
+                            <g fill="none">
+                                <path
+                                    d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                                <path fill="currentColor"
+                                    d="M12 2q.563 0 1.11.061a1 1 0 0 1-.22 1.988a8 8 0 1 0 7.061 7.061a1 1 0 1 1 1.988-.22q.06.547.061 1.11c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m-.032 5.877a1 1 0 0 1-.719 1.217A3.002 3.002 0 0 0 12 15a3 3 0 0 0 2.906-2.25a1 1 0 0 1 1.936.5A5.002 5.002 0 0 1 7 12a5 5 0 0 1 3.75-4.842a1 1 0 0 1 1.218.719m6.536-5.75a1 1 0 0 1 .617.923v1.83h1.829a1 1 0 0 1 .707 1.707L18.12 10.12a1 1 0 0 1-.707.293H15l-1.828 1.829a1 1 0 0 1-1.415-1.415L13.586 9V6.586a1 1 0 0 1 .293-.707l3.535-3.536a1 1 0 0 1 1.09-.217m-1.383 3.337L15.586 7v1.414H17l1.536-1.535h-.415a1 1 0 0 1-1-1z" />
+                            </g>
+                        </svg>
+                        <h3 class="text-sm font-semibold text-gray-600 mt-1">Target Savings</h3>
+                    </div>
+                    <p class="text-[12px] text-gray-500 mt-1 mb-4">Save daily, weekly or monthly to your goal</p>
+                    <a href="#" class="text-blue-600 text-xs font-semibold mt-2">Save Now <i
+                            class="fa fa-chevron-right text-[10px] font-sm ml-2"></i></a>
+                </div>
+
+                <!-- Fixed Savings -->
+                <div class="bg-white p-3 rounded-xl shadow">
+                    <div class="flex space-x-2">
+                        <i class="fas fa-piggy-bank text-xs p-2 rounded-full bg-blue-100 text-xs text-blue-600"></i>
+                        <h3 class="text-sm font-semibold text-gray-600 mt-1">Fixed Savings</h3>
+                    </div>
+                    <p class="text-[12px] text-gray-500 mt-1 mb-4">Save for a fixed term and earn more</p>
+                    <a href="#" class="text-blue-600 font-semibold text-xs mt-2">Save Now <i
+                            class="fa fa-chevron-right text-[10px] font-sm ml-2"></i></a>
+                </div>
+
+                <!-- Spend & Save -->
+                <div class="bg-white p-3 rounded-xl shadow">
+                    <div class="flex space-x-2">
+                        <i class="fas fa-coins text-xs p-2 rounded-full bg-blue-100 text-xs text-blue-600"></i>
+                        <h3 class="text-sm font-semibold text-gray-600">Spend & Save</h3>
+                    </div>
+                    <p class="text-[12px] text-gray-500 mt-1 mb-4">Save a little every time you spend</p>
+                    <a href="#" class="text-blue-600 text-xs mt-2 font-semibold">Save Now <i
+                            class="fa fa-chevron-right text-[10px] font-sm ml-2"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- Investment Section -->
+        <div class="px-4 py-4">
+            <h2 class="text-sm font-semibold mt-6 mb-2 text-gray-600">Investment</h2>
+            <div class="bg-white p-2 rounded-lg shadow">
+                <div class="p-2">
+                    <div class="flex justify-between -mt-1">
+                    <div class="flex space-x-2">
+                    <i class="fa fa-arrow-trend-up p-2 rounded-full bg-blue-100 text-xs text-blue-600"></i>
+                    <h3 class="text-sm font-medium text-gray-600 mt-1">Mutual Funds</h3>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 text-purple-600 -mt-6 -mr-1" viewBox="0 0 256 256"><path fill="currentColor" d="M232 208a8 8 0 0 1-8 8H32a8 8 0 0 1 0-16h8v-64a8 8 0 0 1 8-8h24a8 8 0 0 1 8 8v64h16V88a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v112h16V40a8 8 0 0 1 8-8h40a8 8 0 0 1 8 8v160h8a8 8 0 0 1 8 8"/></svg>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-3">Boost your return with diversified way</p>
+                    <a href="" class="text-sm font-medium text-blue-600">Invest Now <i
+                            class="fa fa-chevron-right text-[10px] font-sm ml-2 text-gray-500"></i></a>
+
+                    <div class="p-2 space-y-2">
+                        <div class="p-4 bg-[#f4f4fa] rounded-lg">
+                            <p class="text-xs text-gray-500">Conservative</p>
+                            <h3 class="text-[13px] mb-2 text-gray-700 font-semibold">ARM MONEY MARKET FUND</h3>
+                            <div class="flex justify-between">
+                                <h3 class="text-[18px] text-green-500 font-semibold">+21.00% <span class="text-gray-400 font-none text-xs">1Y Return</span></h3>
+                                <a href="" class="text-sm text-white px-4 py-1  bg-blue-600 rounded-full">Invest</a>
+                            </div>
+                        </div>
+
+                        <div class="p-2 bg-[#f4f4fa] rounded-lg">
+                            <p class="text-xs text-gray-500">Moderately Aggressive</p>
+                            <h3 class="text-[13px] mb-2 text-gray-700 font-semibold">ARM FIXED INCOME FUND</h3>
+                            <div class="flex justify-between mb-2">
+                                <h3 class="text-[18px] text-green-500 font-semibold">+18.27% <span class="text-gray-400 font-none text-xs">1Y Return</span></h3>
+                                <a href="" class="text-sm text-white px-4 py-1  bg-blue-600 rounded-full">Invest</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

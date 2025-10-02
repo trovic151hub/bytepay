@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transfer to Bank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<style>
+    #bankList li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        cursor: pointer;
+    }
+</style>
+
+<body class="bg-[#f4f4fa] text-sm">
+
+    <div class="max-w-sm mx-auto">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-3 p-4 bg-[#f4f4fa] fixed top-0 w-full z-50">
+            <div class="flex space-x-3">
+                <button onclick="history.back()">
+                    <i class="fas text-gray-600 fa-arrow-left"></i>
+                </button>
+                <h1 class="text-md font-semibold text-gray-900 -mt-1">Transfer to Bank</h1>
+            </div>
+
+            <div class="flex space-x-8">
+                <i class="fas fa-image mt-1 text-gray-500"></i>
+                <i class="fas fa-ellipsis-v text-lg -mt-1 text-gray-500"></i>
+            </div>
+        </div>
+
+        <!-- Tab Switch -->
+        <div class="bg-white m-4 mt-[18%] p-4 rounded-xl">
+            <div class="flex justify-between pb-2">
+                <button class="flex-1 text-center text-blue-600 font-semibold border-b-2 border-blue-600 pb-2">To Other
+                    Bank</button>
+                <button class="flex-1 text-center text-gray-600 font-semibold pb-2">To BytePay</button>
+            </div>
+
+            <!-- Banner -->
+            <div class="bg-green-50 text-green-400 text-center py-2 text-xs mt-2 rounded-lg">
+                <div class="flex justify-between">
+                    <span class="ml-16">
+                        <i class="fa fa-bell mr-1 text-green-400"></i> All bank transfers are free!
+                    </span>
+                    <i class="fa fa-chevron-right text-green-400 mr-4 text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="mt-4 space-y-4">
+                <input id="recipientAccount" type="text" maxlength="10" placeholder="Enter 10-digit Account No."
+                    class="w-full border-0 focus:outline-none focus:ring-none focus:ring-none" />
+
+                <div class="relative">
+                    <div id="bankWrapper" class="flex items-center border-0 rounded px-2 bg-white cursor-text"></div>
+                    <img id="selectedBankLogo" src="" alt="" class="h-6 rounded-full mr-2 hidden">
+                    <input id="bankSearch" type="text" placeholder="Select Bank"
+                        class="w-full border-0 focus:outline-none focus:ring-none focus:ring-none" autocomplete="off" />
+                </div>
+
+                <ul id="bankList"
+                    class="absolute w-full bg-gray-300 border rounded mt-1 hidden max-h-40 overflow-y-auto z-50">
+                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex ">
+                        <img class="h-6 rounded-full mr-3 text-center"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDqECR_Fu-f-dK4jpFdwzA-YPdS2vsknVZpA&s"
+                            alt="">
+                        <span>Access Bank</span>
+                    </li>
+                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
+                        <img class="h-6 rounded-full mr-3 text-center"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmtNynbqsL2BJVxIpcXgA2fjMVsE30rL5elQ&s"
+                            alt="">
+                        <span>GTBank</span>
+                    </li>
+                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
+                        <img class="h-6 w-6 rounded-full mr-3 text-center"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGD8hD3Us1uXUK_RxLbAB3HxgrahoV65NfZg&s"
+                            alt="">
+                        <span>UBA</span>
+                    </li>
+                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
+                        <img class="h-6 rounded-full mr-3 text-center"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZyR7HqJtiwMx6FFUCWE6CkbY8TZ16uYtvw&s"
+                            alt="">
+                        <span>First Bank</span>
+                    </li>
+                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
+                        <img class="h-6 rounded-full mr-3 text-center"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiluo05hkIPy73ZazeRtB_t4Pm8-6Dzvs23Q&s"
+                            alt="">
+                        <span>OPay</span>
+                    </li>
+                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
+                        <img class="h-8 rounded-full mr-3 text-center hover:text-white"
+                            src="/JS-project/bytepayLogo.png" alt="">
+                        <span>BytePay</span>
+                    </li>
+                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
+                        <img class="h-6 rounded-full mr-3 text-center"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVpXgpIRv3vqqnxPV3Xdx_osR2I82_KNbFDg&s"
+                            alt="">
+                        <span>PalmPay</span>
+                    </li>
+                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
+                        <img class="h-6 rounded-full mr-3 text-center"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVQeh5RWr2iLJHlHfGSOrqPpWh_674K32RBQ&s"
+                            alt="">
+                        <span>Kuda</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="w-full p-3 flex justify-between">
+                <span id="recipientName" class="text-gray-500 font-medium my-2 text-left"></span>
+            </div>
+
+            <input id="sendAmount" type="text" placeholder="Enter Amount"
+                class="w-full border-0 mb-3 focus:outline-none focus:ring-none focus:ring-none" />
+
+            <button id="sendBtn" class="w-full p-3 rounded-lg bg-blue-600 text-white font-semibold">Next</button>
+        </div>
+
+    <!-- PIN Confirmation Modal -->
+    <div id="pinModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-xl w-80">
+            <h2 class="text-lg font-bold text-center mb-4">Enter Transaction PIN</h2>
+            <input id="pinInput" type="password" maxlength="6" placeholder="6-digit PIN"
+                class="w-full border p-2 rounded text-center text-xl tracking-widest" />
+            <div class="flex justify-between mt-4">
+                <button id="cancelPin" class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
+                <button id="confirmPin" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warning -->
+    <div class="px-5 -mt-3 -mb-1">
+        <a href="" class="">
+            <img src="./imgage.jpg" class="rounded-lg" alt="">
+        </a>
+    </div>
+
+    <!-- Success Rate Monitor -->
+    <div class="mx-4 mt-4 bg-white rounded-lg p-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-chart-line text-gray-500"></i>
+            <span class="text-sm text-gray-800">Bank transfer success rate monitor</span>
+        </div>
+        <i class="fas fa-chevron-right text-gray-400 font-sm"></i>
+    </div>
+
+    <div class="p-2 mt-3 mb-3 mx-4 bg-white">
+        <!-- Tabs -->
+        <div class="flex justify-around space-x-6">
+            <div class="flex gap-4">
+                <button class="tab-btn text-blue-600 font-semibold border-b-2 border-blue-600 pb-2"
+                    data-tab="0">Recent</button>
+                <button class="tab-btn text-gray-500 pb-2" data-tab="1">Favorites</button>
+                <button class="tab-btn text-gray-500 pb-2" data-tab="2">PalmPay Contacts</button>
+            </div>
+            <i class="fas fa-search text-gray-400 mt-1"></i>
+        </div>
+
+        <!-- Swipeable Content -->
+        <div id="tab-container" class="flex overflow-hidden transition-transform duration-300"
+            style="scroll-snap-type: x mandatory;">
+            <!-- Tab Panels -->
+            <div class="min-w-full p-6 scroll-snap-align-start">
+                <p class="text-center text-[14px] text-gray-700">No Beneficiaries Yet</p>
+                <p class="text-center text-[14px] text-gray-400 mt-1">Beneficiaries will be added automatically
+                    <br>if the transfer is successful
+                </p>
+            </div>
+            <div class="min-w-full p-6 scroll-snap-align-start">
+                <p class="text-center text-[14px] text-gray-700">No Favorites Yet</p>
+                <p class="text-center text-[14px] text-gray-400 mt-1">Add your own frequent Beneficiaries as <br>to
+                    enjoy free transfer.</p>
+                <a href=""
+                    class="flex justify-center text-[14px] rounded-lg  font-semibold mt-3 px-2 py-2 w-24 bg-blue-100 text-blue-600">Add
+                    Now</a>
+            </div>
+            <div class="min-w-full p-6 scroll-snap-align-start">
+                <p class="text-center text-gray-700">No Beneficiaries Yet</p>
+                <p class="text-center text-[14px] text-gray-400 mt-1">Beneficiaries will be add automatically <br>if
+                    the transfer is successful</p>
+            </div>
+        </div>
+
+        <div class="w-full border-t border border-gray-50 my-1"></div>
+
+        <div class="text-gray-500 text-center text-xs">
+            <a href="" class="text-gray-400 text-center">
+                View All
+            </a>
+            <i class="fa fa-chevron-right text-[9px] font-sm text-gray-300 -mt-1"></i>
+        </div>
+    </div>
+    </div>
+
+    <!-- ✅ Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-2xl p-6 w-80 text-center shadow-lg">
+            <div class="flex justify-center mb-3">
+                <div class="w-14 h-14 flex items-center justify-center bg-green-100 rounded-full">
+                    <i class="fas fa-check text-green-600 text-2xl"></i>
+                </div>
+            </div>
+            <h2 class="text-lg font-semibold text-gray-800">Transaction Successful!</h2>
+            <p id="successMessage" class="text-sm text-gray-600 mt-2"></p>
+            <button id="closeSuccess" onclick="closeSuccessModal()"
+                class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                Done
+            </button>
+        </div>
+    </div>
+
+    <!-- ❌ Error Modal -->
+<div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-2xl p-6 w-80 text-center shadow-lg">
+        <div class="flex justify-center mb-3">
+            <div class="w-14 h-14 flex items-center justify-center bg-red-100 rounded-full">
+                <i class="fas fa-times text-red-600 text-2xl"></i>
+            </div>
+        </div>
+        <h2 class="text-lg font-semibold text-gray-800">Transaction Failed!</h2>
+        <p id="errorMessage" class="text-sm text-gray-600 mt-2"></p>
+        <button id="closeError" onclick="closeErrorModal()"
+            class="mt-4 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
+            Close
+        </button>
+    </div>
+</div>
+
+    <div id="loader"
+        class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500"
+        style="display:none; opacity:0;">
+        <img src="./bytepayLogo.png" alt="Loading..."
+            class="w-24 h-24 animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs }
+            from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+        const bcrypt = window.dcodeIO ? window.dcodeIO.bcrypt : window.bcrypt;
+
+        // --- Firebase config ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
+            authDomain: "testing-firebase-d7f88.firebaseapp.com",
+            projectId: "testing-firebase-d7f88",
+            storageBucket: "testing-firebase-d7f88.appspot.com",
+            messagingSenderId: "339099724691",
+            appId: "1:339099724691:web:83ead43e1d41d2e131d666"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- DOM elements ---
+        const sendBtn = document.getElementById("sendBtn");
+        const pinModal = document.getElementById("pinModal");
+        const pinInput = document.getElementById("pinInput");
+        const cancelPinBtn = document.getElementById("cancelPin");
+        const confirmPinBtn = document.getElementById("confirmPin");
+        const acctInput = document.getElementById("recipientAccount");
+        const bankInput = document.getElementById("bankSearch");
+        const amountInput = document.getElementById("sendAmount");
+        const loader = document.getElementById("loader");
+
+        // --- Loader functions ---
+        function showLoader() {
+            loader.style.display = "flex";
+            document.body.style.overflow = "hidden";
+            setTimeout(() => loader.style.opacity = "1", 10);
+        }
+        function hideLoader() {
+            loader.style.opacity = "0";
+            setTimeout(() => {
+                loader.style.display = "none";
+                document.body.style.overflow = "";
+            }, 500);
+        }
+
+        // --- Save transaction ---
+        async function saveTransaction(userId, { amount, type, status, description }) {
+            const txRef = collection(db, "users", userId, "transactions");
+            await addDoc(txRef, {
+                amount: Number(amount),
+                type,
+                status,
+                description,
+                date: serverTimestamp()
+            });
+        }
+
+        // --- Send money logic ---
+        async function sendMoney(recipientAccountNumber, bankSearch, amount, pin) {
+            try {
+                showLoader();
+
+                const user = auth.currentUser;
+                if (!user) return showErrorModal("You must be logged in");
+
+                amount = Number(amount);
+                if (!recipientAccountNumber || !bankSearch || !amount) return alert("Fill all fields");
+                if (amount <= 0) return showErrorModal("Enter a valid amount");
+
+                // --- Fetch sender ---
+                const senderRef = doc(db, "users", user.uid);
+                const senderSnap = await getDoc(senderRef);
+                if (!senderSnap.exists()) return showErrorModal("Sender not found");
+
+                const senderData = senderSnap.data();
+                const storedHashedPin = senderData.transactionPin;
+
+                if (!storedHashedPin) {
+    showErrorModal("No transaction PIN set. Please set up a PIN.");
+    hideLoader();
+    return;
+}
+
+// --- Validate PIN ---
+try {
+    const isValid = await bcrypt.compare(pin, storedHashedPin);
+    if (!isValid) {
+        showErrorModal("Invalid transaction PIN");
+        hideLoader();
+        return;
+    }
+} catch (err) {
+    console.error("Error comparing PIN:", err);
+    showErrorModal("Error verifying PIN");
+    hideLoader();
+    return;
+}
+
+                // --- Check balance ---
+                 if ((senderData.accountBalance || 0) < amount) {
+        showErrorModal("Insufficient funds");
+        hideLoader();
+        return;
+    }
+
+                // --- Find recipient ---
+                const q = query(collection(db, "users"), where("accountNumber", "==", Number(recipientAccountNumber)));
+                const snap = await getDocs(q);
+                if (snap.empty) return alert("Recipient not found");
+
+                const recipientDoc = snap.docs[0];
+                const recipientRef = doc(db, "users", recipientDoc.id);
+                const recipientData = recipientDoc.data();
+
+                // --- Update balances ---
+                await updateDoc(senderRef, { accountBalance: senderData.accountBalance - amount });
+                await updateDoc(recipientRef, { accountBalance: (recipientData.accountBalance || 0) + amount });
+
+                // --- Record transactions ---
+                await saveTransaction(user.uid, {
+                    amount,
+                    type: "debit",
+                    status: "success",
+                    description: `Sent ₦${amount} to ${recipientData.firstName} (${bankSearch})`
+                });
+                await saveTransaction(recipientDoc.id, {
+                    amount,
+                    type: "credit",
+                    status: "success",
+                    description: `Received ₦${amount} from ${senderData.firstName} (${senderData.accountNumber})`
+                });
+
+                // --- Show success ---
+                showSuccessModal(amount, recipientData.firstName);
+
+                // --- Clear inputs safely ---
+                const sendForm = document.getElementById("sendMoneyForm");
+                if (sendForm) sendForm.reset();
+                acctInput.value = "";
+                bankInput.value = "";
+                amountInput.value = "";
+                pinInput.value = "";
+                document.getElementById("recipientName").textContent = "";
+                validateSendForm();
+
+            } catch (err) {
+                console.error(err);
+                alert("Something went wrong. Please try again.");
+            } finally {
+                hideLoader();
+            }
+        }
+
+        // --- Validate form ---
+        function validateSendForm() {
+            const account = acctInput.value.trim();
+            const bank = bankInput.value.trim();
+            const amount = amountInput.value.trim();
+
+            if (account && bank && amount) {
+                sendBtn.disabled = false;
+                sendBtn.classList.remove("bg-blue-200", "cursor-not-allowed");
+                sendBtn.classList.add("bg-blue-600");
+            } else {
+                sendBtn.disabled = true;
+                sendBtn.classList.add("bg-blue-200", "cursor-not-allowed");
+                sendBtn.classList.remove("bg-blue-600");
+            }
+        }
+        [acctInput, bankInput, amountInput].forEach(input => input.addEventListener("input", validateSendForm));
+        validateSendForm();
+
+        // --- Auto-fill recipient ---
+        acctInput.addEventListener("blur", async (e) => {
+            const accountNumber = e.target.value.trim();
+            if (accountNumber.length >= 9) {
+                const q = query(collection(db, "users"), where("accountNumber", "==", Number(accountNumber)));
+                const snap = await getDocs(q);
+                if (!snap.empty) {
+                    const data = snap.docs[0].data();
+                    document.getElementById("recipientName").textContent = `${data.firstName} ${data.lastName}`;
+                } else {
+                    document.getElementById("recipientName").textContent = "Account not found";
+                }
+            }
+        });
+
+        // --- Bank dropdown ---
+        const bankList = document.getElementById("bankList");
+        const banks = Array.from(bankList.querySelectorAll("li"));
+        const selectedBankLogo = document.getElementById("selectedBankLogo");
+        const bankWrapper = document.getElementById("bankWrapper");
+
+        // Show dropdown when input is focused
+        bankInput.addEventListener("focus", () => {
+            bankList.classList.remove("hidden");
+        });
+
+        // Filter banks
+        bankInput.addEventListener("input", () => {
+            const queryText = bankInput.value.toLowerCase();
+            banks.forEach(li => {
+                if (li.textContent.toLowerCase().includes(queryText)) {
+                    li.style.display = "flex"; // ✅ keep flex for logo + name
+                } else {
+                    li.style.display = "none";
+                }
+            });
+
+            // Hide logo when user types (until a new selection is made)
+            if (bankInput.value === "") {
+                selectedBankLogo.classList.add("hidden");
+            }
+        });
+
+        // Select bank on click
+        banks.forEach(li => li.addEventListener("click", () => {
+            const bankName = li.querySelector("span").textContent.trim();
+            const logoUrl = li.querySelector("img").src;
+
+            // Update input and logo
+            bankInput.value = bankName;
+            selectedBankLogo.src = logoUrl;
+            selectedBankLogo.classList.remove("hidden");
+
+            // Close dropdown
+            bankList.classList.add("hidden");
+        }));
+
+        // --- Success modal ---
+        function showSuccessModal(amount, recipientName = "") {
+            const msg = recipientName
+                ? `You successfully sent ₦${amount} to ${recipientName}`
+                : `You successfully sent ₦${amount}`;
+            document.getElementById("successMessage").textContent = msg;
+            document.getElementById("successModal").classList.remove("hidden");
+        }
+        function closeSuccessModal() {
+            document.getElementById("successModal").classList.add("hidden");
+        }
+
+        // ❌ Error Modal Functions
+    function showErrorModal(message) {
+        document.getElementById("errorMessage").textContent = message;
+        document.getElementById("errorModal").classList.remove("hidden");
+    }
+
+    function closeErrorModal() {
+        document.getElementById("errorModal").classList.add("hidden");
+    }
+        window.showSuccessModal = showSuccessModal;
+        window.closeSuccessModal = closeSuccessModal;
+         window.showErrorModal = showErrorModal;
+    window.closeErrorModal = closeErrorModal;
+
+        // --- PIN modal flow ---
+        sendBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const account = acctInput.value.trim();
+            const bank = bankInput.value.trim();
+            const amount = amountInput.value.trim();
+
+            if (!account || !bank || !amount) return showErrorModal("Please fill all fields");
+
+            pinModal.classList.remove("hidden");
+            pinInput.value = "";
+            pinInput.focus();
+        });
+        cancelPinBtn.addEventListener("click", () => {
+            pinModal.classList.add("hidden");
+            pinInput.value = "";
+        });
+        confirmPinBtn.addEventListener("click", async () => {
+            const pin = pinInput.value.trim();
+            if (!pin) return showErrorModal("Enter your PIN");
+
+            pinModal.classList.add("hidden");
+
+            const account = acctInput.value.trim();
+            const bank = bankInput.value.trim();
+            const amount = amountInput.value.trim();
+
+            await sendMoney(account, bank, amount, pin);
+        });
+    </script>
+</body>
+
+</html>
