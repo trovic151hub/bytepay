@@ -1,0 +1,190 @@
+/* === Reset & Base Styles === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f5f7fa;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* === Logo Section === */
+.logo-div img {
+  width: 120px;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.site-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.site-name img {
+  width: 50px;
+}
+
+.site-name h1 {
+  font-size: 1.8rem;
+  color: #2563ea;
+  font-weight: 700;
+}
+
+/* === Animation screens === */
+.logo-div, .site-name, .form {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out;
+}
+
+.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.logo-div {
+  position: absolute;
+  inset: 0;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-div img {
+  height: 250px;
+  width: 250px;
+}
+
+.site-name {
+  position: absolute;
+  inset: 0;
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-name img {
+  height: 250px;
+  width: 250px;
+}
+
+/* .site-name h1 {
+  color: var(--secondary-color);
+  font-size: 2rem;
+  margin-top: 0.5rem;
+} */
+
+/* === Form Styling === */
+main {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #2563ea;
+  font-size: 1.6rem;
+}
+
+/* Inputs */
+.form input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.form input:focus {
+  border-color: #2563ea;
+  box-shadow: 0 0 5px rgba(37, 99, 234, 0.3);
+}
+
+/* Password container */
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordContainer input {
+  width: 100%;
+}
+
+.passwordContainer .eye {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+  min-height: 1.2rem;
+}
+
+/* Redirect text */
+.redirect {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.redirect a {
+  color: #2563ea;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.redirect a:hover {
+  text-decoration: underline;
+}
+
+/* Button */
+#submitData {
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: #2563ea;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#submitData:hover {
+  background: #1d4ed8;
+}
