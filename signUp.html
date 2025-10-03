@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BytePay Sign Up</title>
+    <link rel="stylesheet" href="./signUp.css">
+    <script type="module" src="./signUp.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+</head>
+
+<body>
+    <!-- Intro Logo Animation -->
+    <div id="logo-div" class="logo-div">
+        <img src="./bytepayLogo.png" alt="BytePay-logo">
+    </div>
+
+    <!-- Site Name Animation -->
+    <div id="site-name" class="site-name">
+        <img src="./asset/bytepayname.png" alt="BytePay-logo">
+        <!-- <h1>BytePay</h1> -->
+    </div>
+
+    <!-- Signup Form -->
+    <main>
+        <form onsubmit="event.preventDefault(); submitForm();" name="signIn" class="form">
+            <h1>SIGN UP</h1>
+
+            <input type="text" placeholder="First Name" id="firstName" required>
+            <input type="text" placeholder="Last Name" id="lastName" required>
+            <input type="tel" placeholder="Phone Number" id="phoneNumber" required>
+            <input type="email" placeholder="Email Address" id="emailAddress" required>
+
+            <div class="passwordContainer">
+                <input type="password" placeholder="Password" id="password" required>
+                <span class="eye">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256">
+                        <path fill="#2563ea" d="M243.66 126.38c-.34-.76-8.52-18.89-26.83-37.2C199.87 72.22 170.7 52 128 52S56.13 72.22 39.17 89.18c-18.31 18.31-26.49 36.44-26.83 37.2a4.08 4.08 0 0 0 0 3.25c.34.77 8.52 18.89 26.83 37.2c17 17 46.14 37.17 88.83 37.17s71.87-20.21 88.83-37.17c18.31-18.31 26.49-36.43 26.83-37.2a4.08 4.08 0 0 0 0-3.25m-32.7 35c-23.07 23-51 34.62-83 34.62s-59.89-11.65-83-34.62A135.7 135.7 0 0 1 20.44 128A135.7 135.7 0 0 1 45 94.62C68.11 71.65 96 60 128 60s59.89 11.65 83 34.62A135.8 135.8 0 0 1 235.56 128A135.7 135.7 0 0 1 211 161.38ZM128 84a44 44 0 1 0 44 44a44.05 44.05 0 0 0-44-44m0 80a36 36 0 1 1 36-36a36 36 0 0 1-36 36"/>
+                    </svg>
+                </span>
+            </div>
+
+            <div class="passwordContainer">
+                <input type="password" placeholder="Confirm Password" id="confirmPassword" required>
+                <span class="eye">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256">
+                        <path fill="#2563ea" d="M243.66 126.38c-.34-.76-8.52-18.89-26.83-37.2C199.87 72.22 170.7 52 128 52S56.13 72.22 39.17 89.18c-18.31 18.31-26.49 36.44-26.83 37.2a4.08 4.08 0 0 0 0 3.25c.34.77 8.52 18.89 26.83 37.2c17 17 46.14 37.17 88.83 37.17s71.87-20.21 88.83-37.17c18.31-18.31 26.49-36.43 26.83-37.2a4.08 4.08 0 0 0 0-3.25m-32.7 35c-23.07 23-51 34.62-83 34.62s-59.89-11.65-83-34.62A135.7 135.7 0 0 1 20.44 128A135.7 135.7 0 0 1 45 94.62C68.11 71.65 96 60 128 60s59.89 11.65 83 34.62A135.8 135.8 0 0 1 235.56 128A135.7 135.7 0 0 1 211 161.38ZM128 84a44 44 0 1 0 44 44a44.05 44.05 0 0 0-44-44m0 80a36 36 0 1 1 36-36a36 36 0 0 1-36 36"/>
+                    </svg>                    
+                </span>
+            </div>
+
+            <div class="passwordContainer">
+                <input type="password" placeholder="pin for transaction" id="transactionPin" required>
+                <span class="eye">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256">
+                        <path fill="#2563ea" d="M243.66 126.38c-.34-.76-8.52-18.89-26.83-37.2C199.87 72.22 170.7 52 128 52S56.13 72.22 39.17 89.18c-18.31 18.31-26.49 36.44-26.83 37.2a4.08 4.08 0 0 0 0 3.25c.34.77 8.52 18.89 26.83 37.2c17 17 46.14 37.17 88.83 37.17s71.87-20.21 88.83-37.17c18.31-18.31 26.49-36.43 26.83-37.2a4.08 4.08 0 0 0 0-3.25m-32.7 35c-23.07 23-51 34.62-83 34.62s-59.89-11.65-83-34.62A135.7 135.7 0 0 1 20.44 128A135.7 135.7 0 0 1 45 94.62C68.11 71.65 96 60 128 60s59.89 11.65 83 34.62A135.8 135.8 0 0 1 235.56 128A135.7 135.7 0 0 1 211 161.38ZM128 84a44 44 0 1 0 44 44a44.05 44.05 0 0 0-44-44m0 80a36 36 0 1 1 36-36a36 36 0 0 1-36 36"/>
+                    </svg>                    
+                </span>
+            </div>
+
+            <h5 id="info" class="error-message"></h5>
+
+            <p class="redirect">
+                Already have an account? <a href="./index.html">Sign In</a>
+            </p>
+
+            <button type="submit" id="submitData">Sign Up</button>
+        </form>
+    </main>
+</body>
+</html>
