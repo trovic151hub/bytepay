@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Total Assets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body class="bg-[#f5f5fa] text-gray-900">
+
+    <!-- Header -->
+    <div class="flex items-center gap-3 p-4 bg-[#f5f5fa] fixed top-0 w-full z-50">
+        <button onclick="history.back()">
+            <i class="fa fa-arrow-left text-xl text-gray-800"></i>
+        </button>
+        <h1 class="text-lg font-semibold">Total Assets</h1>
+    </div>
+
+    <div class="max-w-sm mx-auto mt-10 p-4">
+
+        <!-- Security Notice -->
+        <div class="bg-green-50 text-green-400 border-t-0 flex justify-center space-x-2 py-1 mt-4 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 mt-1 text-green-400" viewBox="0 0 20 20">
+                <path fill="currentColor"
+                    d="M10.277 2.084a.5.5 0 0 0-.554 0a15.05 15.05 0 0 1-6.294 2.421A.5.5 0 0 0 3 5v4.5c0 3.891 2.307 6.73 6.82 8.467a.5.5 0 0 0 .36 0C14.693 16.23 17 13.39 17 9.5V5a.5.5 0 0 0-.43-.495a15.05 15.05 0 0 1-6.293-2.421m3.577 5.77l-4 4a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L9.5 10.793l3.646-3.647a.5.5 0 0 1 .708.708" />
+            </svg>
+            <span class="font-sm">Security Guaranteed</span>
+            <i class="fa fa-chevron-right text-xs text-green-300 mt-1"></i>
+        </div>
+
+        <!-- Total Assets Card -->
+        <div class="bg-white rounded-b-lg mb-4 p-4 flex text-center justify-center">
+            <div>
+                <div class="flex items-center text-center justify-center space-x-2 -mb-1 -mt-1">
+                    <span class="text-gray-600 ">Total Assets</span>
+                    <i id="" class="toggleIcon fas fa-eye text-gray-400 mt-1"></i>
+                </div>
+                <h2  class="balance text-2xl font-bold mt-2">₦0.00</h2>
+                <button class="mt-2 text-sm text-gray-700 font-sm flex items-center px-2 bg-blue-100 rounded-full">
+                    Enable earnings on your available balance
+                    <i class="fa fa-chevron-right font-sm text-xs mt-1 ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- July Earnings -->
+        <div class="flex justify-between items-center px-4 py-3 bg-white rounded-lg ">
+            <span class="text-sm text-gray-400">July Earnings</span>
+            <div>
+                <span class="balance text-sm font-sm text-sm text-gray-400">₦0.00</span>
+                <i class="fa fa-chevron-right text-xs text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Total Balance -->
+        <div class="bg-white mt-3 p-4 rounded-lg">
+            <h3 class="font-semibold mb-2">Total Balance</h3>
+
+            <div class="px-2 py2 bg-gray-100 rounded-lg">
+                <div class="flex justify-between items-center py-2 border-t">
+                    <span class="text-gray-400">Balance</span>
+                    <div>
+                        <span class="balance text-sm text-gray-400">₦0.00</span>
+                        <i class="fa fa-chevron-right text-xs text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center py-2 border-t">
+                    <span class="text-gray-400">Cashbox</span>
+                    <div>
+                        <span class="balance text-sm text-gray-400">₦0.00</span>
+                        <i class="fa fa-chevron-right text-xs text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="font-semibold mt-4 mb-2">Savings</h3>
+
+            <div class="px-2 py2 bg-gray-100 rounded-lg">
+                <div class="flex justify-between items-center py-2 border-t">
+                    <span class="text-gray-400">Target Savings</span>
+                    <div>
+                        <span class="balance text-sm text-gray-400">₦0.00</span>
+                        <i class="fa fa-chevron-right text-xs text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center py-2 border-t">
+                    <span class="text-gray-400">Spend & Save</span>
+                    <div>
+                        <span class="balance text-sm text-gray-400">₦0.00</span>
+                        <i class="fa fa-chevron-right text-xs text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center py-2 border-t ">
+                    <span class="text-gray-400">Fixed Savings</span>
+                    <div>
+                        <span class="balance text-sm text-gray-400">₦0.00</span>
+                        <i class="fa fa-chevron-right text-xs text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PalmPoints -->
+        <div class="bg-white mt-3 p-4">
+            <div class="flex justify-between items-center">
+                <span class="font-semibold">PalmPoints</span>
+                <div>
+                    <span class="font-sm text-gray-500">0</span>
+                    <i class="fa fa-chevron-right text-xs text-gray-500 mt-0"></i>
+                </div>
+            </div>
+            <p class="text-yellow-500 text-xs mt-1">
+                Your 0 PalmPoint will expire on 2025/08/31
+            </p>
+        </div>
+
+        <!-- Insurance -->
+        <div class="bg-white  mt-3 p-4 flex justify-between items-center">
+            <span class="font-semibold">Insurance</span>
+            <div>
+                <span class="text-sm text-gray-700">0 Policies Active</span>
+                <i class="fa fa-chevron-right text-xs text-gray-500 -mt-1"></i>
+            </div>
+        </div>
+
+        <div class="py-3">
+            <img src="./WhatsApp Image 2025-08-01 at 21.29.12_84d7e7bd.jpg" class="rounded-lg" alt="">
+        </div>
+
+        <div class="flex justify-center text-gray-400 space-x-4 py-4">
+            <div class="flex space-x-1">
+                <p class="text-[11px]">Licenced by CBN as a MMO</p>
+                <div class="-mt-1">
+                <img class="h-6" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3aOoMCxhzZTbp1fF_R-wTGYeeSiPn4C-I6w&s" alt="">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex">
+                    <p class="text-[11px]">Deposite Insured by</p>
+                    <img class="h-5" src="./LOGO.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logo Loader -->
+<div id="loader" class="fixed inset-0 bg-transparent flex items-center justify-center z-50">
+  <img src="./bytepayLogo.png" 
+       alt="Loading..." 
+       class="w-24 h-24 animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
+</div>
+
+
+
+    <script type="module">
+        // ✅ Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
+// ✅ Firebase setup
+const firebaseConfig = {
+  apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
+  authDomain: "testing-firebase-d7f88.firebaseapp.com",
+  projectId: "testing-firebase-d7f88",
+  storageBucket: "testing-firebase-d7f88.appspot.com",
+  messagingSenderId: "339099724691",
+  appId: "1:339099724691:web:83ead43e1d41d2e131d666"
+};
+
+// ✅ Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+document.addEventListener("DOMContentLoaded", () => {
+        const balances = document.querySelectorAll(".balance");
+        const icons = document.querySelectorAll(".toggleIcon"); // use class, not id
+        const loader = document.getElementById("loader"); // ✅ Loader element
+
+        let visible = localStorage.getItem("balanceVisible");
+        visible = visible === null ? true : visible === "true";
+
+        // ✅ Declare actualBalance here
+    let actualBalance = "₦0.00";
+
+        function updateBalances() {
+            balances.forEach(el => {
+                el.textContent = visible ? actualBalance : "•••••••";
+            });
+
+            icons.forEach(icon => {
+                icon.classList.toggle("fa-eye", visible);
+                icon.classList.toggle("fa-eye-slash", !visible);
+            });
+        }
+
+        icons.forEach(icon => {
+            icon.addEventListener("click", () => {
+                visible = !visible;
+                localStorage.setItem("balanceVisible", visible);
+                updateBalances();
+            });
+        });
+
+        // 👤 Listen for auth state
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+
+      // 🔥 Real-time Firestore listener
+      onSnapshot(userRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          actualBalance = `₦${Number(data.accountBalance || 0).toLocaleString()}`;
+        } else {
+          actualBalance = "₦0.00";
+        }
+        updateBalances();
+        // ✅ Fade out loader
+                loader.style.opacity = "0";
+                setTimeout(() => loader.style.display = "none", 500);
+      });
+    } else {
+      actualBalance = "₦0.00";
+      updateBalances();
+       // ✅ Fade out loader even if not logged in
+            loader.style.opacity = "0";
+            setTimeout(() => loader.style.display = "none", 500);loader.classList.add("hidden"); 
+    }
+  });
+
+        updateBalances();
+    });
+</script>
+</body>
+
+</html>
