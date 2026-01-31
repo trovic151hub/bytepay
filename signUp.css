@@ -129,23 +129,23 @@ main {
 }
 
 /* Password container */
-.passwordContainer {
+/* .passwordContainer {
   position: relative;
   display: flex;
   align-items: center;
-}
+} */
 
 .passwordContainer input {
   width: 100%;
 }
 
-.passwordContainer .eye {
+/* .passwordContainer .eye {
   position: absolute;
   right: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
-}
+} */
 
 /* Error Message */
 .error-message {

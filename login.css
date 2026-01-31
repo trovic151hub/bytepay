@@ -58,8 +58,6 @@ body {
 .login-form input:focus {
     border-color: #2563ea;
   box-shadow: 0 0 5px rgba(37, 99, 234, 0.3);
-  /* outline: none;
-  border-color: #1e4fd0; */
 }
 
 /* Password field with eye icon */

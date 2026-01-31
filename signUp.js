@@ -6,20 +6,38 @@ const info = document.getElementById("info");
 
 document.addEventListener("DOMContentLoaded", () => {
   // === Animation ===
-  const logoDiv = document.querySelector('.logo-div');
-  const siteName = document.querySelector('.site-name');
+    const logoDiv = document.getElementById('logo-div');
+  const siteName = document.getElementById('site-name');
   const form = document.querySelector('.form');
 
+  // Show logo first
   logoDiv.classList.add('show');
+
+  // After 3s, hide logo and show site name
   setTimeout(() => {
     logoDiv.classList.remove('show');
     siteName.classList.add('show');
   }, 3000);
 
+  // After 6s, hide site name and show form
   setTimeout(() => {
     siteName.classList.remove('show');
     form.classList.add('show');
   }, 6000);
+  // const logoDiv = document.querySelector('.logo-div');
+  // const siteName = document.querySelector('.site-name');
+  // const form = document.querySelector('.form');
+
+  // logoDiv.classList.add('show');
+  // setTimeout(() => {
+  //   logoDiv.classList.remove('show');
+  //   siteName.classList.add('show');
+  // }, 3000);
+
+  // setTimeout(() => {
+  //   siteName.classList.remove('show');
+  //   form.classList.add('show');
+  // }, 6000);
 
   // === Firebase Config ===
   const firebaseConfig = {
