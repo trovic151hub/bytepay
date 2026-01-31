@@ -169,8 +169,7 @@ document.querySelectorAll(".togglePassword").forEach((toggle) => {
       email,
       transactionPin: hashedPin,
       accountBalance: 0,
-      // accountNumber,
-      recipientAccountNumber,
+      accountNumber,
       createdAt: new Date()
     });
 

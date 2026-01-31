@@ -355,7 +355,9 @@ try {
     }
 
                 // --- Find recipient ---
-                const q = query(collection(db, "users"), where("accountNumber", "==", Number(recipientAccountNumber)));
+                const q = query(collection(db, "users"), 
+                // where("accountNumber", "==", Number(recipientAccountNumber)));
+                where("accountNumber", "==", recipientAccountNumber.trim()));
                 const snap = await getDocs(q);
                 if (snap.empty) return alert("Recipient not found");
 
@@ -425,7 +427,9 @@ try {
         acctInput.addEventListener("blur", async (e) => {
             const accountNumber = e.target.value.trim();
             if (accountNumber.length >= 9) {
-                const q = query(collection(db, "users"), where("accountNumber", "==", Number(accountNumber)));
+                const q = query(collection(db, "users"), 
+                // where("accountNumber", "==", Number(accountNumber)));
+                where("accountNumber", "==", accountNumber.trim()));
                 const snap = await getDocs(q);
                 if (!snap.empty) {
                     const data = snap.docs[0].data();
