@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BytePay Login</title>
   <link rel="stylesheet" href="login.css">
   <script type="module" src="./login.js" defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
-<body>
-  <div class="login-container">
-    <!-- ✅ Login Success Banner -->
-<div id="loginSuccessBanner" 
-     style="display:none; position:fixed; top:0; left:0; width:100%; 
-            background-color:#22c55e; color:white; text-align:center; 
-            padding:12px; font-weight:bold; z-index:1000;">
-</div>
 
-    <form action="" name="signIn" class="login-form">
-      <h1 class="title">SIGN IN</h1>      
+<body class="min-h-screen flex items-center justify-center bg-[#f6f5fa] font-sans">
 
-      <input type="email" placeholder="Email Address" id="loginEmail" required>
+  <!-- ✅ Login Success Banner -->
+  <div id="loginSuccessBanner"
+    class="hidden fixed top-0 left-0 w-full bg-green-500 text-white text-center py-3 font-bold z-[1000]"></div>
 
-      <!-- Password with Eye Toggle -->
-      <div class="password-field">
-        <input type="password" placeholder="Password" id="loginPassword" required>
-        <span class="eye" id="togglePassword">
-          <!-- Default: open eye -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 256 256">
-            <path fill="#2563ea" d="M243.66 126.38c-.34-.76-8.52-18.89-26.83-37.2C199.87 72.22 170.7 52 128 52S56.13 72.22 39.17 89.18c-18.31 18.31-26.49 36.44-26.83 37.2a4.08 4.08 0 0 0 0 3.25c.34.77 8.52 18.89 26.83 37.2c17 17 46.14 37.17 88.83 37.17s71.87-20.21 88.83-37.17c18.31-18.31 26.49-36.43 26.83-37.2a4.08 4.08 0 0 0 0-3.25m-32.7 35c-23.07 23-51 34.62-83 34.62s-59.89-11.65-83-34.62A135.7 135.7 0 0 1 20.44 128A135.7 135.7 0 0 1 45 94.62C68.11 71.65 96 60 128 60s59.89 11.65 83 34.62A135.8 135.8 0 0 1 235.56 128A135.7 135.7 0 0 1 211 161.38ZM128 84a44 44 0 1 0 44 44a44.05 44.05 0 0 0-44-44m0 80a36 36 0 1 1 36-36a36 36 0 0 1-36 36"/>
-          </svg>
-        </span>
+  <!-- Container -->
+  <div class="w-full flex items-center justify-center px-4">
+
+    <!-- Login Form -->
+    <form name="signIn" class="login-form bg-white w-full max-w-[350px] p-10 rounded-2xl shadow-xl text-center">
+      <h1 class="text-3xl font-bold text-blue-600 mb-6">SIGN IN</h1>
+
+      <!-- Email -->
+      <input type="email" placeholder="Email Address" id="loginEmail" required
+        class="w-full h-[48px] bg-white border border-gray-200 rounded-xl px-4 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition" />
+
+
+      <!-- Password -->
+      <div class="relative">
+        <input type="password" placeholder="Password" id="password" required
+          class="w-full h-[48px] bg-white border border-gray-200 rounded-xl px-4 pr-12 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition" />
+        <i
+          class="togglePassword fa-solid fa-eye absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"></i>
       </div>
 
-      <h5 id="info" class="error-msg"></h5>
+      <!-- Error Message -->
+      <h5 id="info" class="text-red-500 text-sm mb-3 min-h-[1rem]"></h5>
 
-      <div class="links">
-        <a href="./forgot.html" class="forgot">Forgot password?</a>
-        <p>Don't have an account? <a href="./signUp.html">Sign Up</a></p>
+      <!-- Links -->
+      <div class="text-left text-sm mb-4 space-y-2">
+        <a href="./forgot.html" class="block text-blue-600 hover:underline">
+          Forgot password?
+        </a>
+        <p>
+          Don't have an account?
+          <a href="./signUp.html" class="text-blue-600 font-semibold hover:underline">
+            Sign Up
+          </a>
+        </p>
       </div>
 
-      <button type="submit" id="loginBtn">Sign In</button>
+      <!-- Button -->
+      <button id="loginBtn"
+        class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold transition disabled:opacity-60 disabled:cursor-not-allowed">
+        Login In
+      </button>
     </form>
   </div>
-</body>
-</html>
 
+</body>
+
+</html>

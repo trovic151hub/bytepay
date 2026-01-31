@@ -35,161 +35,144 @@ document.addEventListener("DOMContentLoaded", () => {
   const db = getFirestore(app);
   const auth = getAuth(app);
 
-  // === Validation Functions ===
-  const isAlpha = (str) => /^[A-Za-z]+$/.test(str);
-  const isValidPhone = (str) => /^\d{11}$/.test(str);
-  const isValidPassword = (str) =>
-    /[a-z]/.test(str) && /[A-Z]/.test(str) && /\d/.test(str) && /^[A-Za-z0-9]+$/.test(str);
-  const isValidEmail = (str) => /\S+@\S+\.\S+/.test(str);
-  const isValidPin = (str) => /^\d{6}$/.test(str);
-
-  // === Enforce Live Restrictions ===
+  // === DOM Inputs ===
+  const submitDataBtn = document.getElementById("submitData");
+  const firstNameInput = document.getElementById("firstName");
+  const lastNameInput = document.getElementById("lastName");
   const phoneInput = document.getElementById("phoneNumber");
-  phoneInput.addEventListener("input", () => {
-    phoneInput.value = phoneInput.value.replace(/\D/g, "");
-    if (phoneInput.value.length > 11) {
-      phoneInput.value = phoneInput.value.slice(0, 11);
-    }
-  });
-
+  const emailInput = document.getElementById("emailAddress");
+  const passwordInput = document.getElementById("password");
+  const confirmPasswordInput = document.getElementById("confirmPassword");
   const pinInput = document.getElementById("transactionPin");
-  pinInput.addEventListener("input", () => {
-    pinInput.value = pinInput.value.replace(/\D/g, "");
-    if (pinInput.value.length > 6) {
-      pinInput.value = pinInput.value.slice(0, 6);
-    }
+
+  // === Validation Functions ===
+  const isAlpha = str => /^[A-Za-z]+$/.test(str);
+  const isValidPhone = str => /^\d{11}$/.test(str);
+  const isValidPassword = str => /[a-z]/.test(str) && /[A-Z]/.test(str) && /\d/.test(str) && /^[A-Za-z0-9]+$/.test(str);
+  const isValidEmail = str => /\S+@\S+\.\S+/.test(str);
+  const isValidPin = str => /^\d{6}$/.test(str);
+
+  // === Live Input Restrictions ===
+  phoneInput.addEventListener("input", () => {
+    phoneInput.value = phoneInput.value.replace(/\D/g, "").slice(0, 11);
+    info.textContent = "";
   });
 
-  // === Form Submission ===
-  const submitData = document.getElementById("submitData");
-  submitData.addEventListener("click", async (e) => {
-    e.preventDefault();
-    submitData.disabled = true;
-    submitData.textContent = "Processing...";
+  pinInput.addEventListener("input", () => {
+    pinInput.value = pinInput.value.replace(/\D/g, "").slice(0, 6);
+    info.textContent = "";
+  });
 
-    try {
-      const firstName = document.getElementById("firstName").value.trim();
-      const lastName = document.getElementById("lastName").value.trim();
-      const phoneNumber = document.getElementById("phoneNumber").value.trim();
-      const email = document.getElementById("emailAddress").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-      const transactionPin = document.getElementById("transactionPin").value;
+  // Clear error when typing in any input
+  [firstNameInput, lastNameInput, emailInput, passwordInput, confirmPasswordInput, pinInput].forEach(input => {
+    input.addEventListener("input", () => info.textContent = "");
+  });
 
-      info.textContent = "";
-
-      // === Validation Checks ===
-      if (!firstName || !lastName || !phoneNumber || !email || !password || !confirmPassword || !transactionPin) {
-        info.textContent = "Please fill in all fields.";
-        return;
-      }
-      if (!isAlpha(firstName) || !isAlpha(lastName)) {
-        info.textContent = "Names should contain only letters.";
-        return;
-      }
-      if (!isValidPhone(phoneNumber)) {
-        info.textContent = "Phone number must be digits only (max 11).";
-        return;
-      }
-      if (!phoneNumber.startsWith("0")) {
-        info.textContent = "Phone number must start with 0";
-        return;
-      }
-      if (!isValidEmail(email)) {
-        info.textContent = "Invalid email format.";
-        return;
-      }
-      if (!isValidPassword(password)) {
-        info.textContent = "Password must contain uppercase, lowercase, and number (no symbols).";
-        return;
-      }
-      if (password !== confirmPassword) {
-        info.textContent = "Password and Confirm Password do not match.";
-        return;
-      }
-      if (!isValidPin(transactionPin)) {
-        info.textContent = "Transaction PIN must be exactly 6 digits.";
-        return;
-      }
-
-      // Generate account number
-      const accountNumber = () => {
-        const arrayString = phoneNumber.split('');
-        const [firstNumber, ...others] = arrayString;
-        const account = others.join('');
-        return parseInt(account);
-      };
-
-      // Ensure phone number is unique
-      const usersRef = collection(db, "users");
-      const q = query(usersRef, where("phoneNumber", "==", phoneNumber));
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        info.textContent = "Phone number already exists";
-        return;
-      }
-
-      // ✅ Create Firebase Auth user
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // ✅ Update Auth profile with displayName + default photo
-      await updateProfile(user, {
-        displayName: `${firstName} ${lastName}`,
-        photoURL: "default.png"
-      });
-
-      // ✅ Hash PIN with bcrypt before storing
-const salt = dcodeIO.bcrypt.genSaltSync(10);
-const hashedPin = dcodeIO.bcrypt.hashSync(transactionPin, salt);
-
-      // ✅ Save user in Firestore (use default.png not "")
-await setDoc(doc(db, "users", user.uid), {
-  uid: user.uid,
-  firstName: firstName,
-  lastName: lastName,
-  phoneNumber: phoneNumber || "",
-  email: user.email,
-  transactionPin: hashedPin,
-  accountBalance: 0,
-  // profilePictureUrl: "",
-  accountNumber: accountNumber(),
-  createdAt: new Date()
+      // Select all password fields with their toggle icons
+document.querySelectorAll(".togglePassword").forEach((toggle) => {
+  toggle.addEventListener("click", () => {
+    const input = toggle.previousElementSibling; // the input field
+    if (input.type === "password") {
+      input.type = "text";
+      toggle.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+      input.type = "password";
+      toggle.classList.replace("fa-eye-slash", "fa-eye");
+    }
+  });
 });
 
-      info.textContent = "✅ Account created successfully!";
-      setTimeout(() => {
-        window.location.href = "./index.html";
-      }, 2000);
+  // === Form Submission ===
+  submitData.addEventListener("click", async (e) => {
+  e.preventDefault();
 
-    } catch (error) {
-      if (error.code === 'auth/email-already-in-use') {
-        info.textContent = "This email is already registered. Try logging in.";
-      } else if (error.code === 'auth/invalid-email') {
-        info.textContent = "Invalid email address.";
-      } else if (error.code === 'auth/weak-password') {
-        info.textContent = "Password must be at least 6 characters.";
-      } else {
-        info.textContent = "Error: " + error.message;
-      }
-    } finally {
-      submitData.disabled = false;
-      submitData.textContent = "Sign Up";
+  const firstName = firstNameInput.value.trim();
+  const lastName = lastNameInput.value.trim();
+  const phoneNumber = phoneInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
+  const transactionPin = pinInput.value;
+
+  info.style.color = "red";
+  info.textContent = "";
+
+  // === VALIDATION ===
+  const validationError = (() => {
+    if (!firstName || !lastName || !phoneNumber || !email || !password || !confirmPassword || !transactionPin) return "Please fill in all fields.";
+    if (!isAlpha(firstName) || !isAlpha(lastName)) return "Names should contain only letters.";
+    if (!isValidPhone(phoneNumber) || !phoneNumber.startsWith("0")) return "Phone number must be 11 digits and start with 0.";
+    if (!isValidEmail(email)) return "Invalid email format.";
+    if (!isValidPassword(password)) return "Password must contain uppercase, lowercase, and number (no symbols).";
+    if (password !== confirmPassword) return "Password and Confirm Password do not match.";
+    if (!isValidPin(transactionPin)) return "Transaction PIN must be exactly 6 digits.";
+    return null;
+  })();
+
+  if (validationError) {
+    info.textContent = validationError;
+    return; // Exit early, but submit button is still enabled
+  }
+
+  // === VALIDATION PASSED ===
+  submitData.disabled = true;
+  submitData.textContent = "Processing...";
+
+  try {
+    // Check if phone number exists
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("phoneNumber", "==", phoneNumber));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      info.textContent = "Phone number already exists.";
+      return;
     }
-  });
 
-  // === Password Eye Toggle ===
-  const eyes = document.querySelectorAll(".eye");
-  eyes.forEach((eye) => {
-    eye.addEventListener("click", () => {
-      const input = eye.previousElementSibling;
-      if (input.type === "password") {
-        input.type = "text";
-        eye.innerHTML = `<svg ... open eye icon ... ></svg>`;
-      } else {
-        input.type = "password";
-        eye.innerHTML = `<svg ... closed eye icon ... ></svg>`;
-      }
+    // Create Firebase Auth User
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await updateProfile(user, {
+      displayName: `${firstName} ${lastName}`,
+      photoURL: "default.png"
     });
-  });
+
+    // Hash PIN
+    const salt = dcodeIO.bcrypt.genSaltSync(10);
+    const hashedPin = dcodeIO.bcrypt.hashSync(transactionPin, salt);
+
+    const accountNumber = phoneNumber.slice(1); // Preserve leading zeros
+
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      transactionPin: hashedPin,
+      accountBalance: 0,
+      accountNumber,
+      createdAt: new Date()
+    });
+
+    info.style.color = "green";
+    info.textContent = "✅ Account created successfully!";
+    setTimeout(() => window.location.href = "./index.html", 2000);
+
+  } catch (error) {
+    info.style.color = "red";
+    if (error.code === 'auth/email-already-in-use') {
+      info.textContent = "This email is already registered. Try logging in.";
+    } else if (error.code === 'auth/invalid-email') {
+      info.textContent = "Invalid email address.";
+    } else if (error.code === 'auth/weak-password') {
+      info.textContent = "Password must be at least 6 characters.";
+    } else {
+      info.textContent = "Error: " + error.message;
+    }
+  } finally {
+    submitData.disabled = false;
+    submitData.textContent = "Sign Up";
+  }
+});
 });

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BytePay Sign Up</title>
     <link rel="stylesheet" href="./signUp.css">
     <script type="module" src="./signUp.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
 </head>
-
 <body>
     <!-- Intro Logo Animation -->
     <div id="logo-div" class="logo-div">
@@ -25,47 +25,77 @@
     <!-- Signup Form -->
     <main>
         <form onsubmit="event.preventDefault(); submitForm();" name="signIn" class="form">
-            <h1>SIGN UP</h1>
+            <!-- <h1>SIGN UP</h1>
 
             <input type="text" placeholder="First Name" id="firstName" required>
             <input type="text" placeholder="Last Name" id="lastName" required>
             <input type="tel" placeholder="Phone Number" id="phoneNumber" required>
-            <input type="email" placeholder="Email Address" id="emailAddress" required>
+            <input type="email" placeholder="Email Address" id="emailAddress" required> -->
+          <h1 class="text-2xl font-bold text-center text-blue-600 mb-4">SIGN UP</h1>
 
-            <div class="passwordContainer">
-                <input type="password" placeholder="Password" id="password" required>
-                <span class="eye">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256">
-                        <path fill="#2563ea" d="M243.66 126.38c-.34-.76-8.52-18.89-26.83-37.2C199.87 72.22 170.7 52 128 52S56.13 72.22 39.17 89.18c-18.31 18.31-26.49 36.44-26.83 37.2a4.08 4.08 0 0 0 0 3.25c.34.77 8.52 18.89 26.83 37.2c17 17 46.14 37.17 88.83 37.17s71.87-20.21 88.83-37.17c18.31-18.31 26.49-36.43 26.83-37.2a4.08 4.08 0 0 0 0-3.25m-32.7 35c-23.07 23-51 34.62-83 34.62s-59.89-11.65-83-34.62A135.7 135.7 0 0 1 20.44 128A135.7 135.7 0 0 1 45 94.62C68.11 71.65 96 60 128 60s59.89 11.65 83 34.62A135.8 135.8 0 0 1 235.56 128A135.7 135.7 0 0 1 211 161.38ZM128 84a44 44 0 1 0 44 44a44.05 44.05 0 0 0-44-44m0 80a36 36 0 1 1 36-36a36 36 0 0 1-36 36"/>
-                    </svg>
-                </span>
-            </div>
+      <input type="text" placeholder="First Name" id="firstName" required
+        class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none">
+      <input type="text" placeholder="Last Name" id="lastName" required
+        class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none">
+      <input type="tel" placeholder="Phone Number" id="phoneNumber" required
+        class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none">
+      <input type="email" placeholder="Email Address" id="emailAddress" required
+        class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none">
 
-            <div class="passwordContainer">
-                <input type="password" placeholder="Confirm Password" id="confirmPassword" required>
-                <span class="eye">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256">
-                        <path fill="#2563ea" d="M243.66 126.38c-.34-.76-8.52-18.89-26.83-37.2C199.87 72.22 170.7 52 128 52S56.13 72.22 39.17 89.18c-18.31 18.31-26.49 36.44-26.83 37.2a4.08 4.08 0 0 0 0 3.25c.34.77 8.52 18.89 26.83 37.2c17 17 46.14 37.17 88.83 37.17s71.87-20.21 88.83-37.17c18.31-18.31 26.49-36.43 26.83-37.2a4.08 4.08 0 0 0 0-3.25m-32.7 35c-23.07 23-51 34.62-83 34.62s-59.89-11.65-83-34.62A135.7 135.7 0 0 1 20.44 128A135.7 135.7 0 0 1 45 94.62C68.11 71.65 96 60 128 60s59.89 11.65 83 34.62A135.8 135.8 0 0 1 235.56 128A135.7 135.7 0 0 1 211 161.38ZM128 84a44 44 0 1 0 44 44a44.05 44.05 0 0 0-44-44m0 80a36 36 0 1 1 36-36a36 36 0 0 1-36 36"/>
-                    </svg>                    
-                </span>
-            </div>
+          <!-- Password Fields -->
+      <div class="relative">
+        <input type="password" placeholder="Password" id="password" required
+          class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none">
+        <i class="togglePassword fa-solid fa-eye text-gray-400 absolute right-3 top-3 cursor-pointer"></i>
+      </div>
 
-            <div class="passwordContainer">
-                <input type="password" placeholder="pin for transaction" id="transactionPin" required>
-                <span class="eye">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 256 256">
-                        <path fill="#2563ea" d="M243.66 126.38c-.34-.76-8.52-18.89-26.83-37.2C199.87 72.22 170.7 52 128 52S56.13 72.22 39.17 89.18c-18.31 18.31-26.49 36.44-26.83 37.2a4.08 4.08 0 0 0 0 3.25c.34.77 8.52 18.89 26.83 37.2c17 17 46.14 37.17 88.83 37.17s71.87-20.21 88.83-37.17c18.31-18.31 26.49-36.43 26.83-37.2a4.08 4.08 0 0 0 0-3.25m-32.7 35c-23.07 23-51 34.62-83 34.62s-59.89-11.65-83-34.62A135.7 135.7 0 0 1 20.44 128A135.7 135.7 0 0 1 45 94.62C68.11 71.65 96 60 128 60s59.89 11.65 83 34.62A135.8 135.8 0 0 1 235.56 128A135.7 135.7 0 0 1 211 161.38ZM128 84a44 44 0 1 0 44 44a44.05 44.05 0 0 0-44-44m0 80a36 36 0 1 1 36-36a36 36 0 0 1-36 36"/>
-                    </svg>                    
-                </span>
-            </div>
+      <div class="relative">
+        <input type="password" placeholder="Confirm Password" id="confirmPassword" required
+          class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none">
+        <i class="togglePassword fa-solid fa-eye text-gray-400 absolute right-3 top-3 cursor-pointer"></i>
+      </div>
 
-            <h5 id="info" class="error-message"></h5>
+      <div class="relative">
+        <input type="password" placeholder="Pin for transaction" id="transactionPin" required
+          class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-pink-400 focus:outline-none">
+        <i class="togglePassword fa-solid fa-eye text-gray-400 absolute right-3 top-3 cursor-pointer"></i>
+      </div>
+            <!-- <div class="relative">
+  <input type="password" placeholder="Password" id="password" class="passwordInput border border-pink-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-pink-400 focus:outline-none" required />
+  <i class="togglePassword fa-solid fa-eye text-gray-400 absolute right-3 top-3 cursor-pointer"></i>
+</div>
+
+<div class="relative">
+  <input type="password" placeholder="Confirm Password" id="confirmPassword" class="passwordInput border border-pink-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-pink-400 focus:outline-none" required />
+  <i class="togglePassword fa-solid fa-eye text-gray-400 absolute right-3 top-3 cursor-pointer"></i>
+</div>
+
+<div class="relative">
+  <input type="password" placeholder="Pin for transaction" id="transactionPin" class="passwordInput border border-pink-300 p-3 rounded-lg w-full focus:ring-2 focus:ring-pink-400 focus:outline-none" required />
+  <i class="togglePassword fa-solid fa-eye text-gray-400 absolute right-3 top-3 cursor-pointer"></i>
+</div> -->
+
+    <!-- Error Message -->
+      <h5 id="info" class="text-red-500 text-center min-h-[1.2rem] text-sm"></h5>
+
+      <!-- Redirect -->
+      <p class="text-center text-gray-600 text-sm">
+        Already have an account?
+        <a href="./index.html" class="text-blue-600 font-semibold hover:underline">Sign In</a>
+      </p>
+
+      <!-- Submit Button -->
+      <button type="submit" id="submitData"
+        class="bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+        Sign Up
+      </button>
+            <!-- <h5 id="info" class="error-message"></h5>
 
             <p class="redirect">
                 Already have an account? <a href="./index.html">Sign In</a>
             </p>
 
-            <button type="submit" id="submitData">Sign Up</button>
+            <button type="submit" id="submitData">Sign Up</button> -->
         </form>
     </main>
 </body>

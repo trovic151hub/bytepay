@@ -9,23 +9,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <style>
-    body{
+    * {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
 </style>
+
 <body class="bg-[#f5f5fa] text-[#1a1a1a] font-system">
 
     <!-- Header Section -->
     <div class="flex justify-between items-center py-3 p-2 bg-[#f5f5fa] fixed top-0 w-full z-50">
         <div class="flex items-center space-x-2">
-            <a href="user.html">
-                <div class="flex space-x-2 items-center">
-                    <!-- Profile Photo -->
-                    <img id="dashboardProfileImg" src="default-avatar.png" alt="Profile" class="w-9 h-9 rounded-full">
-                    <span id="greeting" class="profile-name font-medium text-[14px] text-gray-900">Sign Up/Login </span>
-                </div>
-            </a>
+    <a href="user.html" class="flex items-center space-x-2">
+        <!-- Profile Icon / Photo -->
+        <div id="dashboardProfileIcon" class="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center">
+            <i class="fa-solid fa-user text-gray-600 text-sm"></i>
         </div>
+
+        <span id="greeting" class="profile-name font-medium text-[14px] text-gray-900">
+            Sign Up / Login
+        </span>
+    </a>
+</div>
         <div class="flex items-center text-red space-x-4">
             <a href="">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5" viewBox="0 0 24 24">
@@ -289,20 +293,13 @@
 
     <div id="slider" class="relative overflow-hidden border my-3 rounded-lg relative">
         <div id="slides" class="gap-1 flex w-full h-[80px] transition-transform duration-700 ease-in-out">
-            <img src="./index7.jpg" class="w-full flex-shrink-0"
-                alt="Slide 7" />
-            <img src="./index6.jpg" class="w-full flex-shrink-0"
-                alt="Slide 6" />
-            <img src="./index5.jpg" class="w-full flex-shrink-0"
-                alt="Slide 5" />
-            <img src="./index3.jpg" class="w-full flex-shrink-0"
-                alt="Slide 3" />
-            <img src="./index4.jpg" class="w-full flex-shrink-0"
-                alt="Slide 4" />
-            <img src="./index2.jpg" class="w-full flex-shrink-0"
-                alt="Slide 2" />
-            <img src="./index1.jpg" class="w-full flex-shrink-0"
-                alt="Slide 1" />
+            <img src="./index7.jpg" class="w-full flex-shrink-0" alt="Slide 7" />
+            <img src="./index6.jpg" class="w-full flex-shrink-0" alt="Slide 6" />
+            <img src="./index5.jpg" class="w-full flex-shrink-0" alt="Slide 5" />
+            <img src="./index3.jpg" class="w-full flex-shrink-0" alt="Slide 3" />
+            <img src="./index4.jpg" class="w-full flex-shrink-0" alt="Slide 4" />
+            <img src="./index2.jpg" class="w-full flex-shrink-0" alt="Slide 2" />
+            <img src="./index1.jpg" class="w-full flex-shrink-0" alt="Slide 1" />
         </div>
     </div>
 
@@ -356,11 +353,11 @@
         </div>
     </div>
 
-    <div id="loader" class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
-  <img src="./bytepayLogo.png" 
-       alt="Loading..." 
-       class="h-20 px-1 py-1 bg-white rounded-lg animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
-</div>
+    <div id="loader"
+        class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
+        <img src="./bytepayLogo.png" alt="Loading..."
+            class="h-20 px-1 py-1 bg-white rounded-lg animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
+    </div>
 
 
     <script type="module">
@@ -408,148 +405,163 @@
             showSlide(0);
         });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const balances = document.querySelectorAll(".balance");
-  const icons = document.querySelectorAll(".toggleIcon");
+        document.addEventListener("DOMContentLoaded", () => {
+            const balances = document.querySelectorAll(".balance");
+            const icons = document.querySelectorAll(".toggleIcon");
 
-  // Load toggle preference
-  let visible = localStorage.getItem("balanceVisible");
-  visible = visible === null ? true : visible === "true";
+            // Load toggle preference
+            let visible = localStorage.getItem("balanceVisible");
+            visible = visible === null ? true : visible === "true";
 
-  let latestBalance = "₦0.00"; // will update when Firestore loads
+            let latestBalance = "₦0.00"; // will update when Firestore loads
 
-  // 🔹 Update balances in UI
-  function updateBalances() {
-    balances.forEach(el => {
-      el.textContent = visible ? latestBalance : "•••••••";
-    });
+            // 🔹 Update balances in UI
+            function updateBalances() {
+                balances.forEach(el => {
+                    el.textContent = visible ? latestBalance : "•••••••";
+                });
 
-    icons.forEach(icon => {
-      icon.classList.toggle("fa-eye", visible);
-      icon.classList.toggle("fa-eye-slash", !visible);
-    });
-  }
+                icons.forEach(icon => {
+                    icon.classList.toggle("fa-eye", visible);
+                    icon.classList.toggle("fa-eye-slash", !visible);
+                });
+            }
 
-  // 🔹 Listen for toggle clicks
-  icons.forEach(icon => {
-    icon.addEventListener("click", () => {
-      visible = !visible;
-      localStorage.setItem("balanceVisible", visible);
-      updateBalances();
-    });
-  });
+            // 🔹 Listen for toggle clicks
+            icons.forEach(icon => {
+                icon.addEventListener("click", () => {
+                    visible = !visible;
+                    localStorage.setItem("balanceVisible", visible);
+                    updateBalances();
+                });
+            });
 
-  // 🔹 Fetch balance from Firestore in realtime
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const userRef = doc(db, "users", user.uid);
-      onSnapshot(userRef, (docSnap) => {
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          // Save latest balance
-          latestBalance = `₦${(data.accountBalance || 0).toLocaleString()}`;
-          updateBalances();
-        }
-      });
-    }
-  });
+            // 🔹 Fetch balance from Firestore in realtime
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const userRef = doc(db, "users", user.uid);
+                    onSnapshot(userRef, (docSnap) => {
+                        if (docSnap.exists()) {
+                            const data = docSnap.data();
+                            // Save latest balance
+                            latestBalance = `₦${(data.accountBalance || 0).toLocaleString()}`;
+                            updateBalances();
+                        }
+                    });
+                }
+            });
 
-  // Initialize with default
-  updateBalances();
-});
+            // Initialize with default
+            updateBalances();
+        });
         // ✅ Firebase Imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
 
-// ✅ Firebase Config
-const firebaseConfig = {
-  apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
-  authDomain: "testing-firebase-d7f88.firebaseapp.com",
-  projectId: "testing-firebase-d7f88",
-  storageBucket: "testing-firebase-d7f88.appspot.com",
-  messagingSenderId: "339099724691",
-  appId: "1:339099724691:web:83ead43e1d41d2e131d666"
-};
+        // ✅ Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
+            authDomain: "testing-firebase-d7f88.firebaseapp.com",
+            projectId: "testing-firebase-d7f88",
+            storageBucket: "testing-firebase-d7f88.appspot.com",
+            messagingSenderId: "339099724691",
+            appId: "1:339099724691:web:83ead43e1d41d2e131d666"
+        };
 
-// ✅ Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app)
+        // ✅ Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app)
 
-// UI elements
-const nameEl = document.querySelector(".profile-name");
-const balanceEl = document.querySelector(".balance");
+        // UI elements
+        const nameEl = document.querySelector(".profile-name");
+        const balanceEl = document.querySelector(".balance");
 
- // 🔹 Loader utility
-    const loader = document.getElementById("loader");
-    function showLoader() {
-      loader.style.display = "flex";
-      document.body.style.overflow = "hidden";
-      setTimeout(() => loader.style.opacity = "1", 10);
-    }
-    function hideLoader() {
-      loader.style.opacity = "0";
-      setTimeout(() => {
-        loader.style.display = "none";
-        document.body.style.overflow = "";
-      }, 500);
-    }
-
-    // 🔹 Auth listener
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        showLoader(); // show loader while fetching
-
-        try {
-          const userRef = doc(db, "users", user.uid);
-          const snap = await getDoc(userRef);
-
-          if (snap.exists()) {
-            const data = snap.data();
-            nameEl.textContent = "Hi, " + (data.firstName || "User");
-            balanceEl.textContent = "₦" + ((data.balance || 0).toLocaleString());
-          } else {
-            console.error("No user document found");
-          }
-        } catch (err) {
-          console.error("Error loading dashboard:", err);
-        } finally {
-          hideLoader(); // hide loader when done
+        // 🔹 Loader utility
+        const loader = document.getElementById("loader");
+        function showLoader() {
+            loader.style.display = "flex";
+            document.body.style.overflow = "hidden";
+            setTimeout(() => loader.style.opacity = "1", 10);
         }
-      } else {
-        console.log("User not logged in");
-        hideLoader();
-      }
-    });
+        function hideLoader() {
+            loader.style.opacity = "0";
+            setTimeout(() => {
+                loader.style.display = "none";
+                document.body.style.overflow = "";
+            }, 500);
+        }
 
-    onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = "./index.html";
-    return;
-  }
+        // 🔹 Auth listener
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                showLoader(); // show loader while fetching
 
-  try {
-    const userRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userRef);
+                try {
+                    const userRef = doc(db, "users", user.uid);
+                    const snap = await getDoc(userRef);
 
-    if (userSnap.exists()) {
-      const data = userSnap.data();
+                    if (snap.exists()) {
+                        const data = snap.data();
+                        nameEl.textContent = "Hi, " + (data.firstName || "User");
+                        balanceEl.textContent = "₦" + ((data.balance || 0).toLocaleString());
+                    } else {
+                        console.error("No user document found");
+                    }
+                } catch (err) {
+                    console.error("Error loading dashboard:", err);
+                } finally {
+                    hideLoader(); // hide loader when done
+                }
+            } else {
+                console.log("User not logged in");
+                hideLoader();
+            }
+        });
 
-      // ✅ Load profile image
-      const dashboardProfileImg = document.getElementById("dashboardProfileImg");
-      dashboardProfileImg.src =
-        data.profileImg || user.photoURL || "default-avatar.png";
-    } else {
-      console.log("No Firestore record for this user.");
+        onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+        window.location.href = "./index.html";
+        return;
     }
-  } catch (error) {
-    console.error("Error loading profile image:", error);
-  } finally {
-    hideLoader();
-  }
+
+    try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+            const data = userSnap.data();
+
+            const profileDiv = document.getElementById("dashboardProfileIcon");
+
+            if (data.profileImg) {
+                // Set background image if user uploaded one
+                profileDiv.style.backgroundImage = `url(${data.profileImg})`;
+                profileDiv.style.backgroundSize = "cover";
+                profileDiv.style.backgroundPosition = "center";
+                profileDiv.innerHTML = ""; // Remove the Font Awesome icon
+            } else {
+                // Keep the default Font Awesome icon
+                profileDiv.innerHTML = '<i class="fa-solid fa-user text-gray-600 text-sm"></i>';
+                profileDiv.style.backgroundImage = ""; // remove background if any
+            }
+
+            // Update greeting
+            const nameEl = document.querySelector(".profile-name");
+            nameEl.textContent = "Hi, " + (data.firstName || "User");
+
+        } else {
+            console.log("No Firestore record for this user.");
+        }
+    } catch (error) {
+        console.error("Error loading profile image:", error);
+    } finally {
+        hideLoader();
+    }
 });
     </script>
 </body>
+
 </html>
