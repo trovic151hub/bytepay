@@ -19,17 +19,18 @@
     <!-- Header Section -->
     <div class="flex justify-between items-center py-3 p-2 bg-[#f5f5fa] fixed top-0 w-full z-50">
         <div class="flex items-center space-x-2">
-    <a href="user.html" class="flex items-center space-x-2">
-        <!-- Profile Icon / Photo -->
-        <div id="dashboardProfileIcon" class="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center">
-            <i class="fa-solid fa-user text-gray-600 text-sm"></i>
-        </div>
+            <a href="user.html" class="flex items-center space-x-2">
+                <!-- Profile Icon / Photo -->
+                <div id="dashboardProfileIcon"
+                    class="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center">
+                    <i class="fa-solid fa-user text-gray-600 text-sm"></i>
+                </div>
 
-        <span id="greeting" class="profile-name font-medium text-[14px] text-gray-900">
-            Sign Up / Login
-        </span>
-    </a>
-</div>
+                <span id="greeting" class="profile-name font-medium text-[14px] text-gray-900">
+                    Sign Up / Login
+                </span>
+            </a>
+        </div>
         <div class="flex items-center text-red space-x-4">
             <a href="">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5" viewBox="0 0 24 24">
@@ -52,7 +53,7 @@
         </div>
     </div>
 
-    <div class="max-w-sm mx-auto px-4 py-2 mt-10 mb-4">
+    <div class="max-w-sm mx-auto px-4 py-2 mt-10 mb-8">
 
         <!-- Balance Card -->
         <div class="bg-blue-100 rounded-xl p-4 mt-4 flex justify-between items-center relative z-10">
@@ -522,50 +523,45 @@
         });
 
         onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-        window.location.href = "./index.html";
-        return;
-    }
-
-    try {
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists()) {
-            const data = userSnap.data();
-
-            const profileDiv = document.getElementById("dashboardProfileIcon");
-
-            if (data.profileImg) {
-                // Set background image if user uploaded one
-                profileDiv.style.backgroundImage = `url(${data.profileImg})`;
-                profileDiv.style.backgroundSize = "cover";
-                profileDiv.style.backgroundPosition = "center";
-                profileDiv.innerHTML = ""; // Remove the Font Awesome icon
-            } else {
-                // Keep the default Font Awesome icon
-                profileDiv.innerHTML = '<i class="fa-solid fa-user text-gray-600 text-sm"></i>';
-                profileDiv.style.backgroundImage = ""; // remove background if any
+            if (!user) {
+                window.location.href = "./index.html";
+                return;
             }
 
-            // Update greeting
-            const nameEl = document.querySelector(".profile-name");
-            nameEl.textContent = "Hi, " + (data.firstName || "User");
+            try {
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
 
-        } else {
-            console.log("No Firestore record for this user.");
-        }
-    } catch (error) {
-        console.error("Error loading profile image:", error);
-    } finally {
-        hideLoader();
-    }
-});
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
+
+                    const profileDiv = document.getElementById("dashboardProfileIcon");
+
+                    if (data.profileImg) {
+                        // Set background image if user uploaded one
+                        profileDiv.style.backgroundImage = `url(${data.profileImg})`;
+                        profileDiv.style.backgroundSize = "cover";
+                        profileDiv.style.backgroundPosition = "center";
+                        profileDiv.innerHTML = ""; // Remove the Font Awesome icon
+                    } else {
+                        // Keep the default Font Awesome icon
+                        profileDiv.innerHTML = '<i class="fa-solid fa-user text-gray-600 text-sm"></i>';
+                        profileDiv.style.backgroundImage = ""; // remove background if any
+                    }
+
+                    // Update greeting
+                    const nameEl = document.querySelector(".profile-name");
+                    nameEl.textContent = "Hi, " + (data.firstName || "User");
+
+                } else {
+                    console.log("No Firestore record for this user.");
+                }
+            } catch (error) {
+                console.error("Error loading profile image:", error);
+            } finally {
+                hideLoader();
+            }
+        });
     </script>
 </body>
-<<<<<<< HEAD
-
 </html>
-=======
-</html>
->>>>>>> d5dfb852664e46a607ad8328841ed2c685f7cdf8
