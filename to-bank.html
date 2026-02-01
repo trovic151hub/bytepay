@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,149 +17,162 @@
         cursor: pointer;
     }
 </style>
-
 <body class="bg-[#f4f4fa] text-sm">
 
-    <div class="max-w-sm mx-auto">
+  <!-- ================= HEADER (FULL WIDTH) ================= -->
+  <div class="fixed top-0 left-0 w-full z-50 bg-[#f4f4fa]">
+    <div class="max-w-sm mx-auto flex items-center justify-between p-4">
+      <div class="flex space-x-3 items-center">
+        <button onclick="history.back()">
+          <i class="fas fa-arrow-left text-gray-600"></i>
+        </button>
+        <h1 class="font-semibold text-gray-900">Transfer to Bank</h1>
+      </div>
 
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-3 p-4 bg-[#f4f4fa] fixed top-0 w-full z-50">
-            <div class="flex space-x-3">
-                <button onclick="history.back()">
-                    <i class="fas text-gray-600 fa-arrow-left"></i>
-                </button>
-                <h1 class="text-md font-semibold text-gray-900 -mt-1">Transfer to Bank</h1>
-            </div>
+      <div class="flex space-x-6">
+        <i class="fas fa-image text-gray-500"></i>
+        <i class="fas fa-ellipsis-v text-gray-500"></i>
+      </div>
+    </div>
+  </div>
 
-            <div class="flex space-x-8">
-                <i class="fas fa-image mt-1 text-gray-500"></i>
-                <i class="fas fa-ellipsis-v text-lg -mt-1 text-gray-500"></i>
-            </div>
-        </div>
+  <!-- ================= PAGE CONTENT ================= -->
+  <div class="max-w-sm mx-auto pt-14 pb-4">
 
-        <!-- Tab Switch -->
-        <div class="bg-white m-4 mt-[18%] p-4 rounded-xl">
-            <div class="flex justify-between pb-2">
-                <button class="flex-1 text-center text-blue-600 font-semibold border-b-2 border-blue-600 pb-2">To Other
-                    Bank</button>
-                <button class="flex-1 text-center text-gray-600 font-semibold pb-2">To BytePay</button>
-            </div>
+    <!-- Transfer Card -->
+    <div class="bg-white m-4 p-4 rounded-xl">
 
-            <!-- Banner -->
-            <div class="bg-green-50 text-green-400 text-center py-2 text-xs mt-2 rounded-lg">
-                <div class="flex justify-between">
-                    <span class="ml-16">
-                        <i class="fa fa-bell mr-1 text-green-400"></i> All bank transfers are free!
-                    </span>
-                    <i class="fa fa-chevron-right text-green-400 mr-4 text-xs"></i>
-                </div>
-            </div>
+      <!-- Tabs -->
+      <div class="flex justify-between border-b mb-3">
+        <button class="flex-1 text-center text-blue-600 font-semibold border-b-2 border-blue-600 pb-2">
+          To Other Bank
+        </button>
+        <button class="flex-1 text-center text-gray-500 pb-2">
+          To BytePay
+        </button>
+      </div>
 
-            <!-- Form -->
-            <div class="mt-4 space-y-4">
-                <input id="recipientAccount" type="text" maxlength="10" placeholder="Enter 10-digit Account No."
-                    class="w-full border-0 focus:outline-none focus:ring-none focus:ring-none" />
+      <!-- Banner -->
+      <div class="bg-green-50 text-green-500 text-xs rounded-lg p-2 flex justify-between items-center mb-4">
+        <span>
+          <i class="fa fa-bell mr-1"></i>
+          All bank transfers are free!
+        </span>
+        <i class="fa fa-chevron-right"></i>
+      </div>
 
-                <div class="relative">
-                    <div id="bankWrapper" class="flex items-center border-0 rounded px-2 bg-white cursor-text"></div>
-                    <img id="selectedBankLogo" src="" alt="" class="h-6 rounded-full mr-2 hidden">
-                    <input id="bankSearch" type="text" placeholder="Select Bank"
-                        class="w-full border-0 focus:outline-none focus:ring-none focus:ring-none" autocomplete="off" />
-                </div>
+      <!-- ================= FORM ================= -->
+      <div class="space-y-4">
 
-                <ul id="bankList"
-                    class="absolute w-full bg-gray-300 border rounded mt-1 hidden max-h-40 overflow-y-auto z-50">
-                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex ">
-                        <img class="h-6 rounded-full mr-3 text-center"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDqECR_Fu-f-dK4jpFdwzA-YPdS2vsknVZpA&s"
-                            alt="">
-                        <span>Access Bank</span>
-                    </li>
-                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
-                        <img class="h-6 rounded-full mr-3 text-center"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmtNynbqsL2BJVxIpcXgA2fjMVsE30rL5elQ&s"
-                            alt="">
-                        <span>GTBank</span>
-                    </li>
-                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
-                        <img class="h-6 w-6 rounded-full mr-3 text-center"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGD8hD3Us1uXUK_RxLbAB3HxgrahoV65NfZg&s"
-                            alt="">
-                        <span>UBA</span>
-                    </li>
-                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
-                        <img class="h-6 rounded-full mr-3 text-center"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZyR7HqJtiwMx6FFUCWE6CkbY8TZ16uYtvw&s"
-                            alt="">
-                        <span>First Bank</span>
-                    </li>
-                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
-                        <img class="h-6 rounded-full mr-3 text-center"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiluo05hkIPy73ZazeRtB_t4Pm8-6Dzvs23Q&s"
-                            alt="">
-                        <span>OPay</span>
-                    </li>
-                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
-                        <img class="h-8 rounded-full mr-3 text-center hover:text-white"
-                            src="/JS-project/bytepayLogo.png" alt="">
-                        <span>BytePay</span>
-                    </li>
-                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
-                        <img class="h-6 rounded-full mr-3 text-center"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVpXgpIRv3vqqnxPV3Xdx_osR2I82_KNbFDg&s"
-                            alt="">
-                        <span>PalmPay</span>
-                    </li>
-                    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex">
-                        <img class="h-6 rounded-full mr-3 text-center"
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVQeh5RWr2iLJHlHfGSOrqPpWh_674K32RBQ&s"
-                            alt="">
-                        <span>Kuda</span>
-                    </li>
-                </ul>
-            </div>
+        <!-- Account Number -->
+        <input
+          id="recipientAccount"
+          type="tel"
+          inputmode="numeric"
+          maxlength="10"
+          placeholder="Enter 10-digit Account No."
+          class="w-full border-b bg-transparent p-2 focus:outline-none"
+        />
 
-            <div class="w-full p-3 flex justify-between">
-                <span id="recipientName" class="text-gray-500 font-medium my-2 text-left"></span>
-            </div>
+        <!-- Bank Selector -->
+<div class="relative">
+  <input
+    id="bankSearch"
+    type="text"
+    placeholder="Select Bank"
+    class="w-full border-b bg-transparent p-2 focus:outline-none"
+    autocomplete="off"
+  />
 
-            <input id="sendAmount" type="text" placeholder="Enter Amount"
-                class="w-full border-0 mb-3 focus:outline-none focus:ring-none focus:ring-none" />
+  <ul
+    id="bankList"
+    class="absolute left-0 right-0 bg-white rounded-lg shadow-lg mt-1 hidden max-h-40 overflow-y-auto z-[9999]"
+  >
+    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex items-center gap-2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDqECR_Fu-f-dK4jpFdwzA-YPdS2vsknVZpA&s"
+           class="w-5 h-5 rounded-full" />
+      <span>Access Bank</span>
+    </li>
 
-            <button id="sendBtn" class="w-full p-3 rounded-lg bg-blue-600 text-white font-semibold">Next</button>
-        </div>
+    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex items-center gap-2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmtNynbqsL2BJVxIpcXgA2fjMVsE30rL5elQ&s"
+           class="w-5 h-5 rounded-full" />
+      <span>GTBank</span>
+    </li>
 
-    <!-- PIN Confirmation Modal -->
-    <div id="pinModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded-xl w-80">
-            <h2 class="text-lg font-bold text-center mb-4">Enter Transaction PIN</h2>
-            <input id="pinInput" type="password" maxlength="6" placeholder="6-digit PIN"
-                class="w-full border p-2 rounded text-center text-xl tracking-widest" />
-            <div class="flex justify-between mt-4">
-                <button id="cancelPin" class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
-                <button id="confirmPin" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Confirm</button>
-            </div>
-        </div>
+    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex items-center gap-2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGD8hD3Us1uXUK_RxLbAB3HxgrahoV65NfZg&s"
+           class="w-5 h-5 rounded-full" />
+      <span>UBA</span>
+    </li>
+
+    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex items-center gap-2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqZyR7HqJtiwMx6FFUCWE6CkbY8TZ16uYtvw&s"
+           class="w-5 h-5 rounded-full" />
+      <span>First Bank</span>
+    </li>
+
+    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex items-center gap-2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiluo05hkIPy73ZazeRtB_t4Pm8-6Dzvs23Q&s"
+           class="w-5 h-5 rounded-full" />
+      <span>OPay</span>
+    </li>
+
+    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex items-center gap-2">
+      <img src="./bytepayLogo.png"
+           class="w-5 h-5 rounded-full" />
+      <span>BytePay</span>
+    </li>
+
+    <li class="p-2 hover:bg-blue-600 hover:text-white cursor-pointer flex items-center gap-2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVQeh5RWr2iLJHlHfGSOrqPpWh_674K32RBQ&s"
+           class="w-5 h-5 rounded-full" />
+      <span>Kuda</span>
+    </li>
+  </ul>
+</div>
+
+        <!-- Recipient Name -->
+        <span id="recipientName" class="text-gray-500 font-medium block"></span>
+
+        <!-- Amount -->
+        <input
+          id="sendAmount"
+          type="number"
+          inputmode="decimal"
+          placeholder="Enter Amount"
+          class="w-full border-b bg-transparent p-2 focus:outline-none"
+        />
+
+        <!-- Send Button -->
+        <button
+          id="sendBtn"
+          class="w-full p-3 rounded-lg bg-blue-600 text-white font-semibold"
+        >
+          Next
+        </button>
+
+      </div>
     </div>
 
-    <!-- Warning -->
+        <!-- Warning -->
     <div class="px-5 -mt-3 -mb-1">
         <a href="" class="">
             <img src="./image.jpg" class="rounded-lg" alt="">
         </a>
     </div>
 
-    <!-- Success Rate Monitor -->
+    <!-- ================= INFO CARD ================= -->
     <div class="mx-4 mt-4 bg-white rounded-lg p-3 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-            <i class="fas fa-chart-line text-gray-500"></i>
-            <span class="text-sm text-gray-800">Bank transfer success rate monitor</span>
-        </div>
-        <i class="fas fa-chevron-right text-gray-400 font-sm"></i>
+      <div class="flex items-center gap-2">
+        <i class="fas fa-chart-line text-gray-500"></i>
+        <span>Bank transfer success rate monitor</span>
+      </div>
+      <i class="fas fa-chevron-right text-gray-400"></i>
     </div>
 
+    <!-- Tabs -->
     <div class="p-2 mt-3 mb-3 mx-4 bg-white">
-        <!-- Tabs -->
         <div class="flex justify-around space-x-6">
             <div class="flex gap-4">
                 <button class="tab-btn text-blue-600 font-semibold border-b-2 border-blue-600 pb-2"
@@ -171,7 +183,7 @@
             <i class="fas fa-search text-gray-400 mt-1"></i>
         </div>
 
-        <!-- Swipeable Content -->
+    <!-- Swipeable Content -->
         <div id="tab-container" class="flex overflow-hidden transition-transform duration-300"
             style="scroll-snap-type: x mandatory;">
             <!-- Tab Panels -->
@@ -207,48 +219,69 @@
     </div>
     </div>
 
-    <!-- ✅ Success Modal -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white rounded-2xl p-6 w-80 text-center shadow-lg">
-            <div class="flex justify-center mb-3">
-                <div class="w-14 h-14 flex items-center justify-center bg-green-100 rounded-full">
-                    <i class="fas fa-check text-green-600 text-2xl"></i>
-                </div>
-            </div>
-            <h2 class="text-lg font-semibold text-gray-800">Transaction Successful!</h2>
-            <p id="successMessage" class="text-sm text-gray-600 mt-2"></p>
-            <button id="closeSuccess" onclick="closeSuccessModal()"
-                class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                Done
-            </button>
-        </div>
-    </div>
+  </div>
 
-    <!-- ❌ Error Modal -->
-<div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-2xl p-6 w-80 text-center shadow-lg">
-        <div class="flex justify-center mb-3">
-            <div class="w-14 h-14 flex items-center justify-center bg-red-100 rounded-full">
-                <i class="fas fa-times text-red-600 text-2xl"></i>
-            </div>
-        </div>
-        <h2 class="text-lg font-semibold text-gray-800">Transaction Failed!</h2>
-        <p id="errorMessage" class="text-sm text-gray-600 mt-2"></p>
-        <button id="closeError" onclick="closeErrorModal()"
-            class="mt-4 w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
-            Close
-        </button>
+  <!-- ================= PIN MODAL ================= -->
+  <div id="pinModal" class="hidden fixed inset-0 bg-black-40 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl w-80">
+      <h2 class="text-lg font-bold text-center mb-4">Enter Transaction PIN</h2>
+      <input
+        id="pinInput"
+        type="password"
+        maxlength="6"
+        placeholder="6-digit PIN"
+        class="w-full border p-2 rounded text-center text-xl tracking-widest"
+      />
+      <div class="flex justify-between mt-4">
+        <button id="cancelPin" class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
+        <button id="confirmPin" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Confirm</button>
+      </div>
     </div>
-</div>
+  </div>
 
-    <div id="loader"
-        class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500"
-        style="display:none; opacity:0;">
-        <img src="./bytepayLogo.png" alt="Loading..."
-            class="w-24 h-24 animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
+  <!-- ================= SUCCESS MODAL ================= -->
+  <div id="successModal" class="hidden fixed inset-0 bg-black-40 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-6 w-80 text-center">
+      <div class="w-14 h-14 mx-auto flex items-center justify-center bg-green-100 rounded-full mb-3">
+        <i class="fas fa-check text-green-600 text-2xl"></i>
+      </div>
+      <h2 class="font-semibold">Transaction Successful!</h2>
+      <p id="successMessage" class="text-sm text-gray-600 mt-2"></p>
+      <button
+        onclick="closeSuccessModal()"
+        class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg"
+      >
+        Done
+      </button>
     </div>
+  </div>
 
-    <script type="module">
+  <!-- ================= ERROR MODAL ================= -->
+  <div id="errorModal" class="hidden fixed inset-0 bg-black-40 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-6 w-80 text-center">
+      <div class="w-14 h-14 mx-auto flex items-center justify-center bg-red-100 rounded-full mb-3">
+        <i class="fas fa-times text-red-600 text-2xl"></i>
+      </div>
+      <h2 class="font-semibold">Transaction Failed!</h2>
+      <p id="errorMessage" class="text-sm text-gray-600 mt-2"></p>
+      <button
+        onclick="closeErrorModal()"
+        class="mt-4 w-full bg-red-600 text-white py-2 rounded-lg"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= LOADER ================= -->
+  <div
+    id="loader"
+    class="hidden fixed inset-0 bg-black-40 backdrop-blur-sm bg-opacity-30 flex items-center justify-center z-50"
+  >
+    <img src="./bytepayLogo.png" class="w-24 h-24 animate-pulse" />
+  </div>
+  
+  <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
         import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, serverTimestamp, query, where, getDocs }
@@ -348,15 +381,22 @@ try {
 }
 
                 // --- Check balance ---
-                 if ((senderData.accountBalance || 0) < amount) {
-        showErrorModal("Insufficient funds");
-        hideLoader();
-        return;
-    }
+if ((senderData.accountBalance || 0) < amount) {
+    // Save failed transaction
+    await saveTransaction(user.uid, {
+        amount,
+        type: "debit",
+        status: "failed",
+        description: `Failed attempt to send ₦${amount} to ${bankInput.value} due to insufficient funds`
+    });
+
+    showErrorModal("Insufficient funds");
+    hideLoader();
+    return;
+}
 
                 // --- Find recipient ---
-                const q = query(collection(db, "users"), 
-                // where("accountNumber", "==", Number(recipientAccountNumber)));
+                const q = query(collection(db, "users"),
                 where("accountNumber", "==", recipientAccountNumber.trim()));
                 const snap = await getDocs(q);
                 if (snap.empty) return alert("Recipient not found");
@@ -427,8 +467,7 @@ try {
         acctInput.addEventListener("blur", async (e) => {
             const accountNumber = e.target.value.trim();
             if (accountNumber.length >= 9) {
-                const q = query(collection(db, "users"), 
-                // where("accountNumber", "==", Number(accountNumber)));
+                const q = query(collection(db, "users"),
                 where("accountNumber", "==", accountNumber.trim()));
                 const snap = await getDocs(q);
                 if (!snap.empty) {
@@ -453,34 +492,55 @@ try {
 
         // Filter banks
         bankInput.addEventListener("input", () => {
-            const queryText = bankInput.value.toLowerCase();
-            banks.forEach(li => {
-                if (li.textContent.toLowerCase().includes(queryText)) {
-                    li.style.display = "flex"; // ✅ keep flex for logo + name
-                } else {
-                    li.style.display = "none";
-                }
-            });
+  const filter = bankInput.value.toLowerCase();
+  let hasMatch = false;
 
-            // Hide logo when user types (until a new selection is made)
-            if (bankInput.value === "") {
-                selectedBankLogo.classList.add("hidden");
-            }
-        });
+  banks.forEach(li => {
+    const bankName = li.querySelector("span").textContent.toLowerCase();
+    const match = bankName.includes(filter);
 
-        // Select bank on click
-        banks.forEach(li => li.addEventListener("click", () => {
-            const bankName = li.querySelector("span").textContent.trim();
-            const logoUrl = li.querySelector("img").src;
+    li.style.display = match ? "flex" : "none";
+    if (match) hasMatch = true;
+  });
 
-            // Update input and logo
-            bankInput.value = bankName;
+  bankList.classList.toggle("hidden", !hasMatch);
+});
+
+// Select bank on click
+banks.forEach(li => {
+    li.addEventListener("click", (e) => {
+        e.stopPropagation(); // ✅ prevent document click from immediately hiding
+
+        const bankName = li.querySelector("span").textContent.trim();
+        const logoUrl = li.querySelector("img").src;
+
+        bankInput.value = bankName;
+
+        // Optional: if you have a logo element
+        const selectedBankLogo = document.getElementById("selectedBankLogo");
+        if (selectedBankLogo) {
             selectedBankLogo.src = logoUrl;
             selectedBankLogo.classList.remove("hidden");
+        }
 
-            // Close dropdown
-            bankList.classList.add("hidden");
-        }));
+        bankList.classList.add("hidden");
+    });
+});
+
+// Click outside closes the dropdown
+        document.addEventListener("click", e => {
+  if (!e.target.closest(".relative")) {
+    bankList.classList.add("hidden");
+  }
+});
+
+// Pressing Escape also closes dropdown
+bankInput.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        bankList.classList.add("hidden");
+        bankInput.blur();
+    }
+});
 
         // --- Success modal ---
         function showSuccessModal(amount, recipientName = "") {

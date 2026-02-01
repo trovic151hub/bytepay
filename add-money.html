@@ -123,7 +123,7 @@
                     </div>
 
                     <!-- Modal Background -->
-                    <div id="topupModal" class="fixed inset-0 bg-black bg-opacity-40 hidden z-50">
+                    <div id="topupModal" class="fixed inset-0 bg-black  backdrop-blur-sm bg-opacity-40 hidden z-50">
                         <!-- Modal Content (bottom sheet style) -->
                         <div id="modalContent"
                             class="absolute bottom-0 w-full bg-[#f5f5fa] rounded-t-2xl p-6 shadow-lg animate__animated">
@@ -240,9 +240,9 @@
             </div>
         </div>
 
-        <!-- ✅ Success Modal -->
+                <!-- ✅ Success Modal -->
         <div id="successModal"
-            class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            class="hidden fixed inset-0 bg-black-40 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-2xl shadow-lg p-6 w-80 text-center animate__animated animate__fadeInUp">
 
                 <!-- Icon -->
@@ -274,12 +274,19 @@
             </div>
         </div>
 
-        <div id="loader"
+         <!-- ================= LOADER ================= -->
+  <div
+    id="loader"
+    class="hidden fixed inset-0 bg-black-40 backdrop-blur-sm bg-opacity-30 flex items-center justify-center z-50"
+  >
+    <img src="./bytepayLogo.png" class="w-24 h-24 animate-pulse" />
+  </div>
+        <!-- <div id="loader"
             class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500"
             style="display:none; opacity:0;">
             <img src="./bytepayLogo.png" alt="Loading..."
                 class="h-20 px-1 py-1 rounded-lg bg-white animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
-        </div>
+        </div> -->
 
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
@@ -360,23 +367,48 @@
                 const closeSuccessBtn = document.getElementById("closeSuccess");
 
                 // ------------------- Loader Functions -------------------
-                const showLoader = () => {
-                    if (loader) {
-                        loader.style.display = "flex";
-                        loader.style.opacity = "1";
-                        document.body.style.overflow = "hidden";
-                    }
-                };
+const showLoader = () => {
+    if (loader) {
+        // Hide all modals first
+        const allModals = [topupModal, pinModal, successModal];
+        allModals.forEach(modal => {
+            if (modal) modal.classList.add("hidden");
+        });
 
-                const hideLoader = () => {
-                    if (loader) {
-                        loader.style.opacity = "0";
-                        setTimeout(() => {
-                            loader.style.display = "none";
-                            document.body.style.overflow = "";
-                        }, 300);
-                    }
-                };
+        loader.style.display = "flex";
+        loader.style.opacity = "1";
+        document.body.style.overflow = "hidden";
+    }
+};
+
+const hideLoader = () => {
+    if (loader) {
+        loader.style.opacity = "0";
+        setTimeout(() => {
+            loader.style.display = "none";
+            document.body.style.overflow = "";
+        }, 300);
+    }
+};
+
+                // // ------------------- Loader Functions -------------------
+                // const showLoader = () => {
+                //     if (loader) {
+                //         loader.style.display = "flex";
+                //         loader.style.opacity = "1";
+                //         document.body.style.overflow = "hidden";
+                //     }
+                // };
+
+                // const hideLoader = () => {
+                //     if (loader) {
+                //         loader.style.opacity = "0";
+                //         setTimeout(() => {
+                //             loader.style.display = "none";
+                //             document.body.style.overflow = "";
+                //         }, 300);
+                //     }
+                // };
 
                 // ------------------- Modal Functions -------------------
                 const openModal = () => {
@@ -490,7 +522,6 @@
                 window.closeSuccessModal = closeSuccessModal;
 
                 // Loader element
-// const loader = document.getElementById("loader");
 const accountSpan = document.querySelector(".profile-account");
 const copyBtn = document.getElementById("copy");
 const tooltip = document.getElementById("tooltip");
@@ -537,7 +568,7 @@ onAuthStateChanged(auth, async (user) => {
     loader.style.display = "none";
   }
 });
-            });
-        </script>
+});
+</script>
 </body>
 </html>
