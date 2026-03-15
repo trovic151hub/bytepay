@@ -5,7 +5,7 @@
 }
 
 :root {
-  --primary-color: #ffffff;   /* white form bg */
+  --primary-color: #ffffff;
   --secondary-color: #2563ea;
   --font-color: #050505;
   --bg-color: #f6f5fa;
@@ -20,7 +20,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* Centered container */
 .login-container {
   display: flex;
   align-items: center;
@@ -28,7 +27,6 @@ body {
   width: 100%;
 }
 
-/* Form box */
 .login-form {
   background: var(--primary-color);
   padding: 40px 30px;
@@ -44,7 +42,6 @@ body {
   font-size: 2rem;
 }
 
-/* Inputs */
 .login-form input {
   width: 100%;
   height: 45px;
@@ -59,7 +56,7 @@ body {
 
 .login-form input:focus {
   outline: none;
-  border-color: #1e4fd0; /* slightly darker blue */
+  border-color: #1e4fd0;
 }
 
 .login-form input::placeholder {
@@ -67,7 +64,6 @@ body {
   font-weight: bold;
 }
 
-/* Password field with eye icon */
 .password-field {
   width: 100%;
   display: flex;
@@ -86,7 +82,6 @@ body {
   cursor: pointer;
 }
 
-/* Error message */
 .error-msg {
   color: red;
   font-size: 14px;
@@ -94,7 +89,6 @@ body {
   margin-bottom: 10px;
 }
 
-/* Links */
 .links {
   text-align: left;
   font-size: 14px;
@@ -115,7 +109,6 @@ body {
   text-decoration: underline;
 }
 
-/* Button */
 .login-form button {
   width: 100%;
   border-radius: 8px;

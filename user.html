@@ -24,10 +24,8 @@
         <!-- Profile Card -->
         <div class="bg-white m-4 -mt-1 p-4 rounded-xl shadow">
             <div class="flex items-center gap-3 mb-3">
-                <!-- Hidden file input -->
                 <input type="file" id="uploadInput" accept="image/*" style="display: none;">
 
-                <!-- Clickable image (profile picture) -->
                 <img id="profileImg" src="" alt=""
                     style="width:50px; height:50px; border-radius:50%; cursor:pointer; object-fit:cover;">
 
@@ -194,7 +192,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// ✅ Loader setup
+// Loader setup
 const loader = document.getElementById("loader");
 function showLoader() {
     loader.style.display = "flex";
@@ -210,12 +208,11 @@ function hideLoader() {
 }
 showLoader();
 
-// ✅ Auth state
+// Auth state
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         document.querySelector(".profile-email").textContent = user.email || "No email";
 
-        // 🔎 Fetch Firestore data by uid
         const usersRef = collection(db, "users");
         const q = query(usersRef, where("uid", "==", user.uid));
         const querySnapshot = await getDocs(q);
@@ -230,7 +227,7 @@ onAuthStateChanged(auth, async (user) => {
                 document.querySelector(".profile-nickName").textContent = data.firstName || "No Nick Name";
                 document.querySelector(".profile-number").textContent = data.phoneNumber || "No Mobile Number";
 
-                // ✅ Prefer Firestore photoURL if available, else fallback to Auth
+                // Prefer Firestore photoURL if available, else fallback to Auth
                 const profileImg = document.getElementById("profileImg");
                 profileImg.src = data.profilePictureUrl || user.photoURL || "default-avatar.png";
             });
@@ -247,7 +244,6 @@ onAuthStateChanged(auth, async (user) => {
 const uploadInput = document.getElementById("uploadInput");
 const profileImg = document.getElementById("profileImg");
 
-// When image is clicked, trigger the file input
 profileImg.addEventListener("click", () => {
     uploadInput.click();
 });
@@ -263,19 +259,15 @@ uploadInput.addEventListener("change", async (event) => {
   }
 
   try {
-    // Upload to Firebase Storage
     const storageRef = ref(storage, `profileImages/${user.uid}`);
     await uploadBytes(storageRef, file);
 
-    // Get the file’s download URL
     const downloadURL = await getDownloadURL(storageRef);
 
-    // Save URL to Firestore (users collection, doc = uid)
     await setDoc(doc(db, "users", user.uid), {
       profileImg: downloadURL
     }, { merge: true });
 
-    // Show immediately
     profileImg.src = downloadURL;
 
     console.log("Profile picture updated successfully!");
@@ -284,7 +276,7 @@ uploadInput.addEventListener("change", async (event) => {
   }
 });
 
-showLoader(); // show loader immediately
+showLoader();
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -300,7 +292,7 @@ onAuthStateChanged(auth, async (user) => {
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
-      const docSnap = querySnapshot.docs[0]; // only take the first matching document
+      const docSnap = querySnapshot.docs[0];
       const data = docSnap.data();
 
       document.querySelector("h2").textContent = `Hi, ${data.firstName}`;
@@ -318,7 +310,7 @@ profileImgEl.src = data.profileImg || user.photoURL || "default-avatar.png";
   } catch (error) {
     console.error("Error fetching user data:", error);
   } finally {
-    hideLoader(); // ✅ Always hide loader, even if Firestore query fails or is empty
+    hideLoader(); //
   }
 });
 
@@ -334,16 +326,13 @@ uploadInput.addEventListener("change", async (event) => {
   try {
     showLoader();
 
-    // 🔑 Replace these with your Cloudinary details
     const cloudName = "dut2dpxuc";
     const uploadPreset = "unsigned_preset";
 
-    // Build form data for Cloudinary
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", uploadPreset);
 
-    // Upload directly to Cloudinary
     const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
       method: "POST",
       body: formData,
@@ -354,19 +343,17 @@ uploadInput.addEventListener("change", async (event) => {
 
     const imageUrl = data.secure_url;
 
-    // Save Cloudinary URL into Firestore user doc
     await setDoc(
       doc(db, "users", user.uid),
       { profileImg: imageUrl },
       { merge: true }
     );
 
-    // Update UI immediately
     profileImg.src = imageUrl;
 
-    console.log("✅ Profile picture uploaded via Cloudinary!");
+    console.log("Profile picture uploaded via Cloudinary!");
   } catch (error) {
-    console.error("❌ Error uploading profile picture:", error);
+    console.error("Error uploading profile picture:", error);
     alert("Upload failed: " + error.message);
   } finally {
     hideLoader();

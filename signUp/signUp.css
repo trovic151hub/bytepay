@@ -1,4 +1,3 @@
-/* === Reset & Base Styles === */
 * {
   margin: 0;
   padding: 0;
@@ -17,7 +16,6 @@ body {
   padding: 2rem;
 }
 
-/* === Logo Section === */
 .logo-div img {
   width: 120px;
   display: block;
@@ -42,7 +40,6 @@ body {
   font-weight: 700;
 }
 
-/* === Animation screens === */
 .logo-div, .site-name, .form {
   opacity: 0;
   visibility: hidden;
@@ -83,13 +80,6 @@ body {
   width: 250px;
 }
 
-/* .site-name h1 {
-  color: var(--secondary-color);
-  font-size: 2rem;
-  margin-top: 0.5rem;
-} */
-
-/* === Form Styling === */
 main {
   width: 100%;
   max-width: 400px;
@@ -112,7 +102,6 @@ main {
   font-size: 1.6rem;
 }
 
-/* Inputs */
 .form input {
   width: 100%;
   padding: 0.8rem;
@@ -128,7 +117,6 @@ main {
   box-shadow: 0 0 5px rgba(37, 99, 234, 0.3);
 }
 
-/* Password container */
 .passwordContainer {
   position: relative;
   display: flex;
@@ -147,7 +135,6 @@ main {
   align-items: center;
 }
 
-/* Error Message */
 .error-message {
   color: red;
   font-size: 0.9rem;
@@ -155,7 +142,6 @@ main {
   min-height: 1.2rem;
 }
 
-/* Redirect text */
 .redirect {
   text-align: center;
   font-size: 0.9rem;
@@ -172,7 +158,6 @@ main {
   text-decoration: underline;
 }
 
-/* Button */
 #submitData {
   padding: 0.9rem;
   border: none;

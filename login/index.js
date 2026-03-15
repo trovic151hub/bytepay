@@ -50,7 +50,7 @@ const db = getFirestore(app);
       `;
   });
 
-  // 🔹 Login button
+  // Login button
   loginBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
@@ -66,7 +66,7 @@ const db = getFirestore(app);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // ✅ Fetch Firestore user data
+      // Fetch Firestore user data
       const userDocRef = doc(db, "users", user.uid);
       const userDocSnap = await getDoc(userDocRef);
       
@@ -81,8 +81,6 @@ setTimeout(() => {
   window.location.href = "/JS-project/palmpay.html";
 }, 3000);
 
-      // alert("✅ Login successful! Welcome " + user.email);
-      // window.location.href = "/JS-project/palmpay.html";
     } catch (error) {
       console.error("❌ Login error:", error.message);
 
@@ -99,13 +97,3 @@ setTimeout(() => {
     }
   });
 });
-
-// const auth = getAuth();
-// onAuthStateChanged(auth, (user) => {
-//   if (!user) {
-//     // Not logged in, go back to login
-//     window.location.href = "../JS-project/palmpay.html";
-//   }
-// });
-
-//Firebase: Error (auth/invalid-email).

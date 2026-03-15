@@ -5,7 +5,6 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://
 const info = document.getElementById("info");
 
 document.addEventListener("DOMContentLoaded", () => {
-  // === Animation ===
   const logoDiv = document.querySelector('.logo-div');
   const siteName = document.querySelector('.site-name');
   const form = document.querySelector('.form');
@@ -129,21 +128,21 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // ✅ Create Firebase Auth user
+      // Create Firebase Auth user
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // ✅ Update Auth profile with displayName + default photo
+      // pdate Auth profile with displayName + default photo
       await updateProfile(user, {
         displayName: `${firstName} ${lastName}`,
         photoURL: "default.png"
       });
 
-      // ✅ Hash PIN with bcrypt before storing
+      //Hash PIN with bcrypt before storing
 const salt = dcodeIO.bcrypt.genSaltSync(10);
 const hashedPin = dcodeIO.bcrypt.hashSync(transactionPin, salt);
 
-      // ✅ Save user in Firestore (use default.png not "")
+      // Save user in Firestore (use default.png not "")
 await setDoc(doc(db, "users", user.uid), {
   uid: user.uid,
   firstName: firstName,

@@ -207,7 +207,7 @@
     </div>
     </div>
 
-    <!-- ✅ Success Modal -->
+    <!-- Success Modal -->
     <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white rounded-2xl p-6 w-80 text-center shadow-lg">
             <div class="flex justify-center mb-3">
@@ -224,7 +224,7 @@
         </div>
     </div>
 
-    <!-- ❌ Error Modal -->
+    <!-- Error Modal -->
 <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white rounded-2xl p-6 w-80 text-center shadow-lg">
         <div class="flex justify-center mb-3">
@@ -452,13 +452,12 @@ try {
             const queryText = bankInput.value.toLowerCase();
             banks.forEach(li => {
                 if (li.textContent.toLowerCase().includes(queryText)) {
-                    li.style.display = "flex"; // ✅ keep flex for logo + name
+                    li.style.display = "flex";
                 } else {
                     li.style.display = "none";
                 }
             });
 
-            // Hide logo when user types (until a new selection is made)
             if (bankInput.value === "") {
                 selectedBankLogo.classList.add("hidden");
             }
@@ -490,7 +489,7 @@ try {
             document.getElementById("successModal").classList.add("hidden");
         }
 
-        // ❌ Error Modal Functions
+        // Error Modal Functions
     function showErrorModal(message) {
         document.getElementById("errorMessage").textContent = message;
         document.getElementById("errorModal").classList.remove("hidden");
