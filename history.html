@@ -24,7 +24,7 @@
         </div>
 
         <div class="items-center">
-            <img src="history img.jpg" class="h-[80px] w-full" alt="">
+            <img src="historyimg.jpg" class="h-[80px] w-full" alt="">
         </div>
 
         <!-- Filters -->
@@ -51,11 +51,18 @@
         </div>
     </div>
 
-    <div id="loader" class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
+     <!-- ================= LOADER ================= -->
+  <div
+    id="loader"
+    class="hidden fixed inset-0 bg-black-40 backdrop-blur-sm bg-opacity-30 flex items-center justify-center z-50"
+  >
+    <img src="./bytepayLogo.png" class="w-24 h-24 animate-pulse" />
+  </div>
+    <!-- <div id="loader" class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
   <img src="./bytepayLogo.png" 
        alt="Loading..." 
        class="h-20 px-1 py-1 bg-white rounded-lg animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
-</div>
+</div> -->
 
     <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
@@ -139,7 +146,7 @@ onAuthStateChanged(auth, (user) => {
           }
 
           groupedHtml += `
-            <div class="bg-white shadow rounded-lg p-3 w-[100%] max-w-md flex justify-between items-center">
+            <div class="bg-white shadow rounded-lg p-3 w-full max-w-md flex justify-between items-center">
               <div>
                 <p class="text-sm font-medium text-gray-800">${tx.description}</p>
                 <p class="text-xs text-gray-500">${txDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
@@ -169,5 +176,4 @@ onAuthStateChanged(auth, (user) => {
 });
 </script>
 </body>
-
 </html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wealth Page</title>
+    <link rel="stylesheet" href="./wealth.css" />
+    <script type="module" src="./wealth.js" defer></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="headerText">
+            <h4>Reward</h4>
+        </div>
+        <div class="imgContainer">
+            <img src="./asset/ellipsis-filled.svg" alt="" />
+        </div>
+    </header>
+
+    <!-- BytePoints & Coupons -->
+    <section class="section1">
+        <div class="card bytePoint">
+            <div class="textImg">
+                <img src="./asset/bytepayLogo.png" alt="BytePay-logo">
+                <span><b>BytePoints</b></span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 12 24">
+                    <path fill="#2563ea"
+                        d="m7.588 12.43l-1.061 1.06L.748 7.713a.996.996 0 0 1 0-1.413L6.527.52l1.06 1.06l-5.424 5.425z"
+                        transform="rotate(-180 5.02 9.505)" />
+                </svg>
+            </div>
+            <div class="pointText">
+                <div class="claim">
+                    <span>Claimed</span>
+                    <span>To Be Claimed</span>
+                </div>
+                <div class="claim">
+                    <span id="claimed"></span>
+                    <hr />
+                    <span id="toBeClaimed"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card coupons">
+            <div class="textImg">
+                <img src="./asset/bytepayLogo.png" alt="BytePay-logo">
+                <span><b>Coupons</b></span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="24" viewBox="0 0 12 24">
+                    <path fill="#2563ea"
+                        d="m7.588 12.43l-1.061 1.06L.748 7.713a.996.996 0 0 1 0-1.413L6.527.52l1.06 1.06l-5.424 5.425z"
+                        transform="rotate(-180 5.02 9.505)" />
+                </svg>
+            </div>
+            <div class="claim">
+                <span>Available</span>
+                <h3>0</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Check-in Section -->
+    <section class="card section2">
+        <div class="section2Header">
+            <div class="textImg">
+                <h3>Check in</h3>
+            </div>
+            <div class="textImg">
+                <span>Daily Reminder</span>
+            </div>
+        </div>
+
+        <div class="claimed">
+            <div class="text">
+                <span>You can get <span class="highlight">4 BytePoints</span></span>
+            </div>
+            <div class="btn">
+                <button id="claimBtn">Claim</button>
+            </div>
+        </div>
+
+        <div class="generalCoupon">
+            <p class="colorBlue">
+                Check in continuously to claim
+                <span class="colorBlue">&#8358;100</span> General Coupon
+            </p>
+        </div>
+        <div id="claimCardDiv"></div>
+    </section>
+    <section class="card section3">
+        <div class="taskTime">
+            <p><b>Daily Task</b></p>
+            <div id="countdown">24:00:00</div>
+        </div>
+        <div class="task">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24" id="transferLogo">
+                    <g fill="none">
+                        <path
+                            d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                        <path fill="#fff"
+                            d="M20 14a1 1 0 0 1 .117 1.993L20 16H6.414l2.293 2.293a1 1 0 0 1-1.32 1.497l-.094-.083l-3.83-3.83c-.665-.664-.239-1.783.663-1.871L4.241 14zm-4.707-9.707a1 1 0 0 1 1.32-.083l.094.083l3.83 3.83c.665.664.239 1.783-.663 1.871l-.115.006H4a1 1 0 0 1-.117-1.993L4 8h13.586l-2.293-2.293a1 1 0 0 1 0-1.414" />
+                    </g>
+                </svg>
+            </div>
+            <div class="taskText">
+                <h4>Transfer To Bank</h4>
+                <p>Transaction Amount &#8805; &#8358;3000(0/1)</p>
+            </div>
+            <div class="taskBtn">
+                <button>Go</button>
+            </div>
+        </div>
+        <div class="task">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24" id="transferLogo">
+                    <g fill="none">
+                        <path
+                            d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                        <path fill="#fff"
+                            d="M20 14a1 1 0 0 1 .117 1.993L20 16H6.414l2.293 2.293a1 1 0 0 1-1.32 1.497l-.094-.083l-3.83-3.83c-.665-.664-.239-1.783.663-1.871L4.241 14zm-4.707-9.707a1 1 0 0 1 1.32-.083l.094.083l3.83 3.83c.665.664.239 1.783-.663 1.871l-.115.006H4a1 1 0 0 1-.117-1.993L4 8h13.586l-2.293-2.293a1 1 0 0 1 0-1.414" />
+                    </g>
+                </svg>
+            </div>
+            <div class="taskText">
+                <h4>Transfer To BytePay</h4>
+                <p>Transaction Amount &#8805; &#8358;1000(0/1)</p>
+            </div>
+            <div class="taskBtn">
+                <button>Go</button>
+            </div>
+        </div>
+        <div class="task">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24" id="transferLogo">
+                    <g fill="none">
+                        <path fill="#fff"
+                            d="m8.5 2.25l3-1.75l3 1.75v3.5l-3 1.75l-3-1.75zm-3 8.25l-3 4.5l-2-.5v4l2-.5l3 3.5v2l3-2h4l4.5 2l-.5-2.5l2.5-5l-2.5-6.5H8L5.5 7z" />
+                        <path fill="#bbd8ff"
+                            d="M18.267 17.465L14.5 11.5h-8l-3 5h-3v2l2-.5l3 3.5v2l3-2h4l4.5 2l-.5-2.5zM14.5 2.25v3.5l-3 1.75l-3-1.75z" />
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
+                            d="M5.5 13.5v1M19 16l1.5-2.5l1.5 2l1.5-1.5M9.607 11.5h4m-1.357-9H11l-.5.667L11 4h1l.5.75l-.5.75h-1.25"
+                            stroke-width="1" />
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
+                            d="m8.5 2.25l3-1.75l3 1.75v3.5l-3 1.75l-3-1.75zm-3 8.25l-3 4.5l-2-.5v4l2-.5l3 3.5v2l3-2h4l4.5 2l-.5-2.5l2.5-5l-2.5-6.5H8L5.5 7z"
+                            stroke-width="1" />
+                    </g>
+                </svg>
+            </div>
+            <div class="taskText">
+                <h4>Turn on CashBox AutoSave</h4>
+                <p>Win &#8358;2,000 Trial cash(once)</p>
+            </div>
+            <div class="taskBtn">
+                <button>Go</button>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

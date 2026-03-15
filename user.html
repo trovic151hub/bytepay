@@ -7,6 +7,14 @@
     <title>User-page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        /* Show dropdown on hover */
+        #avatarContainer.group:hover #avatarActions {
+            opacity: 1;
+            scale: 100%;
+            pointer-events: auto;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 text-[#1C1C1C]">
@@ -23,18 +31,52 @@
 
         <!-- Profile Card -->
         <div class="bg-white m-4 -mt-1 p-4 rounded-xl shadow">
+<<<<<<< HEAD
             <div class="flex items-center gap-3 mb-3">
                 <input type="file" id="uploadInput" accept="image/*" style="display: none;">
 
                 <img id="profileImg" src="" alt=""
                     style="width:50px; height:50px; border-radius:50%; cursor:pointer; object-fit:cover;">
+=======
+            <!-- Avatar -->
+        <div class="flex space-x-3">
+            <div id="profileAvatar" class="w-[50px] h-[50px] rounded-full flex items-center justify-center 
+                bg-gray-200 text-gray-500 cursor-pointer hover:bg-gray-300 transition">
+                <i class="fa-solid fa-user text-xl"></i>
+            </div>
 
-                <div>
-                    <h2 class="text-sm text-gray-600 font-medium"> </h2>
+            <div class="mt-4">
+                <h2 class="text-sm text-gray-600 font-medium"></h2>
+            </div>
+        </div>
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
+
+            <!-- Hidden File Input -->
+            <input type="file" id="uploadInput" accept="image/*" hidden>
+
+            <!-- Modal -->
+            <div id="avatarModal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+                <div class="bg-white rounded-lg p-6 w-64 flex flex-col items-center gap-4 relative">
+                    <span id="closeModal"
+                        class="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-700">&times;</span>
+
+                    <!-- Modal Avatar Preview -->
+                    <div id="modalAvatar"
+                        class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                        <i class="fa-solid fa-user text-3xl"></i>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex gap-2">
+                        <button id="addPhotoBtn" class="px-3 py-1 bg-blue-500 text-white rounded text-sm">Add /
+                            Change</button>
+                        <button id="removePhotoBtn"
+                            class="px-3 py-1 bg-red-500 text-white rounded text-sm">Remove</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="border-[0.5px] border-gray-100"></div>
+            <div class="border-[0.5px] border-gray-100 mt-2"></div>
 
             <div class="mt-4 space-y-3">
                 <div class="flex justify-between items-center">
@@ -165,33 +207,41 @@
         </div>
     </div>
 
+     <!-- ================= LOADER ================= -->
+  <div
+    id="loader"
+    class="hidden fixed inset-0 bg-black-40  backdrop-blur-sm bg-opacity-30 flex items-center justify-center z-50"
+  >
+    <img src="./bytepayLogo.png" class="w-24 h-24 animate-pulse" />
+  </div>
     <!-- Loader -->
-    <div id="loader" class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
-  <img src="./bytepayLogo.png" 
-       alt="Loading..." 
-       class="h-20 px-1 py-1 bg-white rounded-lg animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
-</div>
+    <!-- <div id="loader"
+        class="fixed inset-0 bg-transparent flex items-center justify-center z-50 transition-opacity duration-500">
+        <img src="./bytepayLogo.png" alt="Loading..."
+            class="h-20 px-1 py-1 bg-white rounded-lg animate-pulse drop-shadow-[0_0_25px_rgba(37,99,235,0.8)]" />
+    </div> -->
 
     <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import { getFirestore, collection, query, where, setDoc, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
-    authDomain: "testing-firebase-d7f88.firebaseapp.com",
-    projectId: "testing-firebase-d7f88",
-    storageBucket: "testing-firebase-d7f88.appspot.com",
-    messagingSenderId: "339099724691",
-    appId: "1:339099724691:web:83ead43e1d41d2e131d666"
-};
+        // ===== Firebase config =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyBuvswQZQuVSr3q5gRtFtax07kj5SDrHuU",
+            authDomain: "testing-firebase-d7f88.firebaseapp.com",
+            projectId: "testing-firebase-d7f88",
+            storageBucket: "testing-firebase-d7f88.appspot.com",
+            messagingSenderId: "339099724691",
+            appId: "1:339099724691:web:83ead43e1d41d2e131d666"
+        };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
+        // ===== Initialize Firebase =====
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
+<<<<<<< HEAD
 // Loader setup
 const loader = document.getElementById("loader");
 function showLoader() {
@@ -233,31 +283,55 @@ onAuthStateChanged(auth, async (user) => {
             });
         } else {
             console.log("No matching Firestore user record!");
+=======
+        // ===== Loader =====
+        const loader = document.getElementById("loader");
+        function showLoader() {
+            loader.style.display = "flex";
+            document.body.style.overflow = "hidden";
+            setTimeout(() => (loader.style.opacity = "1"), 10);
+        }
+        function hideLoader() {
+            loader.style.opacity = "0";
+            setTimeout(() => {
+                loader.style.display = "none";
+                document.body.style.overflow = "";
+            }, 500);
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
         }
 
-    } else {
-        window.location.href = "../palmpay/login/login.html";
-    }
-});
+        // ===== Elements =====
+        const avatar = document.getElementById("profileAvatar");
+        const avatarModal = document.getElementById("avatarModal");
+        const modalAvatar = document.getElementById("modalAvatar");
+        const closeModal = document.getElementById("closeModal");
+        const uploadInput = document.getElementById("uploadInput");
+        const addPhotoBtn = document.getElementById("addPhotoBtn");
+        const removePhotoBtn = document.getElementById("removePhotoBtn");
 
-// Get elements
-const uploadInput = document.getElementById("uploadInput");
-const profileImg = document.getElementById("profileImg");
+        // ===== Auth state & load profile =====
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "../palmpay/login/login.html";
+                return;
+            }
 
+<<<<<<< HEAD
 profileImg.addEventListener("click", () => {
     uploadInput.click();
 });
+=======
+            try {
+                showLoader();
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
 
-uploadInput.addEventListener("change", async (event) => {
-  const file = event.target.files[0];
-  if (!file) return;
+                const userDoc = doc(db, "users", user.uid);
+                const snap = await getDoc(userDoc);
 
-  const user = auth.currentUser;
-  if (!user) {
-    alert("You must be logged in to upload a profile picture.");
-    return;
-  }
+                if (snap.exists()) {
+                    const data = snap.data();
 
+<<<<<<< HEAD
   try {
     const storageRef = ref(storage, `profileImages/${user.uid}`);
     await uploadBytes(storageRef, file);
@@ -269,13 +343,30 @@ uploadInput.addEventListener("change", async (event) => {
     }, { merge: true });
 
     profileImg.src = downloadURL;
+=======
+                    // Greeting & profile info
+                    document.querySelector("h2").textContent = `Hi, ${data.firstName || "User"}`;
+                    document.querySelector(".profile-email").textContent = user.email || "No email";
+                    document.querySelector("h2").textContent = `Hi, ${data.firstName}`;
+                    document.querySelector(".profile-account").textContent = data.accountNumber || "No Account Number";
+                    document.querySelector(".profile-fullName").textContent = `${data.firstName} ${data.lastName}`;
+                    document.querySelector(".profile-nickName").textContent = data.firstName;
+                    document.querySelector(".profile-number").textContent = data.phoneNumber || "No Mobile Number";
 
-    console.log("Profile picture updated successfully!");
-  } catch (error) {
-    console.error("Error uploading profile picture:", error);
-  }
-});
+                    const greetingEl = document.querySelector("h2");
+                    if (greetingEl) greetingEl.textContent = `Hi, ${data.firstName || "User"}`;
 
+                    const emailEl = document.querySelector(".profile-email");
+                    if (emailEl) emailEl.textContent = user.email || "No email";
+
+                    const accountEl = document.querySelector(".profile-account");
+                    if (accountEl) accountEl.textContent = data.accountNumber || "No Account Number";
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
+
+                    const fullNameEl = document.querySelector(".profile-fullName");
+                    if (fullNameEl) fullNameEl.textContent = `${data.firstName} ${data.lastName}`;
+
+<<<<<<< HEAD
 showLoader();
 
 onAuthStateChanged(auth, async (user) => {
@@ -283,24 +374,50 @@ onAuthStateChanged(auth, async (user) => {
     window.location.href = "../palmpay/login/index.html";
     return;
   }
+=======
+                    const nickNameEl = document.querySelector(".profile-nickName");
+                    if (nickNameEl) nickNameEl.textContent = data.firstName;
 
-  document.querySelector(".profile-email").textContent = user.email || "No email";
+                    const numberEl = document.querySelector(".profile-number");
+                    if (numberEl) numberEl.textContent = data.phoneNumber || "No Mobile Number";
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
 
-  try {
-    const usersRef = collection(db, "users");
-    const q = query(usersRef, where("uid", "==", user.uid));
-    const querySnapshot = await getDocs(q);
 
+                    // Load avatar for page & modal
+                    if (data.profileImg || user.photoURL) {
+                        avatar.style.backgroundImage = `url(${data.profileImg || user.photoURL})`;
+                        avatar.style.backgroundSize = "cover";
+                        avatar.style.backgroundPosition = "center";
+                        avatar.innerHTML = "";
+
+<<<<<<< HEAD
     if (!querySnapshot.empty) {
       const docSnap = querySnapshot.docs[0];
       const data = docSnap.data();
+=======
+                        modalAvatar.style.backgroundImage = `url(${data.profileImg || user.photoURL})`;
+                        modalAvatar.style.backgroundSize = "cover";
+                        modalAvatar.style.backgroundPosition = "center";
+                        modalAvatar.innerHTML = "";
+                    } else {
+                        avatar.innerHTML = '<i class="fa-solid fa-user text-xl"></i>';
+                        modalAvatar.innerHTML = '<i class="fa-solid fa-user text-3xl"></i>';
+                    }
+                }
+            } catch (err) {
+                console.error("Error loading user data:", err);
+            } finally {
+                hideLoader();
+            }
+        });
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
 
-      document.querySelector("h2").textContent = `Hi, ${data.firstName}`;
-      document.querySelector(".profile-account").textContent = data.accountNumber || "No Account Number";
-      document.querySelector(".profile-fullName").textContent = `${data.firstName} ${data.lastName}` || "No Full Name";
-      document.querySelector(".profile-nickName").textContent = data.firstName || "No Nick Name";
-      document.querySelector(".profile-number").textContent = data.phoneNumber || "No Mobile Number";
+        // ===== Open modal when avatar clicked =====
+        avatar.addEventListener("click", () => {
+            avatarModal.classList.remove("hidden");
+        });
 
+<<<<<<< HEAD
       const profileImgEl = document.getElementById("profileImg");
 profileImgEl.src = data.profileImg || user.photoURL || "default-avatar.png";
    
@@ -313,19 +430,19 @@ profileImgEl.src = data.profileImg || user.photoURL || "default-avatar.png";
     hideLoader(); //
   }
 });
+=======
+        // ===== Close modal =====
+        closeModal.addEventListener("click", () => {
+            avatarModal.classList.add("hidden");
+        });
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
 
-// profileImg 
-uploadInput.addEventListener("change", async (event) => {
-  const file = event.target.files[0];
-  if (!file) return;
-  const user = auth.currentUser;
-  if (!user) {
-    alert("You must be logged in to upload a profile picture.");
-    return;
-  }
-  try {
-    showLoader();
+        // ===== Open file selector =====
+        addPhotoBtn.addEventListener("click", () => {
+            uploadInput.click();
+        });
 
+<<<<<<< HEAD
     const cloudName = "dut2dpxuc";
     const uploadPreset = "unsigned_preset";
 
@@ -337,12 +454,27 @@ uploadInput.addEventListener("change", async (event) => {
       method: "POST",
       body: formData,
     });
+=======
+        // ===== Upload image to Cloudinary =====
+        uploadInput.addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error?.message || "Upload failed");
+            const user = auth.currentUser;
+            if (!user) return;
 
-    const imageUrl = data.secure_url;
+            try {
+                showLoader();
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
 
+                const cloudName = "dut2dpxuc";
+                const uploadPreset = "unsigned_preset";
+
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", uploadPreset);
+
+<<<<<<< HEAD
     await setDoc(
       doc(db, "users", user.uid),
       { profileImg: imageUrl },
@@ -359,7 +491,77 @@ uploadInput.addEventListener("change", async (event) => {
     hideLoader();
   }
 });
+=======
+                const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                    method: "POST",
+                    body: formData
+                });
 
-</script>
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error?.message || "Upload failed");
+
+                const imageUrl = data.secure_url;
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
+
+                // Save URL in Firestore
+                await setDoc(doc(db, "users", user.uid), { profileImg: imageUrl }, { merge: true });
+
+                // Update Firebase Auth
+                await updateProfile(user, { photoURL: imageUrl });
+
+                // Update modal & avatar
+                avatar.style.backgroundImage = `url(${imageUrl})`;
+                avatar.style.backgroundSize = "cover";
+                avatar.style.backgroundPosition = "center";
+                avatar.innerHTML = "";
+
+                modalAvatar.style.backgroundImage = `url(${imageUrl})`;
+                modalAvatar.style.backgroundSize = "cover";
+                modalAvatar.style.backgroundPosition = "center";
+                modalAvatar.innerHTML = "";
+
+                avatarModal.classList.add("hidden");
+                console.log("✅ Profile image updated");
+            } catch (err) {
+                console.error("Upload error:", err);
+                alert("Image upload failed");
+            } finally {
+                hideLoader();
+            }
+        });
+
+        // ===== Remove profile photo =====
+        removePhotoBtn.addEventListener("click", async () => {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            try {
+                showLoader();
+
+                await setDoc(doc(db, "users", user.uid), { profileImg: "" }, { merge: true });
+                await updateProfile(user, { photoURL: "" });
+
+                // Reset UI
+                avatar.style.backgroundImage = "";
+                avatar.innerHTML = '<i class="fa-solid fa-user text-xl"></i>';
+
+                modalAvatar.style.backgroundImage = "";
+                modalAvatar.innerHTML = '<i class="fa-solid fa-user text-3xl"></i>';
+
+                avatarModal.classList.add("hidden");
+                console.log("✅ Profile image deleted");
+            } catch (err) {
+                console.error("Delete error:", err);
+                alert("Failed to remove profile image");
+            } finally {
+                hideLoader();
+            }
+        });
+    </script>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+
+</html>
+>>>>>>> f171a5cf9ee703073607ecfac4fe6f1bd7aca144
