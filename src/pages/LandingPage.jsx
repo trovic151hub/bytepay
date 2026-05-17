@@ -76,14 +76,14 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 px-6 pt-8 pb-10 text-white"
+          className="bg-gradient-to-br from-violet-700 via-purple-700 to-indigo-800 px-6 pt-8 pb-10 text-white"
         >
           <Badge className="bg-white/20 text-white border-0 mb-4">🇳🇬 Nigeria's Smartest Fintech</Badge>
           <h1 className="text-3xl font-bold leading-tight mb-3">
             Banking Made<br />
-            <span className="text-blue-200">Fast & Simple</span>
+            <span className="text-purple-200">Fast & Simple</span>
           </h1>
-          <p className="text-blue-200 text-sm mb-6 leading-relaxed">
+          <p className="text-purple-200 text-sm mb-6 leading-relaxed">
             Send money, pay bills, earn rewards, and save with up to 21% interest — all in one app.
           </p>
 
@@ -95,15 +95,15 @@ export default function LandingPage() {
             className="bg-white/15 backdrop-blur-sm rounded-2xl p-4 mb-5 border border-white/20"
           >
             <div className="flex items-center justify-between mb-2">
-              <p className="text-blue-200 text-xs">Available Balance</p>
-              <button onClick={() => setShowBalance(b => !b)} className="text-blue-200">
+              <p className="text-purple-200 text-xs">Available Balance</p>
+              <button onClick={() => setShowBalance(b => !b)} className="text-purple-200">
                 {showBalance ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
               </button>
             </div>
             <p className="text-2xl font-bold text-white mb-3">
               {showBalance ? "₦0.00" : "₦ • • • • • •"}
             </p>
-            <div className="flex items-center justify-between text-xs text-blue-200">
+            <div className="flex items-center justify-between text-xs text-purple-200">
               <span>Sign in to see your balance</span>
               <Lock className="h-3.5 w-3.5" />
             </div>

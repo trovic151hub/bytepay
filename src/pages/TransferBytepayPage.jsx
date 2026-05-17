@@ -6,14 +6,20 @@ import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import PageHeader from "@/components/PageHeader";
 import PinModal from "@/components/PinModal";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { formatCurrency } from "@/lib/utils";
-import { CheckCircle, AlertCircle, Search } from "lucide-react";
+import { CheckCircle, AlertCircle, Loader2, Search, ChevronRight, MoreVertical, Users } from "lucide-react";
 import { useLocation } from "wouter";
+import { cn } from "@/lib/utils";
 
 const AMOUNTS = [500, 1000, 2000, 5000, 10000];
+
+const RECENT_CONTACTS = [
+  { name: "Adenike Abidemi Oke", account: "9550330717", badge: "Agent", avatar: "A" },
+  { name: "STELLA CHINONYE OKECHUKWU", account: "8133934713", lastTransfer: "Apr 17, 2026", avatar: "S" },
+  { name: "NKIRUKA CHINYERE IHENACHO", account: "8036106237", lastTransfer: "Mar 19, 2026", avatar: "N" },
+];
 
 export default function TransferBytepayPage() {
   const { user, userData } = useAuth();
@@ -33,10 +39,7 @@ export default function TransferBytepayPage() {
     try {
       const q = query(collection(db, "users"), where("accountNumber", "==", val));
       const snap = await getDocs(q);
-      if (!snap.empty) {
-        const d = snap.docs[0];
-        setRecipient({ id: d.id, ...d.data() });
-      } else setRecipient(null);
+      setRecipient(!snap.empty ? { id: snap.docs[0].id, ...snap.docs[0].data() } : null);
     } finally { setSearching(false); }
   };
 
@@ -54,8 +57,6 @@ export default function TransferBytepayPage() {
     if (amt > (userData?.accountBalance ?? 0)) { setFormError("Insufficient balance."); return false; }
     setFormError(""); return true;
   };
-
-  const handleContinue = () => { if (validate()) setPinOpen(true); };
 
   const handlePinConfirm = async (pin) => {
     const match = await bcrypt.compare(pin, userData.transactionPin);
@@ -75,69 +76,153 @@ export default function TransferBytepayPage() {
         description: `Received ${formatCurrency(amt)} from ${userData.firstName} ${userData.lastName} (BytePay)`,
         date: serverTimestamp(),
       });
-      setPinOpen(false);
-      setStatus("success");
-    } catch {
-      throw new Error("Transfer failed. Please try again.");
-    } finally { setPinLoading(false); }
+      setPinOpen(false); setStatus("success");
+    } catch { throw new Error("Transfer failed. Please try again."); }
+    finally { setPinLoading(false); }
   };
 
-  if (status === "success") {
-    return (
-      <div className="min-h-screen bg-[#f5f6fa] flex items-center justify-center">
-        <div className="max-w-[430px] w-full px-6 text-center">
-          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200 }}>
-            <div className="h-20 w-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="h-10 w-10 text-green-600" />
-            </div>
-            <h2 className="text-2xl font-bold mb-1">Transfer Successful</h2>
-            <p className="text-muted-foreground mb-1">You sent</p>
-            <p className="text-3xl font-bold mb-1">{formatCurrency(parseFloat(amount))}</p>
-            <p className="text-sm text-muted-foreground mb-6">to {recipient?.firstName} {recipient?.lastName}</p>
-            <Button className="w-full mb-3" onClick={() => setLocation("/dashboard")} data-testid="button-back-home">Back to Home</Button>
-            <Button variant="outline" className="w-full" onClick={() => { setStatus(null); setAccNum(""); setRecipient(null); setAmount(""); }} data-testid="button-new-transfer">New Transfer</Button>
-          </motion.div>
-        </div>
+  if (status === "success") return (
+    <div className="min-h-screen bg-[#F4F2FA] dark:bg-background flex items-center justify-center">
+      <div className="max-w-[430px] w-full px-6 text-center">
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200 }}>
+          <div className="h-20 w-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+            <CheckCircle className="h-10 w-10 text-green-600" />
+          </div>
+          <h2 className="text-2xl font-bold mb-1">Transfer Successful</h2>
+          <p className="text-muted-foreground mb-1">You sent</p>
+          <p className="text-3xl font-bold mb-1">{formatCurrency(parseFloat(amount))}</p>
+          <p className="text-sm text-muted-foreground mb-6">to {recipient?.firstName} {recipient?.lastName}</p>
+          <button className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl font-bold mb-3" onClick={() => setLocation("/dashboard")} data-testid="button-back-home">Back to Home</button>
+          <button className="w-full bg-secondary text-foreground py-3.5 rounded-xl font-bold border border-border" onClick={() => { setStatus(null); setAccNum(""); setRecipient(null); setAmount(""); }} data-testid="button-new-transfer">New Transfer</button>
+        </motion.div>
       </div>
-    );
-  }
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-[#f5f6fa]">
+    <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
       <div className="max-w-[430px] mx-auto">
-        <PageHeader title="Send to BytePay" />
-        <div className="px-4 py-4 space-y-4">
-          <div className="bg-purple-50 border border-purple-200 rounded-2xl px-4 py-3 flex justify-between">
-            <span className="text-sm text-purple-700">Available balance</span>
-            <span className="text-sm font-bold text-purple-800">{formatCurrency(userData?.accountBalance ?? 0)}</span>
-          </div>
-          <div className="bg-white rounded-2xl p-4 space-y-4">
-            <div className="space-y-1.5">
-              <Label>BytePay Account Number</Label>
-              <div className="relative">
-                <Input placeholder="10-digit account number" value={accNum} onChange={handleAccChange} inputMode="numeric" maxLength={10} className="pr-10" data-testid="input-account-number" />
-                {searching && <div className="absolute right-3 top-1/2 -translate-y-1/2 animate-spin rounded-full h-4 w-4 border-b-2 border-primary" />}
-                {!searching && accNum.length === 10 && <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />}
-              </div>
-              <AnimatePresence>
-                {recipient && <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="text-xs font-semibold text-green-600 flex items-center gap-1" data-testid="text-recipient-name"><CheckCircle className="h-3 w-3" />{recipient.firstName} {recipient.lastName}</motion.p>}
-                {accNum.length === 10 && !recipient && !searching && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-red-500">Account not found on BytePay</motion.p>}
-              </AnimatePresence>
-            </div>
-            <div className="space-y-1.5">
-              <Label>Amount</Label>
-              <Input type="number" placeholder="Enter amount" value={amount} onChange={(e) => setAmount(e.target.value)} min="1" data-testid="input-amount" />
-              <div className="flex flex-wrap gap-2 mt-1">
-                {AMOUNTS.map(a => (
-                  <button key={a} onClick={() => setAmount(String(a))} className="text-xs px-3 py-1 rounded-full border border-border hover:border-primary hover:text-primary transition-colors" data-testid={`quick-amount-${a}`}>
-                    ₦{a.toLocaleString()}
-                  </button>
-                ))}
+        <div className="flex items-center justify-between px-4 pt-4 pb-2">
+          <PageHeader title="Transfer to BytePay" />
+          <button className="h-9 w-9 rounded-xl bg-white dark:bg-card border border-border flex items-center justify-center">
+            <MoreVertical className="h-4 w-4 text-muted-foreground" />
+          </button>
+        </div>
+
+        <div className="px-4 pb-8 space-y-3">
+
+          {/* Input card */}
+          <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm space-y-3">
+            <div className="relative">
+              <Input
+                placeholder="Enter 10-digit Account No. or Phone No."
+                value={accNum} onChange={handleAccChange}
+                inputMode="numeric" maxLength={10}
+                className="pr-10 text-base"
+                data-testid="input-account-number"
+              />
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                {searching
+                  ? <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                  : <Users className="h-4 w-4 text-muted-foreground" />}
               </div>
             </div>
+
+            <AnimatePresence>
+              {recipient && (
+                <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }}
+                  className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-xl px-3 py-2">
+                  <p className="text-xs text-green-600 dark:text-green-400">Account found</p>
+                  <p className="text-sm font-bold text-green-800 dark:text-green-300" data-testid="text-recipient-name">
+                    {recipient.firstName} {recipient.lastName}
+                  </p>
+                </motion.div>
+              )}
+              {accNum.length === 10 && !recipient && !searching && (
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-red-500 flex items-center gap-1">
+                  <AlertCircle className="h-3 w-3" /> Account not found on BytePay
+                </motion.p>
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+              {recipient && (
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="space-y-3">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs text-muted-foreground">Amount (₦)</Label>
+                    <Input type="number" placeholder="Enter amount" value={amount} onChange={(e) => setAmount(e.target.value)} min="1" data-testid="input-amount" />
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {AMOUNTS.map(a => (
+                        <button key={a} onClick={() => setAmount(String(a))}
+                          className={cn("text-xs px-3 py-1.5 rounded-full border transition-colors",
+                            amount === String(a) ? "border-primary bg-primary/10 text-primary font-bold" : "border-border text-foreground hover:border-primary")}
+                          data-testid={`quick-amount-${a}`}>
+                          ₦{a.toLocaleString()}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <button
+              onClick={() => { if (validate()) setPinOpen(true); }}
+              className={cn("w-full py-3.5 rounded-xl font-bold text-sm transition-colors",
+                recipient ? "bg-primary text-primary-foreground" : "bg-primary/30 text-primary-foreground/70")}
+              data-testid="button-continue">
+              Next
+            </button>
           </div>
-          {formError && <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-xl flex items-center gap-2"><AlertCircle className="h-4 w-4 shrink-0" />{formError}</p>}
-          <Button className="w-full" size="lg" onClick={handleContinue} data-testid="button-continue">Continue</Button>
+
+          {formError && (
+            <p className="text-red-500 text-sm bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-xl flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0" />{formError}
+            </p>
+          )}
+
+          {/* See who is using BytePay */}
+          <button className="w-full bg-white dark:bg-card rounded-2xl px-4 py-3.5 flex items-center gap-3 shadow-sm">
+            <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center">
+              <Users className="h-4 w-4 text-primary" />
+            </div>
+            <span className="flex-1 text-sm font-medium text-foreground text-left">See who is using BytePay</span>
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </button>
+
+          {/* Recent contacts */}
+          <div className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
+            <div className="flex items-center gap-4 px-4 pt-3 pb-1 border-b border-border">
+              {["Recent", "Favorites", "Local Contacts"].map((t) => (
+                <button key={t} className={cn("pb-2 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap",
+                  t === "Recent" ? "border-primary text-primary" : "border-transparent text-muted-foreground")}>
+                  {t}
+                </button>
+              ))}
+              <button className="ml-auto"><Search className="h-4 w-4 text-muted-foreground" /></button>
+            </div>
+
+            {RECENT_CONTACTS.map((c, i) => (
+              <div key={i} className={cn("flex items-center gap-3 px-4 py-3.5", i < RECENT_CONTACTS.length - 1 && "border-b border-border/60")}>
+                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold shrink-0">
+                  {c.avatar}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-semibold text-foreground truncate">{c.name}</p>
+                    {c.badge && <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-bold shrink-0">{c.badge}</span>}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{c.account}</p>
+                  {c.lastTransfer && <p className="text-[10px] text-muted-foreground/70">Last transfer on {c.lastTransfer}</p>}
+                </div>
+              </div>
+            ))}
+
+            <button className="w-full py-3 text-center text-sm text-primary font-medium border-t border-border">
+              View All &gt;
+            </button>
+          </div>
+
         </div>
       </div>
       <PinModal isOpen={pinOpen} onClose={() => setPinOpen(false)} onConfirm={handlePinConfirm} loading={pinLoading} />
