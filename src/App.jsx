@@ -3,6 +3,7 @@ import { useAuth } from "./contexts/AuthContext.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import TransferBankPage from "./pages/TransferBankPage.jsx";
 import TransferBytepayPage from "./pages/TransferBytepayPage.jsx";
@@ -17,24 +18,37 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import AssetsPage from "./pages/AssetsPage.jsx";
 import AddMoneyPage from "./pages/AddMoneyPage.jsx";
 
+const Spinner = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+  </div>
+);
+
 function ProtectedRoute({ component: Component }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center bg-background"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div>;
+  if (loading) return <Spinner />;
   if (!user) return <Redirect to="/login" />;
   return <Component />;
 }
 
 function PublicRoute({ component: Component }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="min-h-screen flex items-center justify-center bg-background"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" /></div>;
+  if (loading) return <Spinner />;
   if (user) return <Redirect to="/dashboard" />;
   return <Component />;
+}
+
+function HomeRoute() {
+  const { user, loading } = useAuth();
+  if (loading) return <Spinner />;
+  if (user) return <Redirect to="/dashboard" />;
+  return <LandingPage />;
 }
 
 export default function App() {
   return (
     <Switch>
-      <Route path="/" component={() => <Redirect to="/login" />} />
+      <Route path="/" component={HomeRoute} />
       <Route path="/login" component={() => <PublicRoute component={LoginPage} />} />
       <Route path="/signup" component={() => <PublicRoute component={SignUpPage} />} />
       <Route path="/forgot-password" component={() => <PublicRoute component={ForgotPasswordPage} />} />
@@ -51,7 +65,7 @@ export default function App() {
       <Route path="/profile" component={() => <ProtectedRoute component={ProfilePage} />} />
       <Route path="/assets" component={() => <ProtectedRoute component={AssetsPage} />} />
       <Route path="/add-money" component={() => <ProtectedRoute component={AddMoneyPage} />} />
-      <Route component={() => <Redirect to="/login" />} />
+      <Route component={() => <Redirect to="/" />} />
     </Switch>
   );
 }

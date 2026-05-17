@@ -7,7 +7,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import BottomNav from "@/components/BottomNav";
 import TransactionItem from "@/components/TransactionItem";
 import { formatCurrency } from "@/lib/utils";
-import { Eye, EyeOff, Bell, Headphones, ChevronRight, Send, ArrowDownLeft, Plus, CreditCard, Phone, Wifi, Zap, Gamepad2, PiggyBank, TrendingUp } from "lucide-react";
+import { Eye, EyeOff, Bell, Headphones, ChevronRight, Send, ArrowDownLeft, Plus, CreditCard, Phone, Wifi, Zap, Gamepad2, PiggyBank, TrendingUp, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Badge } from "@/components/ui/badge";
 
 const QUICK_ACTIONS = [
@@ -58,14 +59,15 @@ export default function DashboardPage() {
     return () => clearInterval(t);
   }, []);
 
+  const { isDark, toggleTheme } = useTheme();
   const initials = userData ? `${userData.firstName?.[0] ?? ""}${userData.lastName?.[0] ?? ""}`.toUpperCase() : "?";
 
   return (
-    <div className="min-h-screen bg-[#f5f6fa]">
+    <div className="min-h-screen bg-background dark:bg-background">
       <div className="max-w-[430px] mx-auto">
 
         {/* Header */}
-        <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm px-4 py-3 flex items-center justify-between border-b border-border">
+        <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm px-4 py-3 flex items-center justify-between border-b border-border">
           <Link href="/profile" className="flex items-center gap-2.5" data-testid="link-profile">
             {userData?.profileImg ? (
               <img src={userData.profileImg} alt="avatar" className="h-9 w-9 rounded-full object-cover ring-2 ring-primary/20" />
@@ -77,7 +79,10 @@ export default function DashboardPage() {
               <p className="text-sm font-semibold text-foreground leading-snug">{userData?.firstName ?? "User"}</p>
             </div>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <button onClick={toggleTheme} className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center" data-testid="btn-toggle-theme" aria-label="Toggle dark mode">
+              {isDark ? <Sun className="h-4 w-4 text-muted-foreground" /> : <Moon className="h-4 w-4 text-muted-foreground" />}
+            </button>
             <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center" data-testid="btn-headphones"><Headphones className="h-4 w-4 text-muted-foreground" /></button>
             <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center relative" data-testid="btn-notifications">
               <Bell className="h-4 w-4 text-muted-foreground" />

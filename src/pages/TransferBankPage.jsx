@@ -11,10 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { formatCurrency } from "@/lib/utils";
-import { CheckCircle, AlertCircle } from "lucide-react";
+import { lookupNuban } from "@/lib/nuban";
+import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useLocation } from "wouter";
 
-const BANKS = ["Access Bank","Citibank","Ecobank","Fidelity Bank","First Bank","FCMB","GTBank","Heritage Bank","Keystone Bank","Polaris Bank","Stanbic IBTC","Sterling Bank","UBA","Union Bank","Unity Bank","Wema Bank","Zenith Bank"];
 const AMOUNTS = [500, 1000, 2000, 5000, 10000, 20000];
 
 export default function TransferBankPage() {
@@ -22,6 +22,7 @@ export default function TransferBankPage() {
   const [, setLocation] = useLocation();
   const [form, setForm] = useState({ accountNumber: "", bank: "", amount: "", narration: "" });
   const [recipientName, setRecipientName] = useState("");
+  const [lookingUp, setLookingUp] = useState(false);
   const [pinOpen, setPinOpen] = useState(false);
   const [pinLoading, setPinLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -31,11 +32,19 @@ export default function TransferBankPage() {
 
   const handleAccChange = (e) => {
     const val = e.target.value.replace(/\D/g, "").slice(0, 10);
-    setForm(f => ({ ...f, accountNumber: val }));
+    setForm(f => ({ ...f, accountNumber: val, bank: "" }));
+    setRecipientName("");
     if (val.length === 10) {
-      const names = ["John Adebayo", "Fatima Sule", "Chukwuemeka Obi", "Ngozi Williams", "Taiwo Afolabi", "Kemi Oduya"];
-      setRecipientName(names[Math.floor(Math.random() * names.length)]);
-    } else setRecipientName("");
+      setLookingUp(true);
+      setTimeout(() => {
+        const result = lookupNuban(val);
+        if (result) {
+          setRecipientName(result.name);
+          setForm(f => ({ ...f, bank: result.bank }));
+        }
+        setLookingUp(false);
+      }, 900);
+    }
   };
 
   const validate = () => {
@@ -104,15 +113,31 @@ export default function TransferBankPage() {
           <div className="bg-white rounded-2xl p-4 space-y-4">
             <div className="space-y-1.5">
               <Label>Account Number</Label>
-              <Input placeholder="10-digit account number" value={form.accountNumber} onChange={handleAccChange} inputMode="numeric" maxLength={10} data-testid="input-account-number" />
-              <AnimatePresence>{recipientName && <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="text-xs font-semibold text-green-600 flex items-center gap-1"><CheckCircle className="h-3 w-3" />{recipientName}</motion.p>}</AnimatePresence>
+              <div className="relative">
+                <Input placeholder="10-digit account number" value={form.accountNumber} onChange={handleAccChange} inputMode="numeric" maxLength={10} data-testid="input-account-number" className="pr-10" />
+                {lookingUp && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-primary" />}
+                {!lookingUp && recipientName && <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-500" />}
+              </div>
+              <AnimatePresence>
+                {recipientName && (
+                  <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-xl px-3 py-2">
+                    <p className="text-xs text-green-600 dark:text-green-400 font-medium">Account verified</p>
+                    <p className="text-sm font-bold text-green-800 dark:text-green-300" data-testid="text-recipient-name">{recipientName}</p>
+                    <p className="text-xs text-green-600 dark:text-green-400">{form.bank}</p>
+                  </motion.div>
+                )}
+                {lookingUp && (
+                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Loader2 className="h-3 w-3 animate-spin" /> Verifying account...
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
             <div className="space-y-1.5">
               <Label>Bank</Label>
-              <Select value={form.bank} onChange={set("bank")} data-testid="select-bank">
-                <option value="">Select bank</option>
-                {BANKS.map(b => <option key={b} value={b}>{b}</option>)}
-              </Select>
+              <div className={`h-12 flex items-center px-4 rounded-xl border text-sm transition-colors ${form.bank ? "border-green-300 bg-green-50 dark:bg-green-950/20 text-foreground font-medium" : "border-input bg-secondary text-muted-foreground"}`} data-testid="text-detected-bank">
+                {form.bank || "Auto-detected from account number"}
+              </div>
             </div>
             <div className="space-y-1.5">
               <Label>Amount</Label>
