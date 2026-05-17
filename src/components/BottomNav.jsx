@@ -13,7 +13,7 @@ const navItems = [
   { path: "/wealth",       label: "Loan",   IconOff: RiBankCardLine,   IconOn: RiBankCardFill },
   { path: "/savings",      label: "Wealth", IconOff: RiLineChartLine,  IconOn: RiLineChartFill },
   { path: "/reward",       label: "Reward", IconOff: RiGiftLine,       IconOn: RiGiftFill },
-  { path: "/profile",      label: "Me",     IconOff: RiUserLine,       IconOn: RiUserFill },
+  { path: "/me",           label: "Me",     IconOff: RiUserLine,       IconOn: RiUserFill },
 ];
 
 export default function BottomNav() {

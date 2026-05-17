@@ -18,6 +18,7 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import AssetsPage from "./pages/AssetsPage.jsx";
 import AddMoneyPage from "./pages/AddMoneyPage.jsx";
 import RewardPage from "./pages/RewardPage.jsx";
+import MePage from "./pages/MePage.jsx";
 
 const Spinner = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -67,6 +68,7 @@ export default function App() {
       <Route path="/assets" component={() => <ProtectedRoute component={AssetsPage} />} />
       <Route path="/add-money" component={() => <ProtectedRoute component={AddMoneyPage} />} />
       <Route path="/reward" component={() => <ProtectedRoute component={RewardPage} />} />
+      <Route path="/me" component={() => <ProtectedRoute component={MePage} />} />
       <Route component={() => <Redirect to="/" />} />
     </Switch>
   );

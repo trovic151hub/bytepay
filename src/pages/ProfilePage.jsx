@@ -118,7 +118,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
       <div className="max-w-[430px] mx-auto">
-        <PageHeader title="My Profile" back={false} />
+        <PageHeader title="My Profile" back={true} backTo="/me" />
 
         <div className="px-4 pt-3 pb-28 space-y-3">
 

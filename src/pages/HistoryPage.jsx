@@ -5,7 +5,7 @@ import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import BottomNav from "@/components/BottomNav";
 import PageHeader from "@/components/PageHeader";
-import { Download, ChevronDown, X } from "lucide-react";
+import { Download, ChevronDown, X, ArrowLeft } from "lucide-react";
 import {
   RiPhoneLine, RiWifiLine, RiFlashlightLine, RiSendPlaneLine,
   RiArrowDownLine, RiBankLine, RiMoreLine, RiHistoryLine,
@@ -141,7 +141,13 @@ export default function HistoryPage() {
 
           {/* Title row */}
           <div className="flex items-center justify-between px-4 pt-4 pb-2">
-            <PageHeader title="Transaction History" back={false} />
+            <div className="flex items-center gap-2">
+              <button onClick={() => window.history.back()}
+                className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-secondary transition-colors -ml-1">
+                <ArrowLeft className="h-5 w-5 text-foreground" />
+              </button>
+              <h1 className="text-base font-semibold text-foreground">Transaction History</h1>
+            </div>
             <button className="flex items-center gap-1.5 text-xs text-primary font-semibold bg-primary/10 px-3 py-2 rounded-xl">
               <Download className="h-3.5 w-3.5" /> Download
             </button>
