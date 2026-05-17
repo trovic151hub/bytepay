@@ -7,7 +7,6 @@ import bcrypt from "bcryptjs";
 import { auth, db, storage } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import BottomNav from "@/components/BottomNav";
 import PageHeader from "@/components/PageHeader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -266,7 +265,7 @@ export default function ProfilePage() {
 
         </div>
       </div>
-      <BottomNav />
+
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import BottomNav from "@/components/BottomNav";
 import PageHeader from "@/components/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -40,7 +39,7 @@ export default function SavingsPage() {
   return (
     <div className="min-h-screen bg-[#f5f6fa]">
       <div className="max-w-[430px] mx-auto">
-        <PageHeader title="Savings" back={false} />
+        <PageHeader title="Savings" back={true} />
         <div className="px-4 pt-4 pb-24 space-y-4">
           {/* Summary Card */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-5 text-white">
@@ -101,7 +100,6 @@ export default function SavingsPage() {
           ))}
         </div>
       </div>
-      <BottomNav />
     </div>
   );
 }

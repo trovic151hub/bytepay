@@ -36,7 +36,11 @@ export default function AddMoneyPage() {
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
       <div className="max-w-[430px] mx-auto">
-        <PageHeader title="Add Money" />
+        <PageHeader title="Add Money" right={
+          <button className="flex items-center gap-1 text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-xl">
+            FAQ
+          </button>
+        } />
 
         <div className="px-4 py-4 space-y-3">
 

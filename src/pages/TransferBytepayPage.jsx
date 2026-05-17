@@ -4,12 +4,11 @@ import { collection, query, where, getDocs, doc, updateDoc, addDoc, serverTimest
 import bcrypt from "bcryptjs";
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
-import PageHeader from "@/components/PageHeader";
 import PinModal from "@/components/PinModal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { formatCurrency } from "@/lib/utils";
-import { CheckCircle, AlertCircle, Loader2, Search, ChevronRight, MoreVertical, Users } from "lucide-react";
+import { CheckCircle, AlertCircle, Loader2, Search, ChevronRight, MoreVertical, Users, ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 
@@ -119,12 +118,19 @@ export default function TransferBytepayPage() {
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
       <div className="max-w-[430px] mx-auto">
-        <div className="flex items-center justify-between px-4 pt-4 pb-2">
-          <PageHeader title="Transfer to BytePay" />
-          <button className="h-9 w-9 rounded-xl bg-white dark:bg-card border border-border flex items-center justify-center">
+        {/* Header */}
+        <header className="sticky top-0 z-50 bg-white dark:bg-card shadow-sm px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button onClick={() => setLocation("/dashboard")}
+              className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-secondary transition-colors -ml-1">
+              <ArrowLeft className="h-5 w-5 text-foreground" />
+            </button>
+            <h1 className="text-base font-semibold text-foreground">Transfer to BytePay</h1>
+          </div>
+          <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center">
             <MoreVertical className="h-4 w-4 text-muted-foreground" />
           </button>
-        </div>
+        </header>
 
         <div className="px-4 pb-8 space-y-3">
 
