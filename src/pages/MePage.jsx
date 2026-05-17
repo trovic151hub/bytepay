@@ -82,13 +82,11 @@ export default function MePage() {
               <p className="text-base font-bold text-foreground leading-tight">
                 Hi, {userData?.firstName?.toUpperCase() ?? "USER"}
               </p>
-              <Link href="/profile">
-                <div className="flex items-center gap-1 bg-primary/10 px-2 py-0.5 rounded-full w-fit mt-0.5">
-                  <RiShieldCheckLine className="text-primary text-xs" />
-                  <span className="text-[11px] font-semibold text-primary">Tier 3</span>
-                  <RiArrowRightSLine className="text-primary text-xs" />
-                </div>
-              </Link>
+              <div className="flex items-center gap-1 bg-primary/10 px-2 py-0.5 rounded-full w-fit mt-0.5">
+                <RiShieldCheckLine className="text-primary text-xs" />
+                <span className="text-[11px] font-semibold text-primary">Tier 3</span>
+                <RiArrowRightSLine className="text-primary text-xs" />
+              </div>
             </div>
           </Link>
           <div className="flex items-center gap-2">
