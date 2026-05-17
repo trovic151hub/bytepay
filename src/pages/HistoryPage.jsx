@@ -130,42 +130,41 @@ export default function HistoryPage() {
 
   const totalIn = filtered.filter((t) => t.type === "credit").reduce((s, t) => s + (t.amount ?? 0), 0);
   const totalOut = filtered.filter((t) => t.type === "debit").reduce((s, t) => s + (t.amount ?? 0), 0);
+  const currentPeriod = Object.keys(grouped)[0] ?? new Date().toLocaleDateString("en-NG", { month: "long", year: "numeric" });
 
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
       <div className="max-w-[430px] mx-auto">
 
         {/* Sticky top block: header + summary + filters */}
-        <div className="sticky top-0 z-50 bg-[#F4F2FA] dark:bg-background shadow-sm pb-3">
+        <div className="sticky top-0 z-50 bg-white dark:bg-card shadow-md">
 
           {/* Title row */}
-          <div className="flex items-center justify-between px-4 pt-4 pb-3">
+          <div className="flex items-center justify-between px-4 pt-4 pb-2">
             <PageHeader title="Transaction History" back={false} />
             <button className="flex items-center gap-1.5 text-xs text-primary font-semibold bg-primary/10 px-3 py-2 rounded-xl">
               <Download className="h-3.5 w-3.5" /> Download
             </button>
           </div>
 
-          {/* Summary strip */}
-          <div className="mx-4 bg-white dark:bg-card rounded-2xl px-4 py-3 shadow-sm flex items-center justify-between mb-3">
-            <div className="text-center flex-1">
-              <p className="text-[10px] text-muted-foreground uppercase font-medium">Money In</p>
-              <p className="text-sm font-bold text-green-600">+{formatCurrency(totalIn)}</p>
-            </div>
-            <div className="h-8 w-px bg-border" />
-            <div className="text-center flex-1">
-              <p className="text-[10px] text-muted-foreground uppercase font-medium">Money Out</p>
-              <p className="text-sm font-bold text-foreground">-{formatCurrency(totalOut)}</p>
-            </div>
-            <div className="h-8 w-px bg-border" />
-            <div className="text-center flex-1">
-              <p className="text-[10px] text-muted-foreground uppercase font-medium">Transactions</p>
-              <p className="text-sm font-bold text-foreground">{filtered.length}</p>
+          {/* Period label + In/Out summary */}
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-border/50">
+            <p className="text-sm font-bold text-foreground">{currentPeriod}</p>
+            <div className="flex items-center gap-4 text-xs">
+              <span className="text-muted-foreground">
+                In <span className="font-bold text-green-600">+{formatCurrency(totalIn)}</span>
+              </span>
+              <span className="text-muted-foreground">
+                Out <span className="font-bold text-foreground">-{formatCurrency(totalOut)}</span>
+              </span>
+              <span className="text-muted-foreground">
+                <span className="font-bold text-foreground">{filtered.length}</span> txns
+              </span>
             </div>
           </div>
 
           {/* Filters row */}
-          <div className="flex gap-2 px-4">
+          <div className="flex gap-2 px-4 py-2.5">
             <Dropdown label="All Categories" value={catFilter} options={CAT_OPTIONS} onChange={setCatFilter} />
             <Dropdown label="All Status" value={statusFilter} options={STATUS_OPTIONS} onChange={setStatusFilter} />
             <Dropdown label="All Years" value={yearFilter} options={YEARS} onChange={setYearFilter} />
