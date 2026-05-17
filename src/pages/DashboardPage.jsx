@@ -86,7 +86,7 @@ export default function DashboardPage() {
       <div className="max-w-[430px] mx-auto">
 
         {/* Header */}
-        <header className="bg-white dark:bg-card px-4 py-3 flex items-center justify-between">
+        <header className="sticky top-0 z-50 bg-white dark:bg-card px-4 py-3 flex items-center justify-between shadow-sm">
           <Link href="/profile" className="flex items-center gap-2.5" data-testid="link-profile">
             {userData?.profileImg ? (
               <img src={userData.profileImg} alt="avatar" className="h-11 w-11 rounded-full object-cover" />

@@ -139,7 +139,7 @@ export default function RewardPage() {
               <p className="text-xs font-bold text-muted-foreground uppercase px-1">Available rewards</p>
               <div className="grid grid-cols-2 gap-3">
                 {REWARDS.map((r, i) => (
-                  <motion.button key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                  <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
                     className={cn(
                       "bg-white dark:bg-card rounded-2xl p-4 text-left shadow-sm",
@@ -163,7 +163,7 @@ export default function RewardPage() {
                         Redeem
                       </button>
                     )}
-                  </motion.button>
+                  </motion.div>
                 ))}
               </div>
             </div>
