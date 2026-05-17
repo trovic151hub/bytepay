@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { doc, updateDoc, collection, addDoc, serverTimestamp, increment } from "firebase/firestore";
+import { doc, updateDoc, collection, addDoc, serverTimestamp, increment, query, orderBy, limit, onSnapshot } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
@@ -31,11 +31,28 @@ export default function TransferBankPage() {
   const [form, setForm] = useState({ accountNumber: "", bank: "", amount: "", narration: "" });
   const [recipientName, setRecipientName] = useState("");
   const [lookingUp, setLookingUp] = useState(false);
-  const [step, setStep] = useState("form"); // form | amount | success
+  const [step, setStep] = useState("form");
   const [pinOpen, setPinOpen] = useState(false);
   const [pinLoading, setPinLoading] = useState(false);
   const [status, setStatus] = useState(null);
   const [formError, setFormError] = useState("");
+  const [recentTxns, setRecentTxns] = useState([]);
+  const [txIdx, setTxIdx] = useState(0);
+
+  useEffect(() => {
+    if (!user?.uid) return;
+    const q = query(collection(db, "users", user.uid, "transactions"), orderBy("date", "desc"), limit(3));
+    const unsub = onSnapshot(q, (snap) => {
+      setRecentTxns(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+    });
+    return () => unsub();
+  }, [user?.uid]);
+
+  useEffect(() => {
+    if (recentTxns.length < 2) return;
+    const t = setInterval(() => setTxIdx((i) => (i + 1) % recentTxns.length), 3000);
+    return () => clearInterval(t);
+  }, [recentTxns.length]);
 
   const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
 
@@ -122,6 +139,43 @@ export default function TransferBankPage() {
         </div>
 
         <div className="px-4 pb-8 space-y-3">
+
+          {/* Cycling last transactions */}
+          {recentTxns.length > 0 && (
+            <div className="bg-white dark:bg-card rounded-2xl px-4 py-3 shadow-sm overflow-hidden">
+              <p className="text-[10px] text-muted-foreground font-semibold uppercase mb-2">Recent Activity</p>
+              <AnimatePresence mode="wait">
+                {(() => {
+                  const tx = recentTxns[txIdx];
+                  const d = tx.date?.toDate ? tx.date.toDate() : new Date();
+                  return (
+                    <motion.div key={tx.id}
+                      initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex items-center gap-3">
+                      <div className={`h-9 w-9 rounded-full flex items-center justify-center shrink-0 ${tx.type === "credit" ? "bg-green-100" : "bg-violet-100"}`}>
+                        <span className="text-sm">{tx.type === "credit" ? "⬇" : "⬆"}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-foreground truncate">{tx.description}</p>
+                        <p className="text-[11px] text-muted-foreground">{d.toLocaleDateString("en-NG", { month: "short", day: "numeric" })}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className={`text-sm font-bold ${tx.type === "credit" ? "text-green-600" : "text-foreground"}`}>
+                          {tx.type === "credit" ? "+" : "-"}{formatCurrency(tx.amount ?? 0)}
+                        </p>
+                        <div className="flex items-center gap-1 justify-end mt-0.5">
+                          {recentTxns.map((_, i) => (
+                            <span key={i} className={`h-1 rounded-full transition-all ${i === txIdx ? "w-3 bg-primary" : "w-1 bg-border"}`} />
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })()}
+              </AnimatePresence>
+            </div>
+          )}
 
           {/* Tab switch */}
           <div className="bg-white dark:bg-card rounded-2xl p-1.5 flex shadow-sm">

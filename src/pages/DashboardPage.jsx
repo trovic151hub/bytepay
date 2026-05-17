@@ -103,23 +103,11 @@ export default function DashboardPage() {
             </div>
           </Link>
           <div className="flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center"
-              data-testid="btn-toggle-theme"
-            >
-              {isDark
-                ? <RiSunLine className="h-4 w-4 text-muted-foreground" />
-                : <RiMoonLine className="h-4 w-4 text-muted-foreground" />}
-            </button>
             <button className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center" data-testid="btn-headphones">
               <RiHeadphoneLine className="h-4 w-4 text-muted-foreground" />
             </button>
             <button className="relative h-9 w-9 rounded-full bg-secondary flex items-center justify-center" data-testid="btn-notifications">
               <RiBellLine className="h-4 w-4 text-muted-foreground" />
-              <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] rounded-full bg-red-500 text-white text-[9px] font-bold flex items-center justify-center px-1">
-                99+
-              </span>
             </button>
           </div>
         </header>

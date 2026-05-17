@@ -12,7 +12,7 @@ const navItems = [
   { path: "/dashboard",    label: "Home",   IconOff: RiHomeLine,       IconOn: RiHomeFill },
   { path: "/wealth",       label: "Loan",   IconOff: RiBankCardLine,   IconOn: RiBankCardFill },
   { path: "/savings",      label: "Wealth", IconOff: RiLineChartLine,  IconOn: RiLineChartFill },
-  { path: "/history",      label: "Reward", IconOff: RiGiftLine,       IconOn: RiGiftFill },
+  { path: "/reward",       label: "Reward", IconOff: RiGiftLine,       IconOn: RiGiftFill },
   { path: "/profile",      label: "Me",     IconOff: RiUserLine,       IconOn: RiUserFill },
 ];
 

@@ -17,7 +17,12 @@ import { cn } from "@/lib/utils";
 
 function Row({ label, value, action, onClick, showChevron = true, badge }) {
   return (
-    <button onClick={onClick} className="w-full flex items-center justify-between py-3.5 border-b border-border/60 last:border-0 hover:bg-secondary/30 -mx-4 px-4 transition-colors">
+    <div
+      onClick={onClick}
+      role={onClick ? "button" : undefined}
+      className="w-full flex items-center justify-between py-3.5 border-b border-border/60 last:border-0 hover:bg-secondary/30 -mx-4 px-4 transition-colors cursor-default"
+      style={onClick ? { cursor: "pointer" } : undefined}
+    >
       <span className="text-sm text-foreground">{label}</span>
       <div className="flex items-center gap-1.5">
         {badge && <span className="text-[10px] bg-red-500 h-2 w-2 rounded-full" />}
@@ -25,7 +30,7 @@ function Row({ label, value, action, onClick, showChevron = true, badge }) {
         {action}
         {showChevron && <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />}
       </div>
-    </button>
+    </div>
   );
 }
 
