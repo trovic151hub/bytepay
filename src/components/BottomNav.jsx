@@ -1,13 +1,19 @@
 import { useLocation, Link } from "wouter";
-import { Home, TrendingUp, Gift, User } from "lucide-react";
+import {
+  RiHomeLine, RiHomeFill,
+  RiBankCardLine, RiBankCardFill,
+  RiLineChartLine, RiLineChartFill,
+  RiGiftLine, RiGiftFill,
+  RiUserLine, RiUserFill,
+} from "react-icons/ri";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { path: "/dashboard", label: "Home", icon: Home },
-  { path: "/wealth", label: "Loan", icon: TrendingUp },
-  { path: "/savings", label: "Wealth", icon: null, emoji: "📈" },
-  { path: "/history", label: "Reward", icon: Gift },
-  { path: "/profile", label: "Me", icon: User },
+  { path: "/dashboard",    label: "Home",   IconOff: RiHomeLine,       IconOn: RiHomeFill },
+  { path: "/wealth",       label: "Loan",   IconOff: RiBankCardLine,   IconOn: RiBankCardFill },
+  { path: "/savings",      label: "Wealth", IconOff: RiLineChartLine,  IconOn: RiLineChartFill },
+  { path: "/history",      label: "Reward", IconOff: RiGiftLine,       IconOn: RiGiftFill },
+  { path: "/profile",      label: "Me",     IconOff: RiUserLine,       IconOn: RiUserFill },
 ];
 
 export default function BottomNav() {
@@ -15,27 +21,24 @@ export default function BottomNav() {
   return (
     <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white dark:bg-card border-t border-border z-50">
       <div className="flex items-center justify-around px-1 h-16">
-        {navItems.map(({ path, icon: Icon, label, emoji }) => {
+        {navItems.map(({ path, label, IconOff, IconOn }) => {
           const active = location === path || (path !== "/dashboard" && location.startsWith(path));
+          const Icon = active ? IconOn : IconOff;
           return (
-            <Link key={path} href={path}
-              className="flex flex-col items-center gap-1 px-3 py-1 relative min-w-0 flex-1"
-              data-testid={`nav-${label.toLowerCase()}`}>
+            <Link
+              key={path} href={path}
+              className="flex flex-col items-center gap-1 flex-1 py-2"
+              data-testid={`nav-${label.toLowerCase()}`}
+            >
               {active ? (
-                <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center">
-                  {emoji
-                    ? <span className="text-base">{emoji}</span>
-                    : <Icon className="h-4.5 w-4.5 text-primary-foreground" style={{ height: "18px", width: "18px" }} />}
+                <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                  <Icon className="text-primary-foreground text-lg" />
                 </div>
               ) : (
-                <div className="h-9 w-9 flex items-center justify-center">
-                  {emoji
-                    ? <span className="text-xl text-muted-foreground opacity-60">{emoji}</span>
-                    : <Icon className={cn("h-5 w-5", active ? "text-primary" : "text-muted-foreground")} />}
-                </div>
+                <Icon className="text-muted-foreground text-[22px]" />
               )}
               <span className={cn(
-                "text-[10px] font-semibold transition-colors truncate",
+                "text-[10px] font-semibold",
                 active ? "text-primary" : "text-muted-foreground"
               )}>
                 {label}

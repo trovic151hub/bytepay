@@ -11,7 +11,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 
 const FEATURES = [
-  { icon: Send, label: "Send Money", desc: "Transfer to any bank instantly", color: "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400" },
+  { icon: Send, label: "Send Money", desc: "Transfer to any bank instantly", color: "bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400" },
   { icon: Plus, label: "Add Money", desc: "Fund your wallet easily", color: "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400" },
   { icon: Phone, label: "Buy Airtime", desc: "All networks supported", color: "bg-red-100 text-red-500 dark:bg-red-900/40 dark:text-red-400" },
   { icon: Wifi, label: "Data Bundles", desc: "Best data deals always", color: "bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400" },
@@ -213,12 +213,12 @@ export default function LandingPage() {
 
         {/* Bottom CTA */}
         <div className="px-4 pb-10">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-center">
+          <div className="bg-gradient-to-br from-violet-700 to-indigo-700 rounded-2xl p-6 text-center">
             <h3 className="text-white font-bold text-lg mb-1">Ready to get started?</h3>
-            <p className="text-blue-200 text-sm mb-4">Join millions of Nigerians banking smarter</p>
+            <p className="text-purple-200 text-sm mb-4">Join millions of Nigerians banking smarter</p>
             <Button
               size="lg"
-              className="w-full bg-white text-blue-700 hover:bg-blue-50 font-bold"
+              className="w-full bg-white text-violet-700 hover:bg-purple-50 font-bold"
               onClick={() => setLocation("/signup")}
               data-testid="btn-join-now"
             >

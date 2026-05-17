@@ -10,7 +10,7 @@ import { formatCurrency } from "@/lib/utils";
 
 const PRODUCTS = [
   {
-    id: "target", icon: Target, color: "bg-blue-100 text-blue-600", gradientFrom: "from-blue-500", gradientTo: "to-blue-600",
+    id: "target", icon: Target, color: "bg-violet-100 text-violet-600", gradientFrom: "from-violet-500", gradientTo: "to-violet-600",
     name: "Target Savings", rate: "10% p.a.", badge: "Flexible",
     desc: "Save towards a specific goal. Set your target and watch your money grow.",
     features: ["No lock-in period", "Earn 10% interest per annum", "Withdraw anytime"],

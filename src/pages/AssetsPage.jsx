@@ -11,7 +11,7 @@ export default function AssetsPage() {
   const total = balance;
 
   const assets = [
-    { icon: Wallet, label: "Available Balance", value: balance, color: "bg-blue-100 text-blue-600", path: "/dashboard" },
+    { icon: Wallet, label: "Available Balance", value: balance, color: "bg-violet-100 text-violet-600", path: "/dashboard" },
     { icon: PiggyBank, label: "Savings", value: 0, color: "bg-purple-100 text-purple-600", path: "/savings" },
     { icon: TrendingUp, label: "Investments", value: 0, color: "bg-green-100 text-green-600", path: "/savings" },
     { icon: Shield, label: "Insurance", value: 0, color: "bg-orange-100 text-orange-600", path: "/savings" },
@@ -23,10 +23,10 @@ export default function AssetsPage() {
         <PageHeader title="Total Assets" />
         <div className="px-4 py-4 space-y-4">
           {/* Total */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-5 text-white text-center">
-            <p className="text-blue-200 text-sm mb-1">Total Net Worth</p>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gradient-to-br from-violet-600 to-indigo-700 rounded-2xl p-5 text-white text-center">
+            <p className="text-purple-200 text-sm mb-1">Total Net Worth</p>
             <p className="text-4xl font-bold mb-1" data-testid="text-total-assets">{formatCurrency(total)}</p>
-            <p className="text-blue-200 text-xs">Across all BytePay products</p>
+            <p className="text-purple-200 text-xs">Across all BytePay products</p>
           </motion.div>
 
           {/* Breakdown */}
