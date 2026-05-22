@@ -119,69 +119,49 @@ export default function TransferBytepayPage() {
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
       <div className="max-w-[430px] mx-auto">
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-white dark:bg-card shadow-sm px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <button onClick={() => setLocation("/dashboard")}
-              className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-secondary transition-colors -ml-1">
-              <ArrowLeft className="h-5 w-5 text-foreground" />
+        <header className="sticky top-0 z-50 bg-white dark:bg-card shadow-sm">
+          <div className="px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <button onClick={() => setLocation("/dashboard")}
+                className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-secondary transition-colors -ml-1">
+                <ArrowLeft className="h-5 w-5 text-foreground" />
+              </button>
+              <h1 className="text-base font-semibold text-foreground">Transfer to Bank</h1>
+            </div>
+            <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center">
+              <MoreVertical className="h-4 w-4 text-muted-foreground" />
             </button>
-            <h1 className="text-base font-semibold text-foreground">Transfer to BytePay</h1>
           </div>
-          <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center">
-            <MoreVertical className="h-4 w-4 text-muted-foreground" />
-          </button>
+          {/* Shared underline tabs */}
+          <div className="flex border-b border-border px-4">
+            {["To Other Bank", "To BytePay"].map((t) => (
+              <button key={t}
+                onClick={() => { if (t === "To Other Bank") setLocation("/transfer/bank"); }}
+                className={cn(
+                  "py-3.5 px-2 mr-6 text-sm font-semibold border-b-2 -mb-px transition-colors",
+                  t === "To BytePay"
+                    ? "border-primary text-primary"
+                    : "border-transparent text-muted-foreground hover:text-foreground"
+                )}>
+                {t}
+              </button>
+            ))}
+          </div>
         </header>
 
-        <div className="px-4 pb-8 space-y-3">
+        {/* Form — full-bleed white section */}
+        <div className="bg-white dark:bg-card shadow-sm">
+          <div className="px-4 pt-5 pb-4 space-y-3">
 
-          {/* Cycling last transactions */}
-          {recentTxns.length > 0 && (
-            <div className="bg-white dark:bg-card rounded-2xl px-4 py-3 shadow-sm overflow-hidden">
-              <p className="text-[10px] text-muted-foreground font-semibold uppercase mb-2">Recent Activity</p>
-              <AnimatePresence mode="wait">
-                {(() => {
-                  const tx = recentTxns[txIdx];
-                  const d = tx.date?.toDate ? tx.date.toDate() : new Date();
-                  return (
-                    <motion.div key={tx.id}
-                      initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex items-center gap-3">
-                      <div className={`h-9 w-9 rounded-full flex items-center justify-center shrink-0 ${tx.type === "credit" ? "bg-green-100" : "bg-violet-100"}`}>
-                        <span className="text-sm">{tx.type === "credit" ? "⬇" : "⬆"}</span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-foreground truncate">{tx.description}</p>
-                        <p className="text-[11px] text-muted-foreground">{d.toLocaleDateString("en-NG", { month: "short", day: "numeric" })}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className={`text-sm font-bold ${tx.type === "credit" ? "text-green-600" : "text-foreground"}`}>
-                          {tx.type === "credit" ? "+" : "-"}{formatCurrency(tx.amount ?? 0)}
-                        </p>
-                        <div className="flex items-center gap-1 justify-end mt-0.5">
-                          {recentTxns.map((_, i) => (
-                            <span key={i} className={`h-1 rounded-full transition-all ${i === txIdx ? "w-3 bg-primary" : "w-1 bg-border"}`} />
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })()}
-              </AnimatePresence>
-            </div>
-          )}
-
-          {/* Input card */}
-          <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm space-y-3">
             <div className="relative">
               <Input
                 placeholder="Enter 10-digit Account No. or Phone No."
                 value={accNum} onChange={handleAccChange}
                 inputMode="numeric" maxLength={10}
-                className="pr-10 text-base"
+                className="h-12 text-base border-0 border-b border-border rounded-none px-0 focus-visible:ring-0 bg-transparent"
                 data-testid="input-account-number"
               />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+              <div className="absolute right-0 top-1/2 -translate-y-1/2">
                 {searching
                   ? <Loader2 className="h-4 w-4 animate-spin text-primary" />
                   : <Users className="h-4 w-4 text-muted-foreground" />}
@@ -228,12 +208,21 @@ export default function TransferBytepayPage() {
 
             <button
               onClick={() => { if (validate()) setPinOpen(true); }}
-              className={cn("w-full py-3.5 rounded-xl font-bold text-sm transition-colors",
-                recipient ? "bg-primary text-primary-foreground" : "bg-primary/30 text-primary-foreground/70")}
+              className={cn("w-full py-3.5 rounded-2xl font-bold text-sm transition-colors",
+                recipient ? "bg-primary text-primary-foreground" : "bg-primary/30 text-primary-foreground/80")}
               data-testid="button-continue">
               Next
             </button>
+
+            <div className="flex items-center gap-1.5 justify-center pb-1">
+              <span className="text-xs font-bold text-primary">INSTANT</span>
+              <span className="text-xs text-muted-foreground">| Seamless transfers without delay</span>
+              <ChevronRight className="h-3 w-3 text-muted-foreground" />
+            </div>
           </div>
+        </div>
+
+        <div className="px-4 pt-3 pb-8 space-y-3">
 
           {formError && (
             <p className="text-red-500 text-sm bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-xl flex items-center gap-2">
@@ -250,37 +239,29 @@ export default function TransferBytepayPage() {
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </button>
 
-          {/* Recent contacts */}
+          {/* Recent BytePay contacts */}
           <div className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
-            <div className="flex items-center gap-4 px-4 pt-3 pb-1 border-b border-border">
+            <div className="flex items-center gap-1 px-4 pt-3 pb-0 border-b border-border">
               {["Recent", "Favorites", "Local Contacts"].map((t) => (
-                <button key={t} className={cn("pb-2 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap",
-                  t === "Recent" ? "border-primary text-primary" : "border-transparent text-muted-foreground")}>
+                <button key={t}
+                  className={cn(
+                    "py-2.5 px-2 mr-3 text-sm font-semibold border-b-2 -mb-px transition-colors whitespace-nowrap",
+                    t === "Recent"
+                      ? "border-primary text-primary"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  )}>
                   {t}
                 </button>
               ))}
-              <button className="ml-auto"><Search className="h-4 w-4 text-muted-foreground" /></button>
+              <button className="ml-auto pb-2"><Search className="h-4 w-4 text-muted-foreground" /></button>
             </div>
-
-            {RECENT_CONTACTS.map((c, i) => (
-              <div key={i} className={cn("flex items-center gap-3 px-4 py-3.5", i < RECENT_CONTACTS.length - 1 && "border-b border-border/60")}>
-                <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold shrink-0">
-                  {c.avatar}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-semibold text-foreground truncate">{c.name}</p>
-                    {c.badge && <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-bold shrink-0">{c.badge}</span>}
-                  </div>
-                  <p className="text-xs text-muted-foreground">{c.account}</p>
-                  {c.lastTransfer && <p className="text-[10px] text-muted-foreground/70">Last transfer on {c.lastTransfer}</p>}
-                </div>
+            <div className="text-center py-10">
+              <div className="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mx-auto mb-3">
+                <Users className="h-5 w-5 text-muted-foreground" />
               </div>
-            ))}
-
-            <button className="w-full py-3 text-center text-sm text-primary font-medium border-t border-border">
-              View All &gt;
-            </button>
+              <p className="text-sm font-semibold text-foreground">No recent transfers</p>
+              <p className="text-xs text-muted-foreground mt-1">BytePay users you send to will appear here</p>
+            </div>
           </div>
 
         </div>
