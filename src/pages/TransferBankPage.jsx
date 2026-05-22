@@ -175,38 +175,21 @@ export default function TransferBankPage() {
       <div className="max-w-[430px] mx-auto">
 
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-white dark:bg-card shadow-sm">
-          <div className="px-4 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <button onClick={() => setLocation("/dashboard")}
-                className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-secondary transition-colors -ml-1">
-                <ArrowLeft className="h-5 w-5 text-foreground" />
-              </button>
-              <h1 className="text-base font-semibold text-foreground">Transfer to Bank</h1>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center">
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </button>
-              <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center">
-                <MoreVertical className="h-4 w-4 text-muted-foreground" />
-              </button>
-            </div>
+        <header className="sticky top-0 z-50 bg-white dark:bg-card shadow-sm px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button onClick={() => setLocation("/dashboard")}
+              className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-secondary transition-colors -ml-1">
+              <ArrowLeft className="h-5 w-5 text-foreground" />
+            </button>
+            <h1 className="text-base font-semibold text-foreground">Transfer to Bank</h1>
           </div>
-          {/* Shared underline tabs */}
-          <div className="flex border-b border-border px-4">
-            {["To Other Bank", "To BytePay"].map((t) => (
-              <button key={t}
-                onClick={() => { setTab(t); if (t === "To BytePay") setLocation("/transfer/bytepay"); }}
-                className={cn(
-                  "py-3.5 px-2 mr-6 text-sm font-semibold border-b-2 -mb-px transition-colors",
-                  tab === t
-                    ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
-                )}>
-                {t}
-              </button>
-            ))}
+          <div className="flex items-center gap-2">
+            <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center">
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </button>
+            <button className="h-9 w-9 rounded-xl bg-secondary flex items-center justify-center">
+              <MoreVertical className="h-4 w-4 text-muted-foreground" />
+            </button>
           </div>
         </header>
 
@@ -214,6 +197,22 @@ export default function TransferBankPage() {
 
           {/* Main form card — full bleed white */}
           <div className="bg-white dark:bg-card shadow-sm">
+
+            {/* Underline tabs */}
+            <div className="flex border-b border-border px-4">
+              {["To Other Bank", "To BytePay"].map((t) => (
+                <button key={t}
+                  onClick={() => { setTab(t); if (t === "To BytePay") setLocation("/transfer/bytepay"); }}
+                  className={cn(
+                    "py-3.5 px-2 mr-6 text-sm font-semibold border-b-2 -mb-px transition-colors",
+                    tab === t
+                      ? "border-primary text-primary"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  )}>
+                  {t}
+                </button>
+              ))}
+            </div>
 
             {/* Form fields */}
             <div className="px-4 pt-5 pb-4 space-y-4">
