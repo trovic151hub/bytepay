@@ -123,7 +123,7 @@ export default function DataPage() {
 
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
-      <div className="max-w-[430px] mx-auto">
+      <div className="w-full max-w-[430px] mx-auto">
         <PageHeader title="Data" />
 
         <div className="px-4 py-3 space-y-3">

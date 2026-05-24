@@ -19,7 +19,7 @@ export default function AssetsPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f6fa]">
-      <div className="max-w-[430px] mx-auto">
+      <div className="w-full max-w-[430px] mx-auto">
         <PageHeader title="Total Assets" />
         <div className="px-4 py-4 space-y-4">
           {/* Total */}

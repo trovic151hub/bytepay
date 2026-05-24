@@ -83,7 +83,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
-      <div className="max-w-[430px] mx-auto">
+      <div className="w-full max-w-[430px] mx-auto">
 
         {/* Header */}
         <header className="sticky top-0 z-50 bg-white dark:bg-card px-4 py-3 flex items-center justify-between shadow-sm">
@@ -134,22 +134,22 @@ export default function DashboardPage() {
               </Link>
             </div>
 
-            <div className="flex items-end justify-between mb-3">
-              <div className="flex items-center gap-1.5">
+            <div className="flex items-end justify-between mb-3 gap-2">
+              <div className="flex items-center gap-1 min-w-0 flex-1">
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={showBalance ? "show" : "hide"}
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    className="text-3xl font-bold text-foreground"
+                    className="text-2xl font-bold text-foreground truncate"
                     data-testid="text-balance"
                   >
                     {showBalance ? formatCurrency(userData?.accountBalance ?? 0) : "₦ •••••"}
                   </motion.p>
                 </AnimatePresence>
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
               </div>
-              <Link href="/add-money" data-testid="link-add-money">
-                <div className="bg-primary text-primary-foreground px-4 py-2 rounded-xl text-sm font-semibold">
+              <Link href="/add-money" data-testid="link-add-money" className="shrink-0">
+                <div className="bg-primary text-primary-foreground px-3 py-2 rounded-xl text-sm font-semibold whitespace-nowrap">
                   Add Money
                 </div>
               </Link>

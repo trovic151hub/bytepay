@@ -38,7 +38,7 @@ export default function SavingsPage() {
   const { userData } = useAuth();
   return (
     <div className="min-h-screen bg-[#f5f6fa]">
-      <div className="max-w-[430px] mx-auto">
+      <div className="w-full max-w-[430px] mx-auto">
         <PageHeader title="Savings" back={true} />
         <div className="px-4 pt-4 pb-24 space-y-4">
           {/* Summary Card */}

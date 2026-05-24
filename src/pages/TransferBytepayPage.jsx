@@ -117,7 +117,7 @@ export default function TransferBytepayPage() {
 
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
-      <div className="max-w-[430px] mx-auto">
+      <div className="w-full max-w-[430px] mx-auto">
         {/* Header */}
         <header className="sticky top-0 z-50 bg-white dark:bg-card shadow-sm">
           <div className="px-4 py-3 flex items-center justify-between">
