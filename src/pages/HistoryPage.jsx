@@ -134,7 +134,7 @@ export default function HistoryPage() {
 
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
-      <div className="w-full max-w-[430px] mx-auto">
+      <div className="max-w-[430px] mx-auto">
 
         {/* Sticky top block: header + summary + filters */}
         <div className="sticky top-0 z-50 bg-white dark:bg-card shadow-md">

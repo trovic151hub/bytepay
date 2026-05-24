@@ -46,7 +46,7 @@ export default function RewardPage() {
 
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
-      <div className="w-full max-w-[430px] mx-auto">
+      <div className="max-w-[430px] mx-auto">
 
         {/* Points hero card */}
         <div className="bg-gradient-to-br from-violet-700 via-purple-700 to-indigo-800 px-4 pt-12 pb-6 text-white">

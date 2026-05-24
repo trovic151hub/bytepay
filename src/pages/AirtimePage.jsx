@@ -83,7 +83,7 @@ export default function AirtimePage() {
 
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
-      <div className="w-full max-w-[430px] mx-auto">
+      <div className="max-w-[430px] mx-auto">
         <PageHeader title="Airtime" />
 
         <div className="px-4 py-3 space-y-3">

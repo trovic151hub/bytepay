@@ -86,7 +86,7 @@ export default function ElectricityPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f6fa]">
-      <div className="w-full max-w-[430px] mx-auto">
+      <div className="max-w-[430px] mx-auto">
         <PageHeader title="Pay Electricity" />
         <div className="px-4 py-4 space-y-4">
           <div className="bg-white rounded-2xl p-4 space-y-4">
