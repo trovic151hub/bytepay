@@ -1,0 +1,74 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 262 80% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 260 20% 96%;
+    --secondary-foreground: 262 47% 15%;
+    --muted: 260 14% 95%;
+    --muted-foreground: 262 10% 48%;
+    --accent: 260 14% 95%;
+    --accent-foreground: 262 47% 15%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 260 13% 90%;
+    --input: 260 13% 90%;
+    --ring: 262 80% 55%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 224 30% 9%;
+    --foreground: 210 40% 96%;
+    --card: 224 27% 13%;
+    --card-foreground: 210 40% 96%;
+    --popover: 224 27% 13%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 262 75% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 262 20% 18%;
+    --secondary-foreground: 262 40% 96%;
+    --muted: 262 20% 18%;
+    --muted-foreground: 262 15% 58%;
+    --accent: 262 20% 18%;
+    --accent-foreground: 262 40% 96%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 210 40% 96%;
+    --border: 262 20% 22%;
+    --input: 262 20% 22%;
+    --ring: 262 75% 65%;
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 99px; }
+}
