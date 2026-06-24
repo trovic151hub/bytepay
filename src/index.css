@@ -71,8 +71,12 @@
     min-height: -webkit-fill-available;
   }
 
-  /* Scrollbar styling */
-  ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 99px; }
+  /* Hide all scrollbars while keeping scroll functionality */
+  * {
+    scrollbar-width: none;       /* Firefox */
+    -ms-overflow-style: none;    /* IE / Edge */
+  }
+  *::-webkit-scrollbar {
+    display: none;               /* Chrome / Safari / WebKit */
+  }
 }
