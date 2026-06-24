@@ -2,6 +2,27 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* ── Scrollbar hiding — outside @layer for full specificity on iOS Safari ── */
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+*::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-button {
+  display: none !important;
+  background: transparent !important;
+}
+
 @layer base {
   :root {
     --background: 220 20% 97%;
@@ -71,18 +92,4 @@
     min-height: -webkit-fill-available;
   }
 
-  /* Hide all scrollbars while keeping scroll functionality */
-  * {
-    scrollbar-width: none;       /* Firefox */
-    -ms-overflow-style: none;    /* IE / Edge */
-  }
-  *::-webkit-scrollbar,
-  *::-webkit-scrollbar-track,
-  *::-webkit-scrollbar-thumb,
-  *::-webkit-scrollbar-corner {
-    display: none;               /* Chrome / Safari / WebKit / iOS Safari */
-    width: 0 !important;
-    height: 0 !important;
-    background: transparent;
-  }
 }
