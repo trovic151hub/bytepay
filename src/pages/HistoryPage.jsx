@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
-import BottomNav from "@/components/BottomNav";
 import { ArrowLeft, ChevronDown, Download } from "lucide-react";
 import {
   RiPhoneLine, RiWifiLine, RiFlashlightLine, RiSendPlaneLine,
@@ -416,8 +415,6 @@ export default function HistoryPage() {
           )}
         </div>
       </div>
-
-      <BottomNav />
 
       {/* Month picker bottom sheet */}
       <MonthPicker

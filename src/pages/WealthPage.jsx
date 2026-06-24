@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { doc, updateDoc, increment } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
-import BottomNav from "@/components/BottomNav";
 import PageHeader from "@/components/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -132,7 +131,6 @@ export default function WealthPage() {
           </div>
         </div>
       </div>
-      <BottomNav />
     </div>
   );
 }

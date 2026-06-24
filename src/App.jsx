@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Switch, Route, Redirect, useLocation } from "wouter";
+import BottomNav from "./components/BottomNav.jsx";
 import { useAuth } from "./contexts/AuthContext.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -23,6 +24,7 @@ import TopupPage from "./pages/TopupPage.jsx";
 import FundHistoryPage from "./pages/FundHistoryPage.jsx";
 import RewardPage from "./pages/RewardPage.jsx";
 import MePage from "./pages/MePage.jsx";
+import SettingsPage from "./pages/SettingsPage.jsx";
 import TransactionDetailPage from "./pages/TransactionDetailPage.jsx";
 
 function ProtectedRoute({ component: Component }) {
@@ -69,13 +71,22 @@ const ProtectedTopup = () => <ProtectedRoute component={TopupPage} />;
 const ProtectedFundHistory = () => <ProtectedRoute component={FundHistoryPage} />;
 const ProtectedReward = () => <ProtectedRoute component={RewardPage} />;
 const ProtectedMe = () => <ProtectedRoute component={MePage} />;
+const ProtectedSettings = () => <ProtectedRoute component={SettingsPage} />;
 const ProtectedTxDetail = () => <ProtectedRoute component={TransactionDetailPage} />;
 const RedirectHome = () => <Redirect to="/" />;
+
+const TAB_ROUTES = ["/dashboard", "/wealth", "/savings", "/reward", "/me"];
 
 function ScrollToTop() {
   const [location] = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [location]);
   return null;
+}
+
+function ConditionalBottomNav() {
+  const [location] = useLocation();
+  const isTab = TAB_ROUTES.includes(location) || location === "/";
+  return isTab ? <BottomNav /> : null;
 }
 
 const MIN_SPLASH_MS = 1200;
@@ -94,6 +105,7 @@ export default function App() {
   return (
     <>
     <ScrollToTop />
+    <ConditionalBottomNav />
     <Switch>
       <Route path="/" component={HomeRoute} />
       <Route path="/login" component={PublicLogin} />
@@ -116,6 +128,7 @@ export default function App() {
       <Route path="/fund-history" component={ProtectedFundHistory} />
       <Route path="/reward" component={ProtectedReward} />
       <Route path="/me" component={ProtectedMe} />
+      <Route path="/settings" component={ProtectedSettings} />
       <Route path="/transaction/:id" component={ProtectedTxDetail} />
       <Route component={RedirectHome} />
     </Switch>

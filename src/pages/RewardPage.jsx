@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
-import BottomNav from "@/components/BottomNav";
 import { ChevronRight, CheckCircle } from "lucide-react";
 import {
   RiCoinLine, RiGift2Line, RiUserAddLine, RiShieldCheckLine,
@@ -192,7 +191,6 @@ export default function RewardPage() {
 
         </div>
       </div>
-      <BottomNav />
     </div>
   );
 }

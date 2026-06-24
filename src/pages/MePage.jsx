@@ -5,7 +5,6 @@ import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestor
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import BottomNav from "@/components/BottomNav";
 import { formatCurrency } from "@/lib/utils";
 import { Eye, EyeOff, ChevronRight } from "lucide-react";
 import {
@@ -36,7 +35,7 @@ export default function MePage() {
   const { userData } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const [, setLocation] = useLocation();
-  const [showAssets, setShowAssets] = useState(true);
+  const [showAssets, setShowAssets] = useState(false);
   const [transactions, setTransactions] = useState([]);
 
   const initials = userData
@@ -93,7 +92,8 @@ export default function MePage() {
             <button className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center">
               <RiQrScanLine className="text-muted-foreground text-lg" />
             </button>
-            <button className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center">
+            <button onClick={() => setLocation("/settings")}
+              className="h-9 w-9 rounded-full bg-secondary flex items-center justify-center">
               <RiSettings3Line className="text-muted-foreground text-lg" />
             </button>
           </div>
@@ -134,12 +134,17 @@ export default function MePage() {
           {/* Transaction History preview */}
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
             className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
-            <Link href="/history">
-              <div className="flex items-center justify-between px-4 pt-4 pb-2">
-                <p className="text-sm font-bold text-foreground">Transaction History</p>
-                <RiArrowRightSLine className="text-muted-foreground text-lg" />
+            <div className="flex items-center justify-between px-4 pt-4 pb-2">
+              <p className="text-sm font-bold text-foreground">Transaction History</p>
+              <div className="flex items-center gap-2">
+                <button className="flex items-center gap-1 bg-primary/10 px-3 py-1 rounded-full">
+                  <span className="text-[11px] font-semibold text-primary">Monthly Overview</span>
+                </button>
+                <Link href="/history">
+                  <RiArrowRightSLine className="text-muted-foreground text-lg" />
+                </Link>
               </div>
-            </Link>
+            </div>
             {transactions.length === 0 ? (
               <p className="text-xs text-muted-foreground text-center py-4 pb-4">No transactions yet</p>
             ) : (
@@ -157,7 +162,9 @@ export default function MePage() {
                       </div>
                       <div className="text-right shrink-0">
                         <p className={`text-sm font-bold ${tx.type === "credit" ? "text-green-600" : "text-foreground"}`}>
-                          {tx.type === "credit" ? "+" : "-"}{formatCurrency(tx.amount ?? 0)}
+                          {showAssets
+                            ? `${tx.type === "credit" ? "+" : "-"}${formatCurrency(tx.amount ?? 0)}`
+                            : "****"}
                         </p>
                         <p className={`text-[10px] font-medium ${
                           tx.status === "Failed" ? "text-red-500"
@@ -225,7 +232,6 @@ export default function MePage() {
 
         </div>
 
-        <BottomNav />
       </div>
     </div>
   );

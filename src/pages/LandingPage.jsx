@@ -7,7 +7,6 @@ import {
   RiBankLine, RiUser3Line, RiSafeLine, RiBankCardLine,
   RiBellLine, RiHeadphoneLine,
 } from "react-icons/ri";
-import BottomNav from "@/components/BottomNav";
 
 const QUICK_ACTIONS = [
   { label: "To Bank",    Icon: RiBankLine,    badge: "0 Fee" },
@@ -135,7 +134,6 @@ export default function LandingPage() {
 
         </div>
       </div>
-      <BottomNav />
     </div>
   );
 }

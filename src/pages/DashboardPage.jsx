@@ -5,7 +5,6 @@ import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestor
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import BottomNav from "@/components/BottomNav";
 import { formatCurrency } from "@/lib/utils";
 import {
   Eye, EyeOff, ChevronRight, ArrowUpRight, ArrowDownLeft, PartyPopper,
@@ -505,7 +504,6 @@ export default function DashboardPage() {
 
         </div>
       </div>
-      <BottomNav />
     </div>
   );
 }
