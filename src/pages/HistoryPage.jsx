@@ -145,7 +145,7 @@ function MonthPicker({ open, onClose, onConfirm, initialMonth, initialYear }) {
             key="picker-sheet"
             initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 300 }}
-            className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50 bg-white dark:bg-card rounded-t-3xl"
+            className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto z-50 bg-white dark:bg-card rounded-t-3xl"
             style={{paddingBottom:"calc(env(safe-area-inset-bottom,0px) + 1.5rem)"}}
           >
             {/* title */}
@@ -304,7 +304,7 @@ export default function HistoryPage() {
                 <>
                   <motion.div key="filter-backdrop"
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-40 bg-black/30" onClick={() => setOpenFilter(null)} />
+                    className="fixed inset-0 z-40" onClick={() => setOpenFilter(null)} />
                   <motion.div key="filter-dropdown"
                     initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
                     transition={{ duration: 0.15 }}

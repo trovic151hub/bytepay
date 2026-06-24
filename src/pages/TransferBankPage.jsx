@@ -88,7 +88,7 @@ function BankPicker({ open, onClose, onSelect }) {
           <motion.div key="bp-sheet"
             initial={{y:"100%"}} animate={{y:0}} exit={{y:"100%"}}
             transition={{type:"spring",damping:28,stiffness:300}}
-            className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50 bg-white dark:bg-card rounded-t-3xl flex flex-col"
+            className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto z-50 bg-white dark:bg-card rounded-t-3xl flex flex-col"
             style={{maxHeight:"80vh",paddingBottom:"env(safe-area-inset-bottom,0px)"}}>
             <div className="flex items-center justify-between px-5 pt-4 pb-3 shrink-0">
               <h3 className="text-base font-bold text-foreground">Select Bank</h3>
@@ -160,7 +160,7 @@ function ConfirmSheet({ open, onClose, onConfirm, amount, recipientName, bank, a
           <motion.div key="cs-sheet"
             initial={{y:"100%"}} animate={{y:0}} exit={{y:"100%"}}
             transition={{type:"spring",damping:28,stiffness:300}}
-            className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50 bg-white dark:bg-card rounded-t-3xl"
+            className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto z-50 bg-white dark:bg-card rounded-t-3xl"
             style={{paddingBottom:"calc(env(safe-area-inset-bottom,0px) + 1.5rem)"}}>
 
             {/* Header */}
@@ -640,7 +640,7 @@ export default function TransferBankPage() {
         </div>
 
         {/* Fixed bottom Next button */}
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] px-4 pt-3 bg-[#F4F2FA] dark:bg-background"
+        <div className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto px-4 pt-3 bg-[#F4F2FA] dark:bg-background"
           style={{paddingBottom:"calc(env(safe-area-inset-bottom,0px) + 1.5rem)"}}>
           {formError && (
             <p className="text-center text-xs text-red-500 flex items-center justify-center gap-1 mb-2">

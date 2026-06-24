@@ -295,7 +295,7 @@ export default function TransactionDetailPage() {
       </div>
 
       {/* ── Bottom action bar ── */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white dark:bg-card border-t border-border/40 flex"
+      <div className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto bg-white dark:bg-card border-t border-border/40 flex"
         style={{paddingBottom:"env(safe-area-inset-bottom,0px)"}}>
         <button className="flex-1 flex items-center justify-center gap-2 py-4 text-sm font-bold text-primary">
           <FileText className="h-5 w-5" />
