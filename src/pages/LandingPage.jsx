@@ -1,233 +1,141 @@
 import { useLocation, Link } from "wouter";
 import { motion } from "framer-motion";
+import { User, ChevronRight } from "lucide-react";
 import {
-  Shield, Send, Plus, Phone, Wifi, Zap, Gamepad2, PiggyBank, TrendingUp,
-  ArrowRight, Star, Lock, Eye, EyeOff, ChevronRight, Sun, Moon
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
-import { cn } from "@/lib/utils";
+  RiPhoneLine, RiArrowUpDownLine, RiTvLine, RiFlashlightLine,
+  RiGift2Line, RiShieldCheckLine, RiCoupon3Line, RiApps2Line,
+  RiBankLine, RiUser3Line, RiSafeLine, RiBankCardLine,
+  RiBellLine, RiHeadphoneLine,
+} from "react-icons/ri";
+import BottomNav from "@/components/BottomNav";
 
-const FEATURES = [
-  { icon: Send, label: "Send Money", desc: "Transfer to any bank instantly", color: "bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400" },
-  { icon: Plus, label: "Add Money", desc: "Fund your wallet easily", color: "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400" },
-  { icon: Phone, label: "Buy Airtime", desc: "All networks supported", color: "bg-red-100 text-red-500 dark:bg-red-900/40 dark:text-red-400" },
-  { icon: Wifi, label: "Data Bundles", desc: "Best data deals always", color: "bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400" },
-  { icon: Zap, label: "Pay Bills", desc: "Electricity & utilities", color: "bg-yellow-100 text-yellow-600 dark:bg-yellow-900/40 dark:text-yellow-400" },
-  { icon: Gamepad2, label: "Betting", desc: "Top up all platforms", color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400" },
-  { icon: PiggyBank, label: "Save & Earn", desc: "Up to 21% per annum", color: "bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400" },
-  { icon: TrendingUp, label: "Investments", desc: "Grow your wealth", color: "bg-teal-100 text-teal-600 dark:bg-teal-900/40 dark:text-teal-400" },
+const QUICK_ACTIONS = [
+  { label: "To Bank",    Icon: RiBankLine,    badge: "0 Fee" },
+  { label: "To BytePay", Icon: RiUser3Line },
+  { label: "Savings",    Icon: RiSafeLine },
+  { label: "ATM Card",   Icon: RiBankCardLine },
 ];
 
-const REVIEWS = [
-  { name: "Adaeze O.", stars: 5, text: "BytePay makes sending money so easy! No charges, instant transfers." },
-  { name: "Tunde B.", stars: 5, text: "The savings feature is amazing. I'm earning 21% on my savings. Can't beat that." },
-  { name: "Chioma E.", stars: 5, text: "Finally a fintech app that just works. Airtime top-up in 5 seconds." },
+const SERVICES = [
+  { label: "Airtime",      Icon: RiPhoneLine,        bg: "bg-blue-500",   tag: "FREE" },
+  { label: "Data",         Icon: RiArrowUpDownLine,  bg: "bg-green-500" },
+  { label: "TV",           Icon: RiTvLine,           bg: "bg-sky-500" },
+  { label: "Electricity",  Icon: RiFlashlightLine,   bg: "bg-teal-500" },
+  { label: "Refer & Earn", Icon: RiGift2Line,        bg: "bg-violet-600" },
+  { label: "Insurance",    Icon: RiShieldCheckLine,  bg: "bg-sky-600" },
+  { label: "CashBox",      Icon: RiCoupon3Line,      bg: "bg-violet-500" },
+  { label: "More",         Icon: RiApps2Line,        bg: "bg-violet-500" },
 ];
 
-function GuestRestrictedButton({ children, className }) {
-  const [, setLocation] = useLocation();
-  return (
-    <button
-      onClick={() => setLocation("/login")}
-      className={cn("flex flex-col items-center gap-2 cursor-pointer", className)}
-    >
-      {children}
-    </button>
-  );
-}
+const WEALTH_PRODUCTS = [
+  { label: "Mega Monday", desc: "8-Day Fixed Savings", yieldLabel: "Annual Yield", rate: "25.00%", cta: "Save Now", hot: true },
+  { label: "CashBox",     desc: "Your Available Balance, Earning for You Daily!", yieldLabel: "Maximum Annual Yield", rate: "20.00%", cta: "₦1 to Start", hot: false },
+];
 
 export default function LandingPage() {
   const [, setLocation] = useLocation();
-  const { theme, toggleTheme, isDark } = useTheme();
-  const [showBalance, setShowBalance] = useState(false);
+  const goLogin = () => setLocation("/login");
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-[430px] mx-auto relative">
+    <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
+      <div className="max-w-[430px] mx-auto">
 
-        {/* Sticky header */}
-        <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-xl bg-primary flex items-center justify-center">
-              <Shield className="h-4 w-4 text-primary-foreground" />
+        {/* Header */}
+        <header className="sticky top-0 z-50 bg-white dark:bg-card px-4 py-3 flex items-center justify-between shadow-sm">
+          <button onClick={goLogin} className="flex items-center gap-2.5" data-testid="link-signup-login">
+            <div className="h-11 w-11 rounded-full bg-secondary flex items-center justify-center">
+              <User className="h-5 w-5 text-muted-foreground" />
             </div>
-            <span className="text-base font-bold text-foreground">BytePay</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="h-8 w-8 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-              data-testid="btn-theme-toggle"
-              aria-label="Toggle dark mode"
-            >
-              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            <p className="text-base font-bold text-foreground leading-tight">Sign Up/Login</p>
+          </button>
+          <div className="flex items-center gap-4">
+            <button onClick={goLogin} className="h-6 w-6 flex items-center justify-center text-foreground" data-testid="btn-headphones">
+              <RiHeadphoneLine className="h-5 w-5" />
             </button>
-            <Link href="/login">
-              <Button size="sm" variant="outline" data-testid="btn-signin">Sign In</Button>
-            </Link>
+            <button onClick={goLogin} className="h-6 w-6 flex items-center justify-center text-foreground" data-testid="btn-notifications">
+              <RiBellLine className="h-5 w-5" />
+            </button>
           </div>
         </header>
 
-        {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-gradient-to-br from-violet-700 via-purple-700 to-indigo-800 px-6 pt-8 pb-10 text-white"
-        >
-          <Badge className="bg-white/20 text-white border-0 mb-4">🇳🇬 Nigeria's Smartest Fintech</Badge>
-          <h1 className="text-3xl font-bold leading-tight mb-3">
-            Banking Made<br />
-            <span className="text-purple-200">Fast & Simple</span>
-          </h1>
-          <p className="text-purple-200 text-sm mb-6 leading-relaxed">
-            Send money, pay bills, earn rewards, and save with up to 21% interest — all in one app.
-          </p>
+        <div className="px-4 pb-28 pt-3 space-y-3">
 
-          {/* Mock balance card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white/15 backdrop-blur-sm rounded-2xl p-4 mb-5 border border-white/20"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-purple-200 text-xs">Available Balance</p>
-              <button onClick={() => setShowBalance(b => !b)} className="text-purple-200">
-                {showBalance ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
-              </button>
-            </div>
-            <p className="text-2xl font-bold text-white mb-3">
-              {showBalance ? "₦0.00" : "₦ • • • • • •"}
-            </p>
-            <div className="flex items-center justify-between text-xs text-purple-200">
-              <span>Sign in to see your balance</span>
-              <Lock className="h-3.5 w-3.5" />
-            </div>
-          </motion.div>
-
-          {/* Quick action chips */}
-          <div className="flex gap-2 flex-wrap">
-            {[
-              { label: "Send Money", icon: Send },
-              { label: "Airtime", icon: Phone },
-              { label: "Savings", icon: PiggyBank },
-            ].map(({ label, icon: Icon }) => (
-              <button
+          {/* Quick Actions */}
+          <div className="grid grid-cols-4 gap-2.5">
+            {QUICK_ACTIONS.map(({ label, Icon, badge }, i) => (
+              <motion.button
                 key={label}
-                onClick={() => setLocation("/login")}
-                className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 transition-colors px-3 py-1.5 rounded-full text-xs text-white font-medium"
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.06 }}
+                onClick={goLogin}
+                className="relative bg-white dark:bg-card rounded-2xl shadow-sm pt-3 pb-3 flex flex-col items-center gap-1.5 overflow-hidden"
+                data-testid={`action-${label.replace(/\s+/g, "-").toLowerCase()}`}
               >
-                <Icon className="h-3 w-3" />
-                {label}
-              </button>
+                {badge && (
+                  <span className="absolute top-1.5 left-1.5 bg-red-500 text-white text-[8px] font-bold leading-none px-1.5 py-1 rounded-sm rounded-tl-md">
+                    {badge}
+                  </span>
+                )}
+                <Icon className="text-3xl text-primary" />
+                <span className="text-[11px] font-medium text-foreground text-center leading-tight">{label}</span>
+              </motion.button>
             ))}
           </div>
-        </motion.div>
 
-        {/* CTA buttons */}
-        <div className="px-4 py-5 flex gap-3">
-          <Button className="flex-1" size="lg" onClick={() => setLocation("/signup")} data-testid="btn-create-account">
-            Create Free Account
-          </Button>
-          <Button variant="outline" size="lg" onClick={() => setLocation("/login")} className="flex-1" data-testid="btn-sign-in-alt">
-            Sign In
-          </Button>
-        </div>
-
-        {/* Features grid */}
-        <div className="px-4 pb-5">
-          <p className="text-sm font-semibold text-foreground mb-3">Everything you need</p>
-          <div className="grid grid-cols-4 gap-3">
-            {FEATURES.map(({ icon: Icon, label, desc, color }, i) => (
-              <motion.div
-                key={label}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 * i }}
-              >
-                <GuestRestrictedButton>
-                  <div className={`h-12 w-12 rounded-2xl ${color} flex items-center justify-center shadow-sm`}>
-                    <Icon className="h-5 w-5" />
+          {/* Services */}
+          <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm">
+            <div className="grid grid-cols-4 gap-3">
+              {SERVICES.map(({ label, Icon, bg, tag }, i) => (
+                <motion.button
+                  key={label}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  transition={{ delay: i * 0.03 }}
+                  onClick={goLogin}
+                  className="relative flex flex-col items-center gap-1.5"
+                  data-testid={`service-${label.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  {tag && (
+                    <span className="absolute -top-1 right-2 bg-orange-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full">
+                      {tag}
+                    </span>
+                  )}
+                  <div className={`h-12 w-12 rounded-2xl ${bg} flex items-center justify-center`}>
+                    <Icon className="text-2xl text-white" />
                   </div>
-                  <span className="text-[10px] font-medium text-foreground text-center leading-tight">{label}</span>
-                </GuestRestrictedButton>
-              </motion.div>
-            ))}
+                  <span className="text-[11px] text-foreground font-medium text-center leading-tight">{label}</span>
+                </motion.button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Restricted preview banner */}
-        <div className="mx-4 mb-5 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-2xl p-4 flex items-start gap-3">
-          <Lock className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">Sign in to unlock all features</p>
-            <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">Create a free account to start sending money, paying bills, and earning rewards.</p>
-            <button onClick={() => setLocation("/signup")} className="flex items-center gap-1 text-xs font-semibold text-amber-700 dark:text-amber-300 mt-2 hover:underline" data-testid="btn-get-started">
-              Get started for free <ArrowRight className="h-3 w-3" />
+          {/* Wealth Products */}
+          <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm">
+            <div className="grid grid-cols-2 gap-3">
+              {WEALTH_PRODUCTS.map(({ label, desc, yieldLabel, rate, cta, hot }) => (
+                <button key={label} onClick={goLogin} className="relative bg-secondary dark:bg-secondary rounded-2xl p-4 overflow-hidden text-left">
+                  {hot && (
+                    <span className="absolute top-2.5 -right-7 w-28 rotate-45 bg-orange-500 text-white text-[9px] font-bold text-center py-0.5">
+                      HOT
+                    </span>
+                  )}
+                  <p className="font-bold text-primary text-base">{label}</p>
+                  <p className="text-xs text-muted-foreground mt-1.5">{desc}</p>
+                  <p className="text-2xl font-bold text-green-600 mt-2">{rate}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{yieldLabel}</p>
+                  <div className="w-full mt-3 bg-primary text-primary-foreground text-sm font-semibold py-2.5 rounded-full text-center">
+                    {cta}
+                  </div>
+                </button>
+              ))}
+            </div>
+            <button onClick={goLogin} className="flex items-center justify-center gap-1 text-sm text-muted-foreground mt-3 hover:text-primary w-full">
+              More Wealth Product <ChevronRight className="h-4 w-4" />
             </button>
           </div>
-        </div>
 
-        {/* Stats */}
-        <div className="mx-4 mb-5 bg-white dark:bg-card rounded-2xl p-4 grid grid-cols-3 gap-4 border border-border">
-          {[
-            { value: "2M+", label: "Users" },
-            { value: "₦50B+", label: "Transferred" },
-            { value: "21%", label: "Savings Rate" },
-          ].map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <p className="text-xl font-bold text-foreground">{value}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{label}</p>
-            </div>
-          ))}
         </div>
-
-        {/* Reviews */}
-        <div className="px-4 pb-5">
-          <p className="text-sm font-semibold text-foreground mb-3">What users say</p>
-          <div className="space-y-3">
-            {REVIEWS.map(({ name, stars, text }) => (
-              <motion.div
-                key={name}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-white dark:bg-card rounded-2xl p-4 border border-border"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-sm font-semibold text-foreground">{name}</p>
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: stars }).map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">"{text}"</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="px-4 pb-10">
-          <div className="bg-gradient-to-br from-violet-700 to-indigo-700 rounded-2xl p-6 text-center">
-            <h3 className="text-white font-bold text-lg mb-1">Ready to get started?</h3>
-            <p className="text-purple-200 text-sm mb-4">Join millions of Nigerians banking smarter</p>
-            <Button
-              size="lg"
-              className="w-full bg-white text-violet-700 hover:bg-purple-50 font-bold"
-              onClick={() => setLocation("/signup")}
-              data-testid="btn-join-now"
-            >
-              Join BytePay — It's Free <ArrowRight className="h-4 w-4 ml-1" />
-            </Button>
-          </div>
-        </div>
-
       </div>
+      <BottomNav />
     </div>
   );
 }

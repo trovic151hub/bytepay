@@ -1,5 +1,7 @@
-import { Switch, Route, Redirect } from "wouter";
+import { useEffect, useState } from "react";
+import { Switch, Route, Redirect, useLocation } from "wouter";
 import { useAuth } from "./contexts/AuthContext.jsx";
+import SplashScreen from "./components/SplashScreen.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
@@ -17,59 +19,106 @@ import HistoryPage from "./pages/HistoryPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import AssetsPage from "./pages/AssetsPage.jsx";
 import AddMoneyPage from "./pages/AddMoneyPage.jsx";
+import TopupPage from "./pages/TopupPage.jsx";
+import FundHistoryPage from "./pages/FundHistoryPage.jsx";
 import RewardPage from "./pages/RewardPage.jsx";
 import MePage from "./pages/MePage.jsx";
-
-const Spinner = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-  </div>
-);
+import TransactionDetailPage from "./pages/TransactionDetailPage.jsx";
 
 function ProtectedRoute({ component: Component }) {
-  const { user, loading } = useAuth();
-  if (loading) return <Spinner />;
+  const { user } = useAuth();
   if (!user) return <Redirect to="/login" />;
   return <Component />;
 }
 
 function PublicRoute({ component: Component }) {
-  const { user, loading } = useAuth();
-  if (loading) return <Spinner />;
-  if (user) return <Redirect to="/dashboard" />;
+  const { user, authBusy } = useAuth();
+  if (user && !authBusy) return <Redirect to="/dashboard" />;
   return <Component />;
 }
 
 function HomeRoute() {
-  const { user, loading } = useAuth();
-  if (loading) return <Spinner />;
+  const { user } = useAuth();
   if (user) return <Redirect to="/dashboard" />;
   return <LandingPage />;
 }
 
+// Stable (module-scope) wrapper components per route. Defining these inline
+// inside App's render (e.g. `component={() => <PublicRoute .../>}`) creates a
+// new function identity on every App re-render, which React treats as a new
+// component type — fully remounting the page underneath (resetting its local
+// state and replaying entrance animations) any time auth context changes,
+// even mid-flow on the same screen.
+const PublicLogin = () => <PublicRoute component={LoginPage} />;
+const PublicSignUp = () => <PublicRoute component={SignUpPage} />;
+const PublicForgotPassword = () => <PublicRoute component={ForgotPasswordPage} />;
+const ProtectedDashboard = () => <ProtectedRoute component={DashboardPage} />;
+const ProtectedTransferBank = () => <ProtectedRoute component={TransferBankPage} />;
+const ProtectedTransferBytepay = () => <ProtectedRoute component={TransferBankPage} />;
+const ProtectedAirtime = () => <ProtectedRoute component={AirtimePage} />;
+const ProtectedData = () => <ProtectedRoute component={DataPage} />;
+const ProtectedBetting = () => <ProtectedRoute component={BettingPage} />;
+const ProtectedElectricity = () => <ProtectedRoute component={ElectricityPage} />;
+const ProtectedSavings = () => <ProtectedRoute component={SavingsPage} />;
+const ProtectedWealth = () => <ProtectedRoute component={WealthPage} />;
+const ProtectedHistory = () => <ProtectedRoute component={HistoryPage} />;
+const ProtectedProfile = () => <ProtectedRoute component={ProfilePage} />;
+const ProtectedAssets = () => <ProtectedRoute component={AssetsPage} />;
+const ProtectedAddMoney = () => <ProtectedRoute component={AddMoneyPage} />;
+const ProtectedTopup = () => <ProtectedRoute component={TopupPage} />;
+const ProtectedFundHistory = () => <ProtectedRoute component={FundHistoryPage} />;
+const ProtectedReward = () => <ProtectedRoute component={RewardPage} />;
+const ProtectedMe = () => <ProtectedRoute component={MePage} />;
+const ProtectedTxDetail = () => <ProtectedRoute component={TransactionDetailPage} />;
+const RedirectHome = () => <Redirect to="/" />;
+
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [location]);
+  return null;
+}
+
+const MIN_SPLASH_MS = 1200;
+
 export default function App() {
+  const { loading } = useAuth();
+  const [splashTimerDone, setSplashTimerDone] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setSplashTimerDone(true), MIN_SPLASH_MS);
+    return () => clearTimeout(t);
+  }, []);
+
+  if (loading || !splashTimerDone) return <SplashScreen />;
+
   return (
+    <>
+    <ScrollToTop />
     <Switch>
       <Route path="/" component={HomeRoute} />
-      <Route path="/login" component={() => <PublicRoute component={LoginPage} />} />
-      <Route path="/signup" component={() => <PublicRoute component={SignUpPage} />} />
-      <Route path="/forgot-password" component={() => <PublicRoute component={ForgotPasswordPage} />} />
-      <Route path="/dashboard" component={() => <ProtectedRoute component={DashboardPage} />} />
-      <Route path="/transfer/bank" component={() => <ProtectedRoute component={TransferBankPage} />} />
-      <Route path="/transfer/bytepay" component={() => <ProtectedRoute component={TransferBytepayPage} />} />
-      <Route path="/airtime" component={() => <ProtectedRoute component={AirtimePage} />} />
-      <Route path="/data" component={() => <ProtectedRoute component={DataPage} />} />
-      <Route path="/betting" component={() => <ProtectedRoute component={BettingPage} />} />
-      <Route path="/electricity" component={() => <ProtectedRoute component={ElectricityPage} />} />
-      <Route path="/savings" component={() => <ProtectedRoute component={SavingsPage} />} />
-      <Route path="/wealth" component={() => <ProtectedRoute component={WealthPage} />} />
-      <Route path="/history" component={() => <ProtectedRoute component={HistoryPage} />} />
-      <Route path="/profile" component={() => <ProtectedRoute component={ProfilePage} />} />
-      <Route path="/assets" component={() => <ProtectedRoute component={AssetsPage} />} />
-      <Route path="/add-money" component={() => <ProtectedRoute component={AddMoneyPage} />} />
-      <Route path="/reward" component={() => <ProtectedRoute component={RewardPage} />} />
-      <Route path="/me" component={() => <ProtectedRoute component={MePage} />} />
-      <Route component={() => <Redirect to="/" />} />
+      <Route path="/login" component={PublicLogin} />
+      <Route path="/signup" component={PublicSignUp} />
+      <Route path="/forgot-password" component={PublicForgotPassword} />
+      <Route path="/dashboard" component={ProtectedDashboard} />
+      <Route path="/transfer/bank" component={ProtectedTransferBank} />
+      <Route path="/transfer/bytepay" component={ProtectedTransferBytepay} />
+      <Route path="/airtime" component={ProtectedAirtime} />
+      <Route path="/data" component={ProtectedData} />
+      <Route path="/betting" component={ProtectedBetting} />
+      <Route path="/electricity" component={ProtectedElectricity} />
+      <Route path="/savings" component={ProtectedSavings} />
+      <Route path="/wealth" component={ProtectedWealth} />
+      <Route path="/history" component={ProtectedHistory} />
+      <Route path="/profile" component={ProtectedProfile} />
+      <Route path="/assets" component={ProtectedAssets} />
+      <Route path="/add-money" component={ProtectedAddMoney} />
+      <Route path="/topup" component={ProtectedTopup} />
+      <Route path="/fund-history" component={ProtectedFundHistory} />
+      <Route path="/reward" component={ProtectedReward} />
+      <Route path="/me" component={ProtectedMe} />
+      <Route path="/transaction/:id" component={ProtectedTxDetail} />
+      <Route component={RedirectHome} />
     </Switch>
+    </>
   );
 }

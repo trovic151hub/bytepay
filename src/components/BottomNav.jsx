@@ -19,10 +19,12 @@ const navItems = [
 export default function BottomNav() {
   const [location] = useLocation();
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-card border-t border-border z-50">
-      <div className="max-w-[430px] mx-auto flex items-center justify-around px-1 h-16" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
+    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white dark:bg-card border-t border-border z-50">
+      <div className="flex items-center justify-around px-1 h-16" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
         {navItems.map(({ path, label, IconOff, IconOn }) => {
-          const active = location === path || (path !== "/dashboard" && location.startsWith(path));
+          const active = location === path
+            || (path === "/dashboard" && location === "/")
+            || (path !== "/dashboard" && location.startsWith(path));
           const Icon = active ? IconOn : IconOff;
           return (
             <Link
@@ -30,13 +32,7 @@ export default function BottomNav() {
               className="flex flex-col items-center gap-1 flex-1 py-2"
               data-testid={`nav-${label.toLowerCase()}`}
             >
-              {active ? (
-                <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                  <Icon className="text-primary-foreground text-lg" />
-                </div>
-              ) : (
-                <Icon className="text-muted-foreground text-[22px]" />
-              )}
+              <Icon className={cn("text-[22px]", active ? "text-primary" : "text-muted-foreground")} />
               <span className={cn(
                 "text-[10px] font-semibold",
                 active ? "text-primary" : "text-muted-foreground"

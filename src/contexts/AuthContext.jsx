@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../firebase";
@@ -9,6 +9,9 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  // Lets a page suppress PublicRoute's auto-redirect while it's mid-flow
+  // (e.g. signup briefly authenticates before signing back out).
+  const [authBusy, setAuthBusy] = useState(false);
 
   useEffect(() => {
     const unsubAuth = onAuthStateChanged(auth, (firebaseUser) => {
@@ -33,11 +36,12 @@ export function AuthProvider({ children }) {
     return () => unsubData();
   }, [user]);
 
-  return (
-    <AuthContext.Provider value={{ user, userData, loading }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({ user, userData, loading, authBusy, setAuthBusy }),
+    [user, userData, loading, authBusy]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

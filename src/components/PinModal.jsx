@@ -52,7 +52,8 @@ export default function PinModal({ isOpen, onClose, onConfirm, loading, title = 
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 350 }}
-            className="relative w-full max-w-[430px] bg-white rounded-t-3xl pt-6 pb-8 px-6"
+            className="relative w-full max-w-[430px] bg-white rounded-t-3xl pt-6 px-6"
+            style={{paddingBottom:"calc(env(safe-area-inset-bottom,0px) + 2rem)"}}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="absolute top-3 left-1/2 -translate-x-1/2 w-10 h-1 rounded-full bg-border" />

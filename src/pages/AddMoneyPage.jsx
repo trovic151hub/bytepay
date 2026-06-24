@@ -1,23 +1,49 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
-import PageHeader from "@/components/PageHeader";
-import { Copy, CheckCircle, ChevronRight, Share2, Building2, CreditCard, ArrowDownLeft, Phone } from "lucide-react";
+import {
+  Copy, CheckCircle, ChevronRight, Share2,
+  HelpCircle, ArrowLeft,
+} from "lucide-react";
+import {
+  RiBankLine, RiBankCardLine, RiArrowDownLine, RiPhoneLine,
+  RiShieldCheckLine,
+} from "react-icons/ri";
+import { MdOutlineAccountBalance } from "react-icons/md";
+import { useLocation } from "wouter";
 
-const OPTIONS = [
-  { icon: "💵", label: "Cash Deposit", sub: "Fund your account with nearby agents" },
-  { icon: "💳", label: "Top-up with Card/Account", sub: "Add money from your bank card/account" },
-  { icon: "⬇️", label: "Receive Money", sub: "Share your account and ask for transfer" },
-  { icon: "#️⃣", label: "USSD", sub: "Use your other bank's USSD code" },
-];
-
-function formatAccDisplay(acc) {
+function formatAcc(acc) {
   if (!acc || acc.length < 10) return acc ?? "—";
   return `${acc.slice(0, 3)} ${acc.slice(3, 6)} ${acc.slice(6)}`;
 }
 
+const OPTIONS = [
+  {
+    Icon: RiBankCardLine,
+    label: "Cash Deposit",
+    sub: "Fund your account with nearby agents",
+  },
+  {
+    Icon: MdOutlineAccountBalance,
+    label: "Top-up with Card/Account",
+    sub: "Add money from your bank card/account",
+    path: "/topup",
+  },
+  {
+    Icon: RiArrowDownLine,
+    label: "Receive Money",
+    sub: "Share your account and ask for transfer",
+  },
+  {
+    Icon: RiPhoneLine,
+    label: "USSD",
+    sub: "Use your other bank's USSD code",
+  },
+];
+
 export default function AddMoneyPage() {
   const { userData } = useAuth();
+  const [, setLocation] = useLocation();
   const [copied, setCopied] = useState(false);
 
   const copy = () => {
@@ -36,79 +62,95 @@ export default function AddMoneyPage() {
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
       <div className="max-w-[430px] mx-auto">
-        <PageHeader title="Add Money" right={
-          <button className="flex items-center gap-1 text-xs font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-xl">
-            FAQ
+
+        {/* Header */}
+        <header className="sticky top-0 z-40 bg-[#F4F2FA] dark:bg-background px-4 pt-6 pb-3 flex items-center justify-between">
+          <button onClick={() => setLocation("/dashboard")} className="flex items-center gap-2 text-foreground">
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-lg font-semibold">Add Money</span>
           </button>
-        } />
+          <button className="text-foreground">
+            <HelpCircle className="h-5 w-5" />
+          </button>
+        </header>
 
-        <div className="px-4 py-4 space-y-3">
+        <div className="px-4 pb-8 space-y-3">
 
-          {/* Bank Transfer Card */}
+          {/* Bank Transfer + Account Card */}
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm">
-            <div className="flex items-center gap-3 pb-3 border-b border-border">
-              <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Building2 className="h-5 w-5 text-primary" />
+            className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
+
+            {/* Bank Transfer row */}
+            <div className="flex items-center gap-3 px-4 py-4 border-b border-border/40">
+              <div className="h-11 w-11 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center shrink-0">
+                <RiBankLine className="text-xl text-primary" />
               </div>
               <div className="flex-1">
-                <p className="font-bold text-foreground text-sm">Via Bank Transfer</p>
+                <p className="font-bold text-foreground text-sm">Bank Transfer</p>
                 <p className="text-xs text-muted-foreground">FREE Instant bank funding within 10s</p>
               </div>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
             </div>
 
-            <div className="pt-3">
-              <div className="flex items-center gap-2 mb-1">
-                <p className="text-xs text-muted-foreground">BytePay Account Number</p>
-                <span className="flex items-center gap-1 text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">
-                  <span>③</span> Tier 3
-                  <ChevronRight className="h-2.5 w-2.5" />
-                </span>
+            {/* Account Number */}
+            <div className="px-4 pt-4 pb-5">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs text-muted-foreground">BytePay Account Number</span>
+                <div className="flex items-center gap-1 bg-primary/10 text-primary text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                  <RiShieldCheckLine className="h-3 w-3" />
+                  Tier 3
+                  <ChevronRight className="h-3 w-3" />
+                </div>
               </div>
 
-              <div className="flex items-center gap-3 mb-4">
-                <p className="text-3xl font-black text-foreground tracking-wider" data-testid="text-account-number">
-                  {formatAccDisplay(userData?.accountNumber)}
-                </p>
-                <button onClick={copy} className="p-1.5 rounded-lg hover:bg-secondary transition-colors" data-testid="btn-copy-account">
-                  {copied ? <CheckCircle className="h-5 w-5 text-green-500" /> : <Copy className="h-5 w-5 text-muted-foreground" />}
+              <p className="text-3xl font-black text-foreground tracking-wider mb-5" data-testid="text-account-number">
+                {formatAcc(userData?.accountNumber)}
+              </p>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={copy}
+                  className="flex items-center justify-center gap-2 bg-violet-100 dark:bg-violet-900/30 text-primary font-bold py-3.5 rounded-2xl text-sm"
+                  data-testid="btn-copy-number"
+                >
+                  {copied
+                    ? <><CheckCircle className="h-4 w-4" /> Copied!</>
+                    : <><Copy className="h-4 w-4" /> Copy Number</>}
+                </button>
+                <button
+                  onClick={share}
+                  className="flex items-center justify-center gap-2 bg-primary text-primary-foreground font-bold py-3.5 rounded-2xl text-sm"
+                  data-testid="btn-share-account"
+                >
+                  <Share2 className="h-4 w-4" />
+                  Share Account
                 </button>
               </div>
-
-              <button onClick={share}
-                className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 text-sm"
-                data-testid="btn-share-account">
-                <Share2 className="h-4 w-4" />
-                Share Account
-              </button>
             </div>
           </motion.div>
 
           {/* OR divider */}
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-xs text-muted-foreground font-medium">OR</span>
-            <div className="flex-1 h-px bg-border" />
-          </div>
+          <p className="text-center text-sm text-muted-foreground font-medium">OR</p>
 
-          {/* Other options */}
-          <div className="bg-white dark:bg-card rounded-2xl overflow-hidden shadow-sm">
-            {OPTIONS.map(({ icon, label, sub }, i) => (
-              <motion.div key={label} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
-                <button className="w-full flex items-center gap-4 px-4 py-4 hover:bg-secondary/50 transition-colors border-b border-border last:border-0">
-                  <div className="h-10 w-10 rounded-xl bg-secondary flex items-center justify-center text-lg shrink-0">
-                    {icon}
-                  </div>
-                  <div className="flex-1 text-left">
-                    <p className="text-sm font-semibold text-foreground">{label}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
-                </button>
-              </motion.div>
-            ))}
-          </div>
+          {/* Other options — each in its own card */}
+          {OPTIONS.map(({ Icon, label, sub, path }, i) => (
+            <motion.button
+              key={label}
+              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              onClick={() => path && setLocation(path)}
+              className="w-full bg-white dark:bg-card rounded-2xl shadow-sm px-4 py-4 flex items-center gap-4"
+            >
+              <div className="h-11 w-11 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center shrink-0">
+                <Icon className="text-xl text-primary" />
+              </div>
+              <div className="flex-1 text-left">
+                <p className="text-sm font-bold text-foreground">{label}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
+            </motion.button>
+          ))}
 
         </div>
       </div>

@@ -12,7 +12,7 @@ export default function PageHeader({ title, back = true, backTo, right, classNam
 
   return (
     <header className={cn("sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-border", className)}>
-      <div className="flex items-center h-14 px-4 max-w-[430px] mx-auto gap-3">
+      <div className="flex items-center h-20 px-4 max-w-[430px] mx-auto gap-3">
         {back && (
           <button
             onClick={handleBack}

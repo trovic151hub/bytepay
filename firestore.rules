@@ -1,0 +1,30 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Each user can only read/write their own profile document.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      match /transactions/{transactionId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Minimal public index so phone-number login can resolve to an email
+    // WITHOUT exposing the rest of a user's profile (name, balance, PIN hash, etc).
+    // - get: anyone can look up a single known phone number (needed pre-login).
+    // - list: nobody can enumerate/scan all registered phone numbers.
+    // - create: only the authenticated owner, and only pointing at their own email.
+    // - update/delete: disabled — entries are immutable once created.
+    match /phoneIndex/{phone} {
+      allow get: if true;
+      allow list: if false;
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasOnly(['email'])
+                    && request.resource.data.email == request.auth.token.email;
+      allow update, delete: if false;
+    }
+  }
+}
