@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  collection, query, where, getDocs, doc, updateDoc, addDoc,
+  collection, query, where, getDocs, doc, getDoc, updateDoc, addDoc,
   serverTimestamp, increment, orderBy, limit, onSnapshot,
   writeBatch, runTransaction
 } from "firebase/firestore";
@@ -470,8 +470,8 @@ export default function TransferBankPage() {
     if (val.length !== 10) { setBpRecipient(null); return; }
     setBpSearching(true);
     try {
-      const snap = await getDocs(query(collection(db,"users"), where("accountNumber","==",val)));
-      setBpRecipient(!snap.empty ? {id:snap.docs[0].id,...snap.docs[0].data()} : null);
+      const snap = await getDoc(doc(db, "accountIndex", val));
+      setBpRecipient(snap.exists() ? { id: snap.data().uid, ...snap.data() } : null);
     } finally { setBpSearching(false); }
   };
 

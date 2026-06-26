@@ -60,15 +60,19 @@ export default function SignUpPage() {
         profileImg: "",
         createdAt: serverTimestamp(),
       });
-      // Minimal public index so phone-number login can resolve to an email
-      // without exposing the rest of the profile (see firestore.rules).
-      // Non-blocking: if the phoneIndex rules aren't deployed yet, the
-      // account itself was already created successfully above.
       try {
         await setDoc(doc(db, "phoneIndex", phone), { email });
-      } catch {
-        // phone-number login just won't resolve for this account yet
-      }
+      } catch { /* phone-number login won't resolve for this account yet */ }
+
+      // Public account-number index for BytePay peer-to-peer lookup
+      const accountNumber = generateAccountNumber(phone);
+      try {
+        await setDoc(doc(db, "accountIndex", accountNumber), {
+          uid: user.uid,
+          firstName: form.firstName.trim(),
+          lastName: form.lastName.trim(),
+        });
+      } catch { /* BytePay lookup won't work until rules are deployed */ }
       // createUserWithEmailAndPassword auto-signs the user in; sign back out
       // so they land on the login screen and authenticate with their new
       // credentials rather than being silently auto-logged-in.

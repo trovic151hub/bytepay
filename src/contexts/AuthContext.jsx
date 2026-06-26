@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 
 // Derives a 10-digit account number from any Nigerian phone format
@@ -42,13 +42,22 @@ export function AuthProvider({ children }) {
         const data = snap.data();
         setUserData({ id: snap.id, ...data });
 
-        // Backfill accountNumber for accounts created before the field existed
-        // or where the phone was stored in international format
-        if (!data.accountNumber || data.accountNumber.length !== 10) {
-          const derived = deriveAccountNumber(data.phoneNumber);
-          if (derived) {
-            updateDoc(userRef, { accountNumber: derived }).catch(() => {});
-          }
+        // Backfill accountNumber for accounts missing the field or with wrong format
+        const accountNumber = data.accountNumber?.length === 10
+          ? data.accountNumber
+          : deriveAccountNumber(data.phoneNumber);
+
+        if (accountNumber && data.accountNumber !== accountNumber) {
+          updateDoc(userRef, { accountNumber }).catch(() => {});
+        }
+
+        // Backfill accountIndex so BytePay lookup works for existing accounts
+        if (accountNumber && data.firstName) {
+          setDoc(doc(db, "accountIndex", accountNumber), {
+            uid: snap.id,
+            firstName: data.firstName,
+            lastName: data.lastName ?? "",
+          }).catch(() => {});
         }
       }
       setLoading(false);
