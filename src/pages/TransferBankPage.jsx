@@ -144,7 +144,7 @@ function ContactRow({ contact, onClick }) {
 }
 
 /* ── Confirmation bottom sheet ───────────────────────── */
-function ConfirmSheet({ open, onClose, onConfirm, amount, recipientName, bank, account, balance }) {
+function ConfirmSheet({ open, onClose, onConfirm, amount, recipientName, bank, account, balance, isBytepay }) {
   const fmt = (v) => Number(v||0).toLocaleString("en-NG", {minimumFractionDigits:2});
   const fmtAcc = (d="") => {
     if (d.length<=3) return d;
@@ -182,15 +182,16 @@ function ConfirmSheet({ open, onClose, onConfirm, amount, recipientName, bank, a
             <div className="mx-4 border border-border/40 rounded-2xl overflow-hidden mb-3">
               {[
                 { label:"Amount",       right: <span className="text-sm font-semibold text-foreground">₦{fmt(amount)}</span> },
-                { label:"Fee",          right: (
-                    <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
-                      <span className="text-muted-foreground/50 line-through text-xs">₦10.00</span>
-                      ₦0.00
-                    </span>
-                  )},
+                { label:"Fee",          right: isBytepay
+                    ? <span className="text-sm font-bold text-green-600">FREE</span>
+                    : <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                        <span className="text-muted-foreground/50 line-through text-xs">₦10.00</span>
+                        ₦0.00
+                      </span>
+                },
                 { label:"Account",      right: <span className="text-sm font-semibold text-foreground">{fmtAcc(account)}</span> },
                 { label:"Account Name", right: <span className="text-sm font-bold text-foreground uppercase">{recipientName}</span> },
-                { label:"Bank",         right: <span className="text-sm font-semibold text-foreground">{bank}</span> },
+                ...(!isBytepay ? [{ label:"Bank", right: <span className="text-sm font-semibold text-foreground">{bank}</span> }] : []),
               ].map(({ label, right }, i, arr) => (
                 <div key={label} className={cn("flex items-center justify-between px-4 py-3",
                   i < arr.length-1 && "border-b border-border/30")}>
@@ -360,7 +361,8 @@ export default function TransferBankPage() {
   const [bpAmount, setBpAmount]       = useState("");
 
   /* ── Shared ── */
-  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen]     = useState(false);
+  const [bpConfirmOpen, setBpConfirmOpen] = useState(false);
   const [pinOpen, setPinOpen]         = useState(false);
   const [pinLoading, setPinLoading]   = useState(false);
   const [formError, setFormError]     = useState("");
@@ -421,6 +423,8 @@ export default function TransferBankPage() {
 
   const switchTab = (tab) => {
     setActiveTab(tab); setFormError("");
+    if (tab === "bytepay") setContactTab("BytePay Contacts");
+    else setContactTab("Recent");
     setLocation(tab === "bytepay" ? "/transfer/bytepay" : "/transfer/bank");
   };
 
@@ -876,43 +880,59 @@ export default function TransferBankPage() {
                   <span className="text-sm text-green-700 dark:text-green-400">No Transfer Fee</span>
                 </div>
                 <div className="px-5 pt-4">
+                  {/* Account input */}
                   <div className="relative mb-1">
-                    <input type="text" inputMode="numeric" maxLength={10}
+                    <input type="text" inputMode="numeric" maxLength={13}
                       placeholder="Enter 10-digit Account No. or Phone No."
-                      value={bpAccNum} onChange={handleBpAccChange}
+                      value={fmtAcc(bpAccNum)} onChange={handleBpAccChange}
                       className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground/50 outline-none py-4 pr-8"/>
-                    {bpSearching && <Loader2 className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-primary"/>}
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2">
+                      {bpSearching
+                        ? <Loader2 className="h-4 w-4 animate-spin text-primary"/>
+                        : bpAccNum && <button onClick={() => { setBpAccNum(""); setBpRecipient(null); setBpAmount(""); }}>
+                            <X className="h-4 w-4 text-muted-foreground"/>
+                          </button>}
+                    </div>
                   </div>
                   <div className="h-px bg-border/60 mb-4"/>
 
-                  <div className="flex items-center gap-3 py-1 mb-2">
-                    <div className="h-14 w-14 rounded-full bg-primary flex items-center justify-center shrink-0">
-                      <span className="text-white text-xl font-extrabold">B</span>
-                    </div>
-                    <span className="text-base font-bold text-foreground">BytePay</span>
-                  </div>
-
+                  {/* Recipient resolved */}
                   <AnimatePresence>
                     {bpRecipient && (
                       <motion.div initial={{opacity:0,y:-4}} animate={{opacity:1,y:0}} exit={{opacity:0}}
-                        className="my-3 flex items-center gap-2 bg-green-50 border border-green-100 rounded-xl px-3 py-2.5">
-                        <ShieldCheck className="h-4 w-4 text-green-600 shrink-0"/>
-                        <p className="text-sm font-bold text-green-800">{bpRecipient.firstName} {bpRecipient.lastName}</p>
+                        className="flex items-center gap-3 mb-4">
+                        <div className="h-11 w-11 rounded-full bg-primary flex items-center justify-center shrink-0 text-white text-base font-bold">
+                          {`${bpRecipient.firstName?.[0]??''}${bpRecipient.lastName?.[0]??''}`.toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="text-sm font-bold text-foreground">{bpRecipient.firstName} {bpRecipient.lastName}</p>
+                          <div className="flex items-center gap-1 mt-0.5">
+                            <ShieldCheck className="h-3 w-3 text-green-600"/>
+                            <span className="text-xs text-green-600 font-medium">BytePay verified</span>
+                          </div>
+                        </div>
                       </motion.div>
                     )}
                     {bpAccNum.length===10 && !bpRecipient && !bpSearching && (
                       <motion.p initial={{opacity:0}} animate={{opacity:1}}
-                        className="text-xs text-red-500 flex items-center gap-1 my-3">
+                        className="text-xs text-red-500 flex items-center gap-1 mb-3">
                         <AlertCircle className="h-3 w-3"/> Account not found on BytePay
                       </motion.p>
                     )}
                   </AnimatePresence>
 
+                  {/* Amount + presets */}
                   <AnimatePresence>
                     {bpRecipient && (
                       <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}} className="overflow-hidden">
-                        <input type="number" inputMode="numeric" placeholder="Enter Amount (₦)"
-                          value={bpAmount} onChange={e=>setBpAmount(e.target.value)}
+                        <input
+                          type="text" inputMode="decimal"
+                          placeholder="Enter Amount (₦)"
+                          value={bpAmount}
+                          onChange={e => {
+                            const v = e.target.value.replace(/[^0-9.]/g,"");
+                            if ((v.match(/\./g)||[]).length <= 1) setBpAmount(v);
+                          }}
                           className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground/50 outline-none py-4"/>
                         <div className="h-px bg-border/60 mb-3"/>
                         <div className="grid grid-cols-3 gap-2 mb-1">
@@ -924,13 +944,16 @@ export default function TransferBankPage() {
                             </button>
                           ))}
                         </div>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Balance: ₦{(userData?.accountBalance??0).toLocaleString("en-NG",{minimumFractionDigits:2})}
+                        </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
                   {!bpRecipient && <div className="h-6"/>}
 
-                  <button onClick={() => { if (validateBytepay()) setPinOpen(true); }}
+                  <button onClick={() => { if (validateBytepay()) setBpConfirmOpen(true); }}
                     className={cn("w-full py-4 rounded-full font-bold text-white text-sm transition-colors mt-4 mb-3",
                       bpRecipient && bpAmount ? "bg-primary" : "bg-primary/30")}>
                     Next
@@ -952,8 +975,8 @@ export default function TransferBankPage() {
             </p>
           )}
 
-          {/* Success rate monitor — only on account step */}
-          {bankStep === "account" && (
+          {/* Success rate monitor — bank tab only */}
+          {activeTab === "bank" && bankStep === "account" && (
             <button className="w-full bg-white dark:bg-card rounded-2xl px-4 py-3.5 flex items-center gap-3 shadow-sm">
               <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
                 <Activity className="h-5 w-5 text-primary"/>
@@ -963,8 +986,8 @@ export default function TransferBankPage() {
             </button>
           )}
 
-          {/* Contacts — only on account step */}
-          {bankStep === "account" && (
+          {/* Contacts — bank account step or BytePay tab */}
+          {(activeTab === "bytepay" || bankStep === "account") && (
             <div className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
               <div className="flex items-center border-b border-border/60 px-4 pt-1">
                 {["Recent","Favorites","BytePay Contacts"].map(t => (
@@ -998,6 +1021,20 @@ export default function TransferBankPage() {
       </div>
 
       <BankPicker open={bankPickerOpen} onClose={() => setBankPickerOpen(false)} onSelect={setSelectedBank}/>
+
+      {/* BytePay confirm sheet */}
+      <ConfirmSheet
+        open={bpConfirmOpen}
+        onClose={() => setBpConfirmOpen(false)}
+        onConfirm={() => { setBpConfirmOpen(false); setPinOpen(true); }}
+        amount={bpAmount}
+        recipientName={bpRecipient ? `${bpRecipient.firstName} ${bpRecipient.lastName}` : ""}
+        bank="BytePay"
+        account={bpAccNum}
+        balance={userData?.accountBalance ?? 0}
+        isBytepay
+      />
+
       <PinModal isOpen={pinOpen} onClose={() => setPinOpen(false)} onConfirm={handlePinConfirm} loading={pinLoading}/>
     </div>
   );
