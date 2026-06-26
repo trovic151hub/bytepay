@@ -26,5 +26,10 @@ export function formatDate(timestamp) {
 }
 
 export function generateAccountNumber(phoneNumber) {
-  return phoneNumber.replace(/^0/, "");
+  if (!phoneNumber) return "";
+  let p = phoneNumber.replace(/[\s\-\(\)]/g, "");
+  if (p.startsWith("+234"))                      p = p.slice(4);
+  else if (p.startsWith("234") && p.length >= 13) p = p.slice(3);
+  else if (p.startsWith("0"))                     p = p.slice(1);
+  return p;
 }

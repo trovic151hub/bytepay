@@ -1,7 +1,17 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
+
+// Derives a 10-digit account number from any Nigerian phone format
+function deriveAccountNumber(phone) {
+  if (!phone) return null;
+  let p = phone.replace(/[\s\-\(\)]/g, "");
+  if (p.startsWith("+234"))                      p = p.slice(4);   // +2349151702497
+  else if (p.startsWith("234") && p.length >= 13) p = p.slice(3);  // 2349151702497
+  else if (p.startsWith("0"))                     p = p.slice(1);   // 09151702497
+  return p.length === 10 ? p : null;
+}
 
 const AuthContext = createContext(null);
 
@@ -29,7 +39,17 @@ export function AuthProvider({ children }) {
     const userRef = doc(db, "users", user.uid);
     const unsubData = onSnapshot(userRef, (snap) => {
       if (snap.exists()) {
-        setUserData({ id: snap.id, ...snap.data() });
+        const data = snap.data();
+        setUserData({ id: snap.id, ...data });
+
+        // Backfill accountNumber for accounts created before the field existed
+        // or where the phone was stored in international format
+        if (!data.accountNumber || data.accountNumber.length !== 10) {
+          const derived = deriveAccountNumber(data.phoneNumber);
+          if (derived) {
+            updateDoc(userRef, { accountNumber: derived }).catch(() => {});
+          }
+        }
       }
       setLoading(false);
     });
