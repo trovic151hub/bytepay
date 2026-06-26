@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   collection, query, where, getDocs, doc, updateDoc, addDoc,
-  serverTimestamp, increment, orderBy, limit, onSnapshot
+  serverTimestamp, increment, orderBy, limit, onSnapshot,
+  writeBatch, runTransaction
 } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import { db } from "@/firebase";
@@ -521,20 +522,32 @@ export default function TransferBankPage() {
       } else {
         const amt = parseFloat(bpAmount);
         const name = `${bpRecipient.firstName} ${bpRecipient.lastName}`;
-        await updateDoc(doc(db,"users",user.uid), {accountBalance:increment(-amt)});
-        await updateDoc(doc(db,"users",bpRecipient.id), {accountBalance:increment(amt)});
-        await addDoc(collection(db,"users",user.uid,"transactions"), {
-          amount:amt, type:"debit", status:"success",
-          description:`Send - ${name}`,
-          recipientName:name, recipientBank:"BytePay",
-          recipientAccount:bpAccNum, isBytepay:true,
-          date:serverTimestamp(),
+        const senderName = `${userData.firstName} ${userData.lastName}`;
+
+        // Verify sender still has enough balance before committing
+        await runTransaction(db, async (tx) => {
+          const senderSnap = await tx.get(doc(db, "users", user.uid));
+          if ((senderSnap.data()?.accountBalance ?? 0) < amt)
+            throw new Error("Insufficient balance.");
         });
-        await addDoc(collection(db,"users",bpRecipient.id,"transactions"), {
-          amount:amt, type:"credit", status:"success",
-          description:`Send - ${userData.firstName} ${userData.lastName}`,
-          date:serverTimestamp(),
+
+        const batch = writeBatch(db);
+        batch.update(doc(db, "users", user.uid), { accountBalance: increment(-amt) });
+        batch.update(doc(db, "users", bpRecipient.id), { accountBalance: increment(amt) });
+        batch.set(doc(collection(db, "users", user.uid, "transactions")), {
+          amount: amt, type: "debit", status: "success",
+          description: `Send - ${name}`,
+          recipientName: name, recipientBank: "BytePay",
+          recipientAccount: bpAccNum, isBytepay: true,
+          date: serverTimestamp(),
         });
+        batch.set(doc(collection(db, "users", bpRecipient.id, "transactions")), {
+          amount: amt, type: "credit", status: "success",
+          description: `Send - ${senderName}`,
+          senderName, senderAccount: userData.accountNumber,
+          date: serverTimestamp(),
+        });
+        await batch.commit();
       }
       setPinOpen(false); setStatus("success");
     } catch { throw new Error("Transfer failed. Please try again."); }
