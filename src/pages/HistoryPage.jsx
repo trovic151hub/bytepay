@@ -12,7 +12,7 @@ import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 
 const CAT_OPTIONS  = ["All Categories", "Transfer", "Airtime", "Data", "Bills", "Credit"];
-const STATUS_OPTIONS = ["All Status", "Success", "Pending", "Failed"];
+const STATUS_OPTIONS = ["All Status", "Success", "Pending", "Failed", "Declined"];
 const MONTH_NAMES  = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const FULL_MONTHS  = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const YEARS        = ["2024","2025","2026","2027"];

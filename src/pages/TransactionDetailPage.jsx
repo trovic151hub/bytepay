@@ -108,9 +108,10 @@ export default function TransactionDetailPage() {
 
   const d         = tx.date?.toDate ? tx.date.toDate() : new Date();
   const isCredit  = tx.type === "credit";
-  const isSuccess = !tx.status || tx.status === "success";
-  const isFailed  = tx.status === "failed";
-  const isPending = tx.status === "pending";
+  const isSuccess  = !tx.status || tx.status === "success";
+  const isDeclined = tx.status === "declined";
+  const isFailed   = tx.status === "failed" || isDeclined;
+  const isPending  = tx.status === "pending";
 
   const amount    = (tx.amount ?? 0).toLocaleString("en-NG", { minimumFractionDigits: 2 });
   const recipient = parseRecipient(tx);
@@ -194,7 +195,7 @@ export default function TransactionDetailPage() {
               ) : isFailed ? (
                 <div className="flex items-center gap-1.5 bg-red-50 text-red-500 text-sm font-semibold px-4 py-1.5 rounded-full">
                   <RiCloseCircleFill className="text-base" />
-                  Failed
+                  {isDeclined ? "Declined" : "Failed"}
                 </div>
               ) : (
                 <div className="flex items-center gap-1.5 bg-yellow-50 text-yellow-600 text-sm font-semibold px-4 py-1.5 rounded-full">

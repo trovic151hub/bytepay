@@ -167,10 +167,16 @@ export default function MePage() {
                             : "****"}
                         </p>
                         <p className={`text-[10px] font-medium ${
-                          tx.status === "Failed" ? "text-red-500"
-                          : tx.status === "Pending" ? "text-yellow-500"
+                          tx.status === "failed" || tx.status === "declined" ? "text-red-500"
+                          : tx.status === "pending" ? "text-yellow-500"
                           : "text-green-500"
-                        }`}>{tx.status ?? "Successful"}</p>
+                        }`}>{
+                          tx.status === "success" || !tx.status ? "Successful"
+                          : tx.status === "failed" ? "Failed"
+                          : tx.status === "declined" ? "Declined"
+                          : tx.status === "pending" ? "Pending"
+                          : "Successful"
+                        }</p>
                       </div>
                     </div>
                   );

@@ -511,47 +511,83 @@ export default function TransferBankPage() {
     try {
       if (activeTab === "bank") {
         const amt = parseFloat(bankAmount);
-        await updateDoc(doc(db,"users",user.uid), {accountBalance:increment(-amt)});
-        await addDoc(collection(db,"users",user.uid,"transactions"), {
-          amount:amt, type:"debit", status:"success",
-          description:`Send - ${resolvedName}`,
-          recipientName:resolvedName, recipientBank:selectedBank,
-          recipientAccount:bankAccNum, isBytepay:false,
-          date:serverTimestamp(),
-        });
+        const baseRecord = {
+          amount: amt, type: "debit",
+          description: `Send - ${resolvedName}`,
+          recipientName: resolvedName, recipientBank: selectedBank,
+          recipientAccount: bankAccNum, isBytepay: false,
+          date: serverTimestamp(),
+        };
+        try {
+          const batch = writeBatch(db);
+          batch.update(doc(db, "users", user.uid), { accountBalance: increment(-amt) });
+          batch.set(doc(collection(db, "users", user.uid, "transactions")), {
+            ...baseRecord, status: "success",
+          });
+          await batch.commit();
+        } catch {
+          await addDoc(collection(db, "users", user.uid, "transactions"), {
+            ...baseRecord, status: "failed",
+          }).catch(() => {});
+          throw new Error("Transfer failed. Please try again.");
+        }
       } else {
         const amt = parseFloat(bpAmount);
         const name = `${bpRecipient.firstName} ${bpRecipient.lastName}`;
         const senderName = `${userData.firstName} ${userData.lastName}`;
-
-        // Verify sender still has enough balance before committing
-        await runTransaction(db, async (tx) => {
-          const senderSnap = await tx.get(doc(db, "users", user.uid));
-          if ((senderSnap.data()?.accountBalance ?? 0) < amt)
-            throw new Error("Insufficient balance.");
-        });
-
-        const batch = writeBatch(db);
-        batch.update(doc(db, "users", user.uid), { accountBalance: increment(-amt) });
-        batch.update(doc(db, "users", bpRecipient.id), { accountBalance: increment(amt) });
-        batch.set(doc(collection(db, "users", user.uid, "transactions")), {
-          amount: amt, type: "debit", status: "success",
+        const baseRecord = {
+          amount: amt, type: "debit",
           description: `Send - ${name}`,
           recipientName: name, recipientBank: "BytePay",
           recipientAccount: bpAccNum, isBytepay: true,
           date: serverTimestamp(),
-        });
-        batch.set(doc(collection(db, "users", bpRecipient.id, "transactions")), {
-          amount: amt, type: "credit", status: "success",
-          description: `Send - ${senderName}`,
-          senderName, senderAccount: userData.accountNumber,
-          date: serverTimestamp(),
-        });
-        await batch.commit();
+        };
+
+        // Step 1: verify balance — write "declined" if insufficient
+        try {
+          await runTransaction(db, async (tx) => {
+            const snap = await tx.get(doc(db, "users", user.uid));
+            if ((snap.data()?.accountBalance ?? 0) < amt)
+              throw new Error("Insufficient balance.");
+          });
+        } catch (err) {
+          const isDeclined = err.message === "Insufficient balance.";
+          await addDoc(collection(db, "users", user.uid, "transactions"), {
+            ...baseRecord, status: isDeclined ? "declined" : "failed",
+          }).catch(() => {});
+          throw new Error(
+            isDeclined
+              ? "Transaction declined — insufficient balance."
+              : "Transfer failed. Please try again."
+          );
+        }
+
+        // Step 2: atomic batch — write "failed" if commit errors
+        try {
+          const batch = writeBatch(db);
+          batch.update(doc(db, "users", user.uid), { accountBalance: increment(-amt) });
+          batch.update(doc(db, "users", bpRecipient.id), { accountBalance: increment(amt) });
+          batch.set(doc(collection(db, "users", user.uid, "transactions")), {
+            ...baseRecord, status: "success",
+          });
+          batch.set(doc(collection(db, "users", bpRecipient.id, "transactions")), {
+            amount: amt, type: "credit", status: "success",
+            description: `Send - ${senderName}`,
+            senderName, senderAccount: userData.accountNumber,
+            date: serverTimestamp(),
+          });
+          await batch.commit();
+        } catch {
+          await addDoc(collection(db, "users", user.uid, "transactions"), {
+            ...baseRecord, status: "failed",
+          }).catch(() => {});
+          throw new Error("Transfer failed. Please try again.");
+        }
       }
       setPinOpen(false); setStatus("success");
-    } catch { throw new Error("Transfer failed. Please try again."); }
-    finally { setPinLoading(false); }
+    } finally {
+      setPinLoading(false);
+    }
   };
 
   const resetAll = () => {
