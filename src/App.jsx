@@ -82,7 +82,10 @@ const TAB_ROUTES = ["/dashboard", "/wealth", "/savings", "/reward", "/me"];
 
 function ScrollToTop() {
   const [location] = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [location]);
+  useEffect(() => {
+    const el = document.getElementById("root");
+    (el ?? window).scrollTo(0, 0);
+  }, [location]);
   return null;
 }
 

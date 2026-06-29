@@ -2,25 +2,20 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* ── Scrollbar hiding — outside @layer for full specificity on iOS Safari ── */
+/* ── Scrollbar hiding ── */
 * {
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
 *::-webkit-scrollbar {
-  -webkit-appearance: none !important;
-  appearance: none !important;
   display: none !important;
   width: 0 !important;
   height: 0 !important;
-  background: transparent !important;
 }
-*::-webkit-scrollbar-track,
-*::-webkit-scrollbar-thumb,
-*::-webkit-scrollbar-corner,
-*::-webkit-scrollbar-button {
+#root::-webkit-scrollbar {
   display: none !important;
-  background: transparent !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 @layer base {
@@ -75,9 +70,8 @@
   }
 
   html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
     height: 100%;
+    overflow: hidden;
   }
 
   body {
@@ -86,10 +80,16 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.2s ease, color 0.2s ease;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #root {
+    height: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
     overscroll-behavior: none;
-    min-height: 100%;
-    min-height: -webkit-fill-available;
+    -webkit-overflow-scrolling: touch;
   }
 
 }
