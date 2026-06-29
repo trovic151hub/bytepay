@@ -7,6 +7,7 @@ import { ArrowLeft, Headphones, Copy, Check, ChevronRight, FileText, MessageCirc
 import { RiCheckboxCircleFill, RiCloseCircleFill, RiTimeLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import LogoLoader from "@/components/LogoLoader";
 
 function BPayBadge() {
   return (
@@ -90,7 +91,7 @@ export default function TransactionDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F4F2FA] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+        <LogoLoader />
       </div>
     );
   }

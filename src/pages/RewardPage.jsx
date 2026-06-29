@@ -1,193 +1,163 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
-import { ChevronRight, CheckCircle } from "lucide-react";
+import { MoreVertical, ChevronRight, ArrowRight } from "lucide-react";
 import {
-  RiCoinLine, RiGift2Line, RiUserAddLine, RiShieldCheckLine,
-  RiSmartphoneLine, RiMoneyDollarCircleLine, RiTrophyLine,
-  RiCheckboxCircleLine, RiLockLine, RiFireLine, RiArrowRightSLine,
+  RiSendPlaneLine, RiBankCardLine, RiBriefcaseLine,
+  RiArrowRightSLine, RiCoinLine,
 } from "react-icons/ri";
-import { cn } from "@/lib/utils";
+import { toast } from "@/hooks/useToast";
+
+const cs = () => toast({ title: "Coming Soon", description: "This feature is coming soon." });
 
 const TASKS = [
-  { Icon: RiShieldCheckLine, bg: "bg-green-100", color: "text-green-600", label: "Complete KYC Verification", points: 500, done: true },
-  { Icon: RiSmartphoneLine, bg: "bg-violet-100", color: "text-violet-600", label: "Buy Airtime or Data", points: 50, done: false },
-  { Icon: RiMoneyDollarCircleLine, bg: "bg-amber-100", color: "text-amber-600", label: "Send Money to a Bank", points: 100, done: false },
-  { Icon: RiUserAddLine, bg: "bg-blue-100", color: "text-blue-600", label: "Refer a Friend", points: 1000, done: false },
-  { Icon: RiGift2Line, bg: "bg-pink-100", color: "text-pink-600", label: "Daily Check-in (5-day streak)", points: 25, done: false },
-  { Icon: RiMoneyDollarCircleLine, bg: "bg-indigo-100", color: "text-indigo-600", label: "Save ₦5,000 or more", points: 200, done: false },
+  {
+    Icon: RiSendPlaneLine, bg: "bg-blue-100 dark:bg-blue-900/30", color: "text-blue-600",
+    label: "Transfer to Bank", sub: "Transaction Amount ≥ ₦3000", progress: "0/1",
+  },
+  {
+    Icon: RiCoinLine, bg: "bg-violet-100 dark:bg-violet-900/30", color: "text-violet-600",
+    label: "Standard your pocket n...", sub: "Fast cash for your daily runz", progress: "0/1",
+  },
+  {
+    Icon: RiBriefcaseLine, bg: "bg-indigo-100 dark:bg-indigo-900/30", color: "text-indigo-600",
+    label: "Active My Biz Hub", sub: "₦100+ via Biz Account for i...", progress: "0/8",
+    badge: "Win iPhone 16 Pro",
+  },
+  {
+    Icon: RiBankCardLine, bg: "bg-purple-100 dark:bg-purple-900/30", color: "text-purple-600",
+    label: "Apply ATM Card", sub: "Lowest to ₦499", progress: "Once",
+  },
 ];
 
-const REWARDS = [
-  { Icon: RiSmartphoneLine, label: "₦200 Airtime", points: 500, bg: "bg-red-100", color: "text-red-500" },
-  { Icon: RiWifi, label: "1GB Data", points: 750, bg: "bg-green-100", color: "text-green-600" },
-  { Icon: RiGift2Line, label: "₦1,000 Cashback", points: 2000, bg: "bg-violet-100", color: "text-violet-600" },
-  { Icon: RiTrophyLine, label: "₦5,000 Transfer Fee Waiver", points: 5000, bg: "bg-amber-100", color: "text-amber-600" },
-];
-
-function RiWifi(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-      <path d="M1.39 8.56A16.005 16.005 0 0 1 12 4.5c4.13 0 7.9 1.57 10.71 4.14l-1.43 1.43A13.98 13.98 0 0 0 12 6.5c-3.6 0-6.87 1.36-9.38 3.59L1.39 8.56zm3.95 3.95A10.005 10.005 0 0 1 12 9.5a9.98 9.98 0 0 1 6.89 2.74l-1.42 1.42A8.003 8.003 0 0 0 12 11.5c-2.07 0-3.95.79-5.35 2.08l-1.31-1.07zm3.95 3.94A5.005 5.005 0 0 1 12 14.5c1.32 0 2.52.51 3.41 1.34l-1.41 1.41A3.001 3.001 0 0 0 12 16.5a2.99 2.99 0 0 0-1.94.73l-1.76-1.78zM12 20a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-    </svg>
-  );
+function useCountdown() {
+  const [time, setTime] = useState("");
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      const midnight = new Date();
+      midnight.setHours(24, 0, 0, 0);
+      const diff = midnight - now;
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTime(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`);
+    };
+    update();
+    const t = setInterval(update, 1000);
+    return () => clearInterval(t);
+  }, []);
+  return time;
 }
 
 export default function RewardPage() {
   const { userData } = useAuth();
-  const [activeTab, setActiveTab] = useState("Earn");
-  const TABS = ["Earn", "Redeem", "History"];
-
-  const totalPoints = 500;
-  const level = "Silver";
-  const nextLevel = "Gold";
-  const progress = 35;
+  const countdown = useCountdown();
 
   return (
     <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
       <div className="max-w-[430px] mx-auto">
 
-        {/* Points hero card */}
-        <div className="bg-gradient-to-br from-violet-700 via-purple-700 to-indigo-800 px-4 pt-12 pb-6 text-white">
-          <p className="text-purple-200 text-xs font-medium mb-1">BytePoints Balance</p>
-          <div className="flex items-end gap-2 mb-3">
-            <p className="text-5xl font-black">{totalPoints.toLocaleString()}</p>
-            <div className="flex items-center gap-1 pb-1">
-              <RiCoinLine className="text-yellow-300 text-xl" />
-              <span className="text-purple-200 text-sm">pts</span>
-            </div>
-          </div>
+        {/* Header */}
+        <header className="px-4 pt-12 pb-4 flex items-center justify-between">
+          <h1 className="text-2xl font-black text-foreground">Reward</h1>
+          <button onClick={cs}><MoreVertical className="h-5 w-5 text-foreground" /></button>
+        </header>
 
-          {/* Level progress */}
-          <div className="bg-white/15 rounded-2xl p-3">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-1.5">
-                <RiTrophyLine className="text-yellow-300 text-base" />
-                <span className="text-white text-xs font-bold">{level} Member</span>
+        <div className="px-4 pb-28 space-y-3">
+
+          {/* Cashback + Coupons */}
+          <div className="flex gap-3">
+            <button onClick={cs} className="flex-1 bg-white dark:bg-card rounded-2xl p-4 shadow-sm text-left">
+              <p className="text-xs text-muted-foreground mb-1">Cashback</p>
+              <div className="flex items-center gap-1">
+                <span className="text-lg">🪙</span>
+                <p className="text-lg font-black text-foreground">₦0.00</p>
+                <ChevronRight className="h-4 w-4 text-muted-foreground" />
               </div>
-              <span className="text-purple-200 text-xs">{progress}% to {nextLevel}</span>
-            </div>
-            <div className="h-1.5 bg-white/20 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }} animate={{ width: `${progress}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="h-full bg-gradient-to-r from-yellow-300 to-amber-400 rounded-full"
-              />
-            </div>
-            <p className="text-purple-200 text-[10px] mt-1.5">Earn {5000 - totalPoints} more points to reach {nextLevel}</p>
-          </div>
-        </div>
-
-        {/* Streak */}
-        <div className="mx-4 -mt-3 bg-white dark:bg-card rounded-2xl p-3.5 shadow-sm flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-xl bg-orange-100 flex items-center justify-center">
-              <RiFireLine className="text-orange-500 text-xl" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-foreground">3-day streak!</p>
-              <p className="text-xs text-muted-foreground">Check in daily to earn bonus points</p>
-            </div>
-          </div>
-          <button className="bg-primary text-primary-foreground text-xs font-bold px-3 py-2 rounded-xl">
-            Check In
-          </button>
-        </div>
-
-        <div className="px-4 pb-24 space-y-3">
-
-          {/* Tabs */}
-          <div className="bg-white dark:bg-card rounded-2xl p-1.5 flex shadow-sm">
-            {TABS.map((t) => (
-              <button key={t} onClick={() => setActiveTab(t)}
-                className={cn("flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all",
-                  activeTab === t ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground")}>
-                {t}
-              </button>
-            ))}
+            </button>
+            <button onClick={cs} className="flex-1 bg-white dark:bg-card rounded-2xl p-4 shadow-sm text-left">
+              <p className="text-xs text-muted-foreground mb-1">Coupons</p>
+              <div className="flex items-center gap-1">
+                <span className="text-lg">🎫</span>
+                <p className="text-lg font-black text-foreground">0</p>
+                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </button>
           </div>
 
-          {activeTab === "Earn" && (
-            <div className="space-y-2">
-              <p className="text-xs font-bold text-muted-foreground uppercase px-1">How to earn</p>
-              <div className="bg-white dark:bg-card rounded-2xl overflow-hidden shadow-sm">
-                {TASKS.map((task, i) => (
-                  <div key={i} className={cn("flex items-center gap-3 px-4 py-3.5", i < TASKS.length - 1 && "border-b border-border/60")}>
-                    <div className={`h-10 w-10 rounded-full ${task.bg} flex items-center justify-center shrink-0`}>
-                      <task.Icon className={`text-xl ${task.color}`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-foreground">{task.label}</p>
-                      <div className="flex items-center gap-1 mt-0.5">
-                        <RiCoinLine className="text-yellow-500 text-sm" />
-                        <p className="text-xs text-muted-foreground font-medium">+{task.points} pts</p>
-                      </div>
-                    </div>
-                    {task.done
-                      ? <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
-                      : <RiArrowRightSLine className="text-muted-foreground text-xl shrink-0" />
-                    }
+          {/* Daily Tasks */}
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+            className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border/40">
+              <p className="text-sm font-bold text-foreground">Daily Tasks</p>
+              <p className="text-sm font-mono font-bold text-primary">{countdown}</p>
+            </div>
+            <div className="divide-y divide-border/40">
+              {TASKS.map(({ Icon, bg, color, label, sub, progress, badge }) => (
+                <div key={label} className="flex items-center gap-3 px-4 py-3.5">
+                  <div className={`h-10 w-10 rounded-xl ${bg} flex items-center justify-center shrink-0`}>
+                    <Icon className={`text-xl ${color}`} />
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === "Redeem" && (
-            <div className="space-y-2">
-              <p className="text-xs font-bold text-muted-foreground uppercase px-1">Available rewards</p>
-              <div className="grid grid-cols-2 gap-3">
-                {REWARDS.map((r, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className={cn(
-                      "bg-white dark:bg-card rounded-2xl p-4 text-left shadow-sm",
-                      totalPoints < r.points && "opacity-60"
-                    )}>
-                    <div className={`h-12 w-12 rounded-2xl ${r.bg} flex items-center justify-center mb-3`}>
-                      <r.Icon className={`text-2xl ${r.color}`} />
-                    </div>
-                    <p className="text-sm font-bold text-foreground">{r.label}</p>
-                    <div className="flex items-center gap-1 mt-1">
-                      <RiCoinLine className="text-yellow-500 text-sm" />
-                      <p className="text-xs text-muted-foreground font-medium">{r.points.toLocaleString()} pts</p>
-                    </div>
-                    {totalPoints < r.points ? (
-                      <div className="flex items-center gap-1 mt-2">
-                        <RiLockLine className="text-muted-foreground text-sm" />
-                        <p className="text-[10px] text-muted-foreground">Need {(r.points - totalPoints).toLocaleString()} more</p>
-                      </div>
-                    ) : (
-                      <button className="mt-2 w-full bg-primary text-primary-foreground text-xs font-bold py-1.5 rounded-lg">
-                        Redeem
-                      </button>
+                  <div className="flex-1 min-w-0">
+                    {badge && (
+                      <span className="text-[9px] font-bold text-white bg-green-500 px-1.5 py-0.5 rounded-sm inline-block mb-0.5">
+                        {badge}
+                      </span>
                     )}
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {activeTab === "History" && (
-            <div className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
-              {[
-                { label: "KYC Verification Bonus", pts: 500, date: "May 15, 2026", type: "earn" },
-                { label: "Daily Check-in Bonus", pts: 25, date: "May 14, 2026", type: "earn" },
-                { label: "Daily Check-in Bonus", pts: 25, date: "May 13, 2026", type: "earn" },
-              ].map((item, i) => (
-                <div key={i} className={cn("flex items-center gap-3 px-4 py-3.5", i < 2 && "border-b border-border/60")}>
-                  <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-                    <RiCoinLine className="text-yellow-500 text-xl" />
+                    <p className="text-sm font-semibold text-foreground truncate">{label}</p>
+                    <p className="text-xs text-primary truncate">{sub} ({progress})</p>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-foreground">{item.label}</p>
-                    <p className="text-xs text-muted-foreground">{item.date}</p>
-                  </div>
-                  <p className="text-sm font-bold text-green-600">+{item.pts} pts</p>
+                  <button onClick={cs}
+                    className="bg-primary text-primary-foreground text-xs font-bold px-4 py-1.5 rounded-full shrink-0">
+                    Go
+                  </button>
                 </div>
               ))}
             </div>
-          )}
+            <button onClick={cs} className="w-full flex items-center justify-center gap-1 py-3 text-xs text-muted-foreground border-t border-border/40">
+              <span>···</span>
+              <RiArrowRightSLine className="text-base" />
+            </button>
+          </motion.div>
+
+          {/* Promo banner */}
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
+            className="flex gap-3">
+            <button onClick={cs} className="flex-1 bg-white dark:bg-card rounded-2xl p-4 shadow-sm flex items-center gap-2">
+              <span className="text-2xl">😴</span>
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">ready :</p>
+              </div>
+              <button className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1.5 rounded-full shrink-0">
+                Check Now
+              </button>
+            </button>
+            <button onClick={cs} className="flex-1 bg-gradient-to-br from-green-700 to-green-600 rounded-2xl p-4 shadow-sm">
+              <p className="text-white font-black text-xs leading-tight">ROAD TO</p>
+              <p className="text-white font-black text-lg leading-tight">₦10M<br/>to be Won!</p>
+              <div className="bg-yellow-400 text-yellow-900 font-black text-xs px-3 py-1 rounded-full w-fit mt-2">GO</div>
+            </button>
+          </motion.div>
+
+          {/* BytePoints legacy section */}
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
+            className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-bold text-foreground">BytePoints</p>
+              <button onClick={cs} className="flex items-center gap-0.5 text-primary text-xs font-semibold">
+                History <RiArrowRightSLine />
+              </button>
+            </div>
+            <div className="bg-gradient-to-br from-violet-600 to-purple-700 rounded-xl p-4 text-white">
+              <p className="text-purple-200 text-xs mb-1">My Points</p>
+              <p className="text-3xl font-black">{userData?.bytePoints ?? 0}</p>
+              <div className="flex items-center gap-1 mt-2">
+                <RiCoinLine className="text-yellow-300 text-lg" />
+                <p className="text-purple-200 text-xs">BytePoints balance</p>
+              </div>
+            </div>
+          </motion.div>
 
         </div>
       </div>

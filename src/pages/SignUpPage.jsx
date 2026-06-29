@@ -7,18 +7,22 @@ import bcrypt from "bcryptjs";
 import { auth, db } from "@/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Eye, EyeOff, ArrowLeft, ChevronDown, Gift } from "lucide-react";
+import { ArrowLeft, ChevronDown, Gift, X } from "lucide-react";
 import { RiHeadphoneLine } from "react-icons/ri";
 import Logo from "@/components/Logo";
+import NumericKeypad from "@/components/NumericKeypad";
+import { LogoIcon } from "@/components/LogoLoader";
 import { generateAccountNumber } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { cn } from "@/lib/utils";
 
 export default function SignUpPage() {
   const [, setLocation] = useLocation();
   const { setAuthBusy } = useAuth();
   const [form, setForm] = useState({ firstName: "", lastName: "", phone: "", email: "", password: "", pin: "", referralCode: "" });
-  const [showPass, setShowPass] = useState(false);
   const [showReferral, setShowReferral] = useState(false);
+  const [pinSheetOpen, setPinSheetOpen] = useState(false);
+  const [passSheetOpen, setPassSheetOpen] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -128,26 +132,46 @@ export default function SignUpPage() {
             <Input type="email" placeholder="Email address" value={form.email} onChange={set("email")} required
               autoComplete="email" className="bg-secondary border-0 rounded-2xl h-14" data-testid="input-email" />
 
-            <div className="relative">
-              <Input type={showPass ? "text" : "password"} placeholder="Password (min. 6 characters)"
-                value={form.password} onChange={set("password")} required autoComplete="new-password"
-                className="bg-secondary border-0 rounded-2xl h-14 pr-11" data-testid="input-password" />
-              <button type="button" onClick={() => setShowPass(!showPass)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground" data-testid="btn-toggle-password">
-                {showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </button>
-            </div>
+            {/* Password — opens keypad sheet */}
+            <button
+              type="button"
+              onClick={() => setPassSheetOpen(true)}
+              className="w-full bg-secondary border-0 rounded-2xl h-14 px-4 flex items-center justify-between"
+              data-testid="input-password"
+            >
+              <span className={cn("text-sm", form.password ? "text-foreground" : "text-muted-foreground")}>
+                {form.password ? "Password set" : "Set Payment Password (6 digits)"}
+              </span>
+              <div className="flex gap-1.5">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className={cn("h-2 w-2 rounded-full", i < form.password.length ? "bg-primary" : "bg-muted-foreground/30")} />
+                ))}
+              </div>
+            </button>
 
-            <Input type="password" placeholder="Transaction PIN (6 digits)" maxLength={6} inputMode="numeric"
-              value={form.pin} onChange={set("pin")} required
-              className="bg-secondary border-0 rounded-2xl h-14" data-testid="input-pin" />
+            {/* Transaction PIN — opens keypad sheet */}
+            <button
+              type="button"
+              onClick={() => setPinSheetOpen(true)}
+              className="w-full bg-secondary border-0 rounded-2xl h-14 px-4 flex items-center justify-between"
+              data-testid="input-pin"
+            >
+              <span className={cn("text-sm", form.pin ? "text-foreground" : "text-muted-foreground")}>
+                {form.pin ? "Transaction PIN set" : "Set Transaction PIN (6 digits)"}
+              </span>
+              <div className="flex gap-1.5">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className={cn("h-2 w-2 rounded-full", i < form.pin.length ? "bg-primary" : "bg-muted-foreground/30")} />
+                ))}
+              </div>
+            </button>
 
             <div className="relative">
               <div className="absolute -top-3 right-2 bg-orange-100 text-orange-600 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 z-10">
                 <Gift className="h-3 w-3" /> Get ₦100 Airtime for Free
               </div>
               <Button type="submit" className="w-full mt-3" size="lg" disabled={loading} data-testid="button-submit">
-                {loading ? <span className="flex items-center gap-2"><span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />Creating account...</span> : "Sign up"}
+                {loading ? <span className="flex items-center gap-2"><LogoIcon size="xs" />Creating account...</span> : "Sign up"}
               </Button>
             </div>
 
@@ -195,6 +219,105 @@ export default function SignUpPage() {
           </p>
         </motion.div>
       </div>
+
+      {/* Password keypad sheet */}
+      <AnimatePresence>
+        {passSheetOpen && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-40" onClick={() => setPassSheetOpen(false)} />
+            <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 320 }}
+              className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto z-50 bg-white dark:bg-card rounded-t-3xl px-6 pt-5 pb-8">
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 w-10 h-1 rounded-full bg-border" />
+              <div className="flex items-center justify-between mt-2 mb-4">
+                <h2 className="text-base font-bold text-foreground">Set Payment Password</h2>
+                <button onClick={() => setPassSheetOpen(false)}><X className="h-5 w-5 text-muted-foreground" /></button>
+              </div>
+              <p className="text-center text-sm text-muted-foreground mb-5">
+                Used to log in to your BytePay account
+              </p>
+              <div className="flex justify-center gap-3 mb-2">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ scale: form.password.length === i ? 1.25 : 1 }}
+                    className={cn(
+                      "w-4 h-4 rounded-full border-2 transition-colors",
+                      i < form.password.length ? "bg-primary border-primary" : "bg-transparent border-muted-foreground/40"
+                    )}
+                  />
+                ))}
+              </div>
+              <div className="mt-5">
+                <NumericKeypad
+                  onKey={(k) => {
+                    if (k === "del") {
+                      setForm((f) => ({ ...f, password: f.password.slice(0, -1) }));
+                    } else if (form.password.length < 6) {
+                      const next = form.password + k;
+                      setForm((f) => ({ ...f, password: next }));
+                      if (next.length === 6) setTimeout(() => setPassSheetOpen(false), 300);
+                    }
+                  }}
+                />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* PIN entry sheet */}
+      <AnimatePresence>
+        {pinSheetOpen && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-40" onClick={() => setPinSheetOpen(false)} />
+            <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 320 }}
+              className="fixed bottom-0 left-0 right-0 max-w-[430px] mx-auto z-50 bg-white dark:bg-card rounded-t-3xl px-6 pt-5 pb-8">
+
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 w-10 h-1 rounded-full bg-border" />
+
+              <div className="flex items-center justify-between mt-2 mb-4">
+                <h2 className="text-base font-bold text-foreground">Set Transaction PIN</h2>
+                <button onClick={() => setPinSheetOpen(false)}><X className="h-5 w-5 text-muted-foreground" /></button>
+              </div>
+
+              <p className="text-center text-sm text-muted-foreground mb-5">
+                This PIN is used to authorize all transactions
+              </p>
+
+              <div className="flex justify-center gap-3 mb-2">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ scale: form.pin.length === i ? 1.25 : 1 }}
+                    className={cn(
+                      "w-4 h-4 rounded-full border-2 transition-colors",
+                      i < form.pin.length ? "bg-primary border-primary" : "bg-transparent border-muted-foreground/40"
+                    )}
+                  />
+                ))}
+              </div>
+
+              <div className="mt-5">
+                <NumericKeypad
+                  onKey={(k) => {
+                    if (k === "del") {
+                      setForm((f) => ({ ...f, pin: f.pin.slice(0, -1) }));
+                    } else if (form.pin.length < 6) {
+                      const next = form.pin + k;
+                      setForm((f) => ({ ...f, pin: next }));
+                      if (next.length === 6) setTimeout(() => setPinSheetOpen(false), 300);
+                    }
+                  }}
+                />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -239,6 +239,25 @@ export default function DataPage() {
               Buy {bundle.size} for {formatCurrency(bundle.price)}
             </button>
           )}
+
+          {/* More Services */}
+          <div className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
+            <p className="text-sm font-semibold text-foreground px-4 pt-4 pb-2">More Services</p>
+            {[
+              { emoji: "📶", label: "Top up Data Bundle with *861", sub: "If network is unavailable" },
+              { emoji: "#️⃣", label: "Short Code Enquiry", sub: "SIM card basic information inquiry" },
+              { emoji: "🔄", label: "Data Auto-Renew", sub: "Always stay online!" },
+            ].map(({ emoji, label, sub }, i, arr) => (
+              <button key={label} className={cn("w-full flex items-center gap-3 hover:bg-secondary/50 px-4 py-3 transition-colors text-left", i < arr.length - 1 && "border-b border-border/40")}>
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-xl shrink-0">{emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-foreground">{label}</p>
+                  <p className="text-xs text-muted-foreground">{sub}</p>
+                </div>
+                <span className="text-muted-foreground text-lg shrink-0">›</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <PinModal isOpen={pinOpen} onClose={() => setPinOpen(false)} onConfirm={handlePinConfirm} loading={pinLoading} />

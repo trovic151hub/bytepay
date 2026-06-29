@@ -6,6 +6,7 @@ import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { formatCurrency } from "@/lib/utils";
+import LogoLoader from "@/components/LogoLoader";
 import {
   Eye, EyeOff, ChevronRight, ArrowUpRight, ArrowDownLeft, PartyPopper,
   Gift, TrendingUp, Smartphone, CreditCard,
@@ -209,6 +210,8 @@ export default function DashboardPage() {
   const [txLoading, setTxLoading] = useState(true);
   const [bannerIdx, setBannerIdx] = useState(0);
   const [promoIdx, setPromoIdx] = useState(0);
+  const [txIdx, setTxIdx] = useState(0);
+  const [txSnap, setTxSnap] = useState(false);
 
   const initials = userData
     ? `${userData.firstName?.[0] ?? ""}${userData.lastName?.[0] ?? ""}`.toUpperCase()
@@ -238,6 +241,25 @@ export default function DashboardPage() {
     return () => clearInterval(t);
   }, []);
 
+  useEffect(() => {
+    if (transactions.length < 2) return;
+    const t = setInterval(() => setTxIdx((i) => i + 1), 3000);
+    return () => clearInterval(t);
+  }, [transactions.length]);
+
+  useEffect(() => {
+    const count = Math.min(transactions.length, 3);
+    if (txIdx !== count || count < 2) return;
+    // txIdx landed on the duplicate clone of item 0 — wait for the slide to finish,
+    // then instant-snap back to real index 0 (visually identical, no jump)
+    const t = setTimeout(() => {
+      setTxSnap(true);
+      setTxIdx(0);
+      setTimeout(() => setTxSnap(false), 50);
+    }, 420);
+    return () => clearTimeout(t);
+  }, [txIdx, transactions.length]);
+
   const lastTx = transactions[0];
 
   return (
@@ -255,7 +277,7 @@ export default function DashboardPage() {
               </div>
             )}
             <p className="text-base font-bold text-foreground leading-tight">
-              Hi, {userData?.firstName?.toUpperCase() ?? "USER"}
+              Hi, {(userData?.nickname ?? userData?.firstName)?.toUpperCase() ?? "USER"}
             </p>
           </Link>
           <div className="flex items-center gap-4">
@@ -354,32 +376,54 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          {/* Last Transaction */}
-          {!txLoading && lastTx && (
-            <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className={`h-10 w-10 rounded-full flex items-center justify-center ${lastTx.type === "credit" ? "bg-green-100" : "bg-violet-100"}`}>
-                  {lastTx.type === "credit"
-                    ? <ArrowDownLeft className="h-5 w-5 text-green-600" />
-                    : <ArrowUpRight className="h-5 w-5 text-primary" />}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-foreground truncate">{lastTx.description}</p>
-                  <p className="text-xs text-muted-foreground">{lastTx.status === "success" ? "✓ Success" : lastTx.status}</p>
-                </div>
-                <div className="text-right">
-                  <p className={`text-sm font-bold ${lastTx.type === "credit" ? "text-green-600" : "text-foreground"}`}>
-                    {lastTx.type === "credit" ? "+" : "-"}{formatCurrency(lastTx.amount)}
-                  </p>
-                  <p className="text-[10px] text-muted-foreground">
-                    {lastTx.date?.toDate
-                      ? lastTx.date.toDate().toLocaleDateString("en-NG", { month: "short", day: "numeric" })
-                      : ""}
-                  </p>
-                </div>
-              </div>
+          {/* Recent Transactions ticker */}
+          {txLoading ? (
+            <div className="bg-white dark:bg-card rounded-2xl shadow-sm h-[66px] flex items-center justify-center">
+              <LogoLoader />
             </div>
-          )}
+          ) : null}
+          {!txLoading && transactions.length > 0 && (() => {
+            const visible = transactions.slice(0, 3);
+            const loopList = visible.length > 1 ? [...visible, visible[0]] : visible;
+            return (
+              <div
+                className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden h-[66px] cursor-pointer"
+                onClick={() => setLocation("/history")}
+              >
+                <motion.div
+                  animate={{ y: -(txIdx * 66) }}
+                  transition={txSnap ? { duration: 0 } : { duration: 0.4, ease: "easeInOut" }}
+                >
+                  {loopList.map((tx, i) => (
+                    <div key={i} className="h-[66px] flex items-center gap-3 px-4">
+                      <div className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${tx.type === "credit" ? "bg-green-100 dark:bg-green-900/30" : "bg-violet-100 dark:bg-violet-900/30"}`}>
+                        {tx.type === "credit"
+                          ? <ArrowDownLeft className="h-5 w-5 text-green-600" />
+                          : <ArrowUpRight className="h-5 w-5 text-primary" />}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-foreground truncate">{tx.description}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {tx.status === "success" || !tx.status ? "✓ Successful"
+                            : tx.status === "declined" ? "✗ Declined"
+                            : tx.status === "failed" ? "✗ Failed"
+                            : tx.status}
+                        </p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className={`text-sm font-bold ${tx.type === "credit" ? "text-green-600" : "text-foreground"}`}>
+                          {tx.type === "credit" ? "+" : "-"}{formatCurrency(tx.amount)}
+                        </p>
+                        <p className="text-[10px] text-muted-foreground">
+                          {tx.date?.toDate ? tx.date.toDate().toLocaleDateString("en-NG", { month: "short", day: "numeric" }) : ""}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            );
+          })()}
 
           {/* Services */}
           <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm">

@@ -65,7 +65,7 @@ export default function AddMoneyPage() {
 
         {/* Header */}
         <header className="sticky top-0 z-40 bg-[#F4F2FA] dark:bg-background px-4 pt-6 pb-3 flex items-center justify-between">
-          <button onClick={() => setLocation("/dashboard")} className="flex items-center gap-2 text-foreground">
+          <button onClick={() => window.history.back()} className="flex items-center gap-2 text-foreground">
             <ArrowLeft className="h-5 w-5" />
             <span className="text-lg font-semibold">Add Money</span>
           </button>

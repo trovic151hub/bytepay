@@ -4,6 +4,7 @@ import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { ArrowLeft } from "lucide-react";
+import LogoLoader from "@/components/LogoLoader";
 import { RiArrowDownLine } from "react-icons/ri";
 import { formatCurrency } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -69,7 +70,7 @@ export default function FundHistoryPage() {
         <div className="flex-1 px-4 pt-4 pb-8">
           {loading ? (
             <div className="flex justify-center py-20">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+              <LogoLoader />
             </div>
           ) : transactions.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full pt-10">

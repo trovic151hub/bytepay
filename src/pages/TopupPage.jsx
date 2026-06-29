@@ -5,6 +5,7 @@ import { doc, updateDoc, addDoc, collection, serverTimestamp, increment } from "
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { ArrowLeft, CheckCircle } from "lucide-react";
+import { LogoIcon } from "@/components/LogoLoader";
 import { RiBankCardLine } from "react-icons/ri";
 import { formatCurrency } from "@/lib/utils";
 
@@ -101,7 +102,7 @@ export default function TopupPage() {
                 >
                   {loading ? (
                     <span className="flex items-center gap-1.5">
-                      <span className="h-3.5 w-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <LogoIcon size="xs" />
                       Wait...
                     </span>
                   ) : "Add Money"}

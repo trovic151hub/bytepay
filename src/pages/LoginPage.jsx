@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -7,6 +7,9 @@ import { auth, db } from "@/firebase";
 import { ArrowLeft, User } from "lucide-react";
 import { RiHeadphoneLine } from "react-icons/ri";
 import Logo from "@/components/Logo";
+import NumericKeypad from "@/components/NumericKeypad";
+import { LogoIcon } from "@/components/LogoLoader";
+import { cn } from "@/lib/utils";
 
 function maskIdentifier(value) {
   if (!value) return "";
@@ -27,11 +30,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const pinInputRef = useRef(null);
-
-  useEffect(() => {
-    if (step === "password") pinInputRef.current?.focus();
-  }, [step]);
 
   const handleIdentifierSubmit = async (e) => {
     e.preventDefault();
@@ -59,13 +57,11 @@ export default function LoginPage() {
     }
   };
 
-  const handlePasswordSubmit = async (e) => {
-    e.preventDefault();
+  const doLogin = async (pwd) => {
     setError("");
-    if (!password) return;
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, loginEmail, password);
+      await signInWithEmailAndPassword(auth, loginEmail, pwd);
       setLocation("/dashboard");
     } catch (err) {
       const msg = {
@@ -75,8 +71,24 @@ export default function LoginPage() {
         "auth/too-many-requests": "Too many attempts. Please try again later.",
       }[err.code] || "Login failed. Please try again.";
       setError(msg);
+      setPassword("");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleKey = (k) => {
+    if (loading) return;
+    if (k === "del") {
+      setPassword((p) => p.slice(0, -1));
+      setError("");
+    } else if (password.length < 6) {
+      const next = password + k;
+      setPassword(next);
+      setError("");
+      if (next.length === 6) {
+        setTimeout(() => doLogin(next), 150);
+      }
     }
   };
 
@@ -85,7 +97,7 @@ export default function LoginPage() {
       <div className="max-w-[430px] w-full mx-auto flex flex-col flex-1">
         <header className="px-4 py-4 flex items-center justify-between">
           <button
-            onClick={() => (step === "password" ? setStep("identifier") : setLocation("/"))}
+            onClick={() => (step === "password" ? (setStep("identifier"), setPassword(""), setError("")) : setLocation("/"))}
             className="text-foreground"
             data-testid="btn-back"
           >
@@ -109,16 +121,14 @@ export default function LoginPage() {
 
               <input
                 type="text"
-                placeholder="Please enter Phone Number/Email"
+                placeholder="Please enter Phone Number / Email"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
                 className="w-full bg-secondary rounded-2xl px-4 py-4 text-sm placeholder:text-muted-foreground outline-none text-foreground"
                 data-testid="input-identifier"
               />
 
-              {error && (
-                <p className="text-red-500 text-sm mt-3" data-testid="text-error">{error}</p>
-              )}
+              {error && <p className="text-red-500 text-sm mt-3" data-testid="text-error">{error}</p>}
 
               <button
                 type="submit"
@@ -126,7 +136,7 @@ export default function LoginPage() {
                 className="w-full mt-4 py-4 rounded-2xl text-base font-bold text-white bg-primary disabled:bg-primary/30 disabled:cursor-not-allowed transition-colors"
                 data-testid="button-continue"
               >
-                {loading ? "Please wait..." : "Log in"}
+                {loading ? "Please wait…" : "Log in"}
               </button>
 
               <div className="flex-1" />
@@ -139,54 +149,51 @@ export default function LoginPage() {
               </p>
             </motion.form>
           ) : (
-            <motion.form
+            <motion.div
               key="password"
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
-              onSubmit={handlePasswordSubmit}
               className="flex flex-col flex-1 px-6"
             >
-              <div className="flex flex-col items-center mt-10 mb-2">
+              <div className="flex flex-col items-center mt-10 mb-6">
                 <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-3">
                   <User className="h-7 w-7 text-muted-foreground" />
                 </div>
                 <p className="text-base font-bold text-foreground">{maskIdentifier(identifier)}</p>
-                <p className="text-sm text-muted-foreground mt-1">Enter Password to login</p>
+                <p className="text-sm text-muted-foreground mt-1">Enter your 6-digit payment password</p>
               </div>
 
-              <div className="relative mt-6">
-                <input
-                  ref={pinInputRef}
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="absolute inset-0 opacity-0"
-                  data-testid="input-password"
-                  autoFocus
-                />
-                <div className="grid grid-cols-6 gap-2 pointer-events-none">
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className={`aspect-square rounded-xl flex items-center justify-center text-lg font-bold ${
-                        password.length > i ? "bg-secondary text-foreground" : "bg-secondary/60"
-                      }`}
-                    >
-                      {password.length > i ? "•" : ""}
-                    </div>
-                  ))}
+              {/* PIN dots */}
+              <div className="flex justify-center gap-3 mb-2">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ scale: password.length === i ? 1.25 : 1 }}
+                    className={cn(
+                      "w-4 h-4 rounded-full border-2 transition-colors",
+                      i < password.length ? "bg-primary border-primary" : "bg-transparent border-muted-foreground/40"
+                    )}
+                  />
+                ))}
+              </div>
+
+              {error && <p className="text-red-500 text-sm mt-2 text-center" data-testid="text-error">{error}</p>}
+
+              {loading && (
+                <div className="flex justify-center mt-3">
+                  <LogoIcon size="sm" />
                 </div>
-              </div>
-
-              {error && (
-                <p className="text-red-500 text-sm mt-3 text-center" data-testid="text-error">{error}</p>
               )}
 
               <div className="flex-1" />
 
+              <div className="mb-4">
+                <NumericKeypad onKey={handleKey} disabled={loading} />
+              </div>
+
               <Link href="/forgot-password" className="text-center text-sm text-primary font-semibold pb-6" data-testid="link-forgot-password">
                 Forgot Password
               </Link>
-            </motion.form>
+            </motion.div>
           )}
         </AnimatePresence>
 

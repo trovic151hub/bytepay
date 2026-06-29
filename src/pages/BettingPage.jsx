@@ -100,6 +100,25 @@ export default function BettingPage() {
           </div>
           {formError && <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-xl flex items-center gap-2"><AlertCircle className="h-4 w-4 shrink-0" />{formError}</p>}
           <Button className="w-full" size="lg" onClick={() => { if (validate()) setPinOpen(true); }} data-testid="button-continue">Top Up</Button>
+
+          {/* Sports Services */}
+          <div className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
+            <p className="text-sm font-semibold text-foreground px-4 pt-4 pb-2">Sports Services</p>
+            {[
+              { emoji: "🏆", label: "Bet History", sub: "View your betting transactions" },
+              { emoji: "🎯", label: "Odds Calculator", sub: "Calculate your potential winnings" },
+              { emoji: "🔄", label: "Auto Top-Up", sub: "Never run out of betting funds" },
+            ].map(({ emoji, label, sub }, i, arr) => (
+              <button key={label} className={cn("w-full flex items-center gap-3 hover:bg-secondary/50 px-4 py-3 transition-colors text-left", i < arr.length - 1 && "border-b border-border/40")}>
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-xl shrink-0">{emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-foreground">{label}</p>
+                  <p className="text-xs text-muted-foreground">{sub}</p>
+                </div>
+                <span className="text-muted-foreground text-lg shrink-0">›</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <PinModal isOpen={pinOpen} onClose={() => setPinOpen(false)} onConfirm={handlePinConfirm} loading={pinLoading} />

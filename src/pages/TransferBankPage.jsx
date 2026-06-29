@@ -12,10 +12,11 @@ import PinModal from "@/components/PinModal";
 import { formatCurrency } from "@/lib/utils";
 import { lookupNuban } from "@/lib/nuban";
 import {
-  Check, CheckCircle, AlertCircle, Loader2, MoreVertical,
+  Check, CheckCircle, AlertCircle, MoreVertical,
   ChevronRight, Search, ArrowLeft, Activity, X, ShieldCheck,
   Share2, Heart, Tv, Gift, Smartphone, CreditCard
 } from "lucide-react";
+import { LogoIcon } from "@/components/LogoLoader";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 
@@ -843,7 +844,7 @@ export default function TransferBankPage() {
                     {resolving && (
                       <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
                         className="mt-3 mb-1 flex items-center gap-2 px-1">
-                        <Loader2 className="h-4 w-4 animate-spin text-primary shrink-0"/>
+                        <LogoIcon size="xs" />
                         <p className="text-sm text-muted-foreground">Verifying account…</p>
                       </motion.div>
                     )}
@@ -888,7 +889,7 @@ export default function TransferBankPage() {
                       className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground/50 outline-none py-4 pr-8"/>
                     <div className="absolute right-0 top-1/2 -translate-y-1/2">
                       {bpSearching
-                        ? <Loader2 className="h-4 w-4 animate-spin text-primary"/>
+                        ? <LogoIcon size="xs" />
                         : bpAccNum && <button onClick={() => { setBpAccNum(""); setBpRecipient(null); setBpAmount(""); }}>
                             <X className="h-4 w-4 text-muted-foreground"/>
                           </button>}

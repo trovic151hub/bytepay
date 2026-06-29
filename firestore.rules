@@ -3,12 +3,27 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Each user can only read/write their own profile document.
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Only the owner can read their full profile
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      // Owner can do anything to their own document
+      allow write: if request.auth != null && request.auth.uid == userId;
+
+      // Any authenticated user can credit another user's balance (for BytePay transfers).
+      // Guard: only accountBalance may change, and only upward — prevents draining balances.
+      allow update: if request.auth != null
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['accountBalance'])
+                    && request.resource.data.accountBalance >= resource.data.accountBalance;
 
       match /transactions/{transactionId} {
+        // Owner can read/write their own transactions
         allow read, write: if request.auth != null && request.auth.uid == userId;
+
+        // Any authenticated user can create a credit record in another user's transactions
+        // (the incoming side of a BytePay transfer). Debit records are owner-only.
+        allow create: if request.auth != null
+                      && request.resource.data.type == 'credit';
       }
     }
 

@@ -1,21 +1,29 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 
-let toastCount = 0;
+let _id = 0;
+let _toasts = [];
+const _listeners = new Set();
 
-export function useToast() {
+function broadcast() {
+  const snapshot = [..._toasts];
+  _listeners.forEach((fn) => fn(snapshot));
+}
+
+export function toast({ title, description, duration = 3000 }) {
+  const id = ++_id;
+  _toasts = [..._toasts, { id, title, description }];
+  broadcast();
+  setTimeout(() => {
+    _toasts = _toasts.filter((t) => t.id !== id);
+    broadcast();
+  }, duration);
+}
+
+export function useToaster() {
   const [toasts, setToasts] = useState([]);
-
-  const toast = useCallback(({ title, description, variant = "default", duration = 4000 }) => {
-    const id = ++toastCount;
-    setToasts((prev) => [...prev, { id, title, description, variant }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, duration);
+  useEffect(() => {
+    _listeners.add(setToasts);
+    return () => _listeners.delete(setToasts);
   }, []);
-
-  const dismiss = useCallback((id) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
-  }, []);
-
-  return { toasts, toast, dismiss };
+  return toasts;
 }

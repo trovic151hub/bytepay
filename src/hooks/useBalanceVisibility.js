@@ -1,24 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const KEY = "bytepay_show_balance";
 
-export function useBalanceVisibility() {
-  const [show, setShow] = useState(() => {
-    try {
-      const stored = localStorage.getItem(KEY);
-      return stored === null ? true : stored === "true";
-    } catch {
-      return true;
-    }
-  });
+let _show = (() => {
+  try {
+    const stored = localStorage.getItem(KEY);
+    return stored === null ? true : stored === "true";
+  } catch {
+    return true;
+  }
+})();
 
-  const toggle = () => {
-    setShow((v) => {
-      const next = !v;
-      try { localStorage.setItem(KEY, String(next)); } catch {}
-      return next;
-    });
-  };
+const _listeners = new Set();
+
+function broadcast(val) {
+  _show = val;
+  try { localStorage.setItem(KEY, String(val)); } catch {}
+  _listeners.forEach((fn) => fn(val));
+}
+
+export function useBalanceVisibility() {
+  const [show, setShow] = useState(_show);
+
+  useEffect(() => {
+    _listeners.add(setShow);
+    return () => _listeners.delete(setShow);
+  }, []);
+
+  const toggle = () => broadcast(!_show);
 
   return [show, toggle];
 }

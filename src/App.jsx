@@ -26,6 +26,8 @@ import RewardPage from "./pages/RewardPage.jsx";
 import MePage from "./pages/MePage.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx";
 import TransactionDetailPage from "./pages/TransactionDetailPage.jsx";
+import AtmCardPage from "./pages/AtmCardPage.jsx";
+import Toaster from "./components/Toaster.jsx";
 
 function ProtectedRoute({ component: Component }) {
   const { user } = useAuth();
@@ -73,6 +75,7 @@ const ProtectedReward = () => <ProtectedRoute component={RewardPage} />;
 const ProtectedMe = () => <ProtectedRoute component={MePage} />;
 const ProtectedSettings = () => <ProtectedRoute component={SettingsPage} />;
 const ProtectedTxDetail = () => <ProtectedRoute component={TransactionDetailPage} />;
+const ProtectedAtmCard = () => <ProtectedRoute component={AtmCardPage} />;
 const RedirectHome = () => <Redirect to="/" />;
 
 const TAB_ROUTES = ["/dashboard", "/wealth", "/savings", "/reward", "/me"];
@@ -105,6 +108,7 @@ export default function App() {
   return (
     <>
     <ScrollToTop />
+    <Toaster />
     <ConditionalBottomNav />
     <Switch>
       <Route path="/" component={HomeRoute} />
@@ -130,6 +134,7 @@ export default function App() {
       <Route path="/me" component={ProtectedMe} />
       <Route path="/settings" component={ProtectedSettings} />
       <Route path="/transaction/:id" component={ProtectedTxDetail} />
+      <Route path="/atm-card" component={ProtectedAtmCard} />
       <Route component={RedirectHome} />
     </Switch>
     </>

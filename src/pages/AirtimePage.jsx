@@ -180,16 +180,22 @@ export default function AirtimePage() {
           )}
 
           {/* Airtime services */}
-          <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm">
-            <p className="text-sm font-semibold text-foreground mb-3">Airtime services</p>
-            <button className="w-full flex items-center gap-3 hover:bg-secondary/50 rounded-xl p-2 transition-colors">
-              <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-xl">🔄</div>
-              <div className="flex-1 text-left">
-                <p className="text-sm font-semibold text-foreground">Airtime Top-up Plan（Auto Top-up）</p>
-                <p className="text-xs text-muted-foreground">Always Stay Online</p>
-              </div>
-              <span className="text-muted-foreground">›</span>
-            </button>
+          <div className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
+            <p className="text-sm font-semibold text-foreground px-4 pt-4 pb-2">Airtime services</p>
+            {[
+              { emoji: "🔄", label: "Airtime Top-up Plan", sub: "Always Stay Online" },
+              { emoji: "🎯", label: "Airtime Group Purchase", sub: "Team up & Enjoy 50% OFF!" },
+              { emoji: "#️⃣", label: "USSD Enquiry", sub: "Check phone balance and more" },
+            ].map(({ emoji, label, sub }, i, arr) => (
+              <button key={label} className={cn("w-full flex items-center gap-3 hover:bg-secondary/50 px-4 py-3 transition-colors text-left", i < arr.length - 1 && "border-b border-border/40")}>
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-xl shrink-0">{emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-foreground">{label}</p>
+                  <p className="text-xs text-muted-foreground">{sub}</p>
+                </div>
+                <span className="text-muted-foreground text-lg shrink-0">›</span>
+              </button>
+            ))}
           </div>
         </div>
       </div>

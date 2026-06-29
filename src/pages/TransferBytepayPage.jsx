@@ -8,7 +8,8 @@ import PinModal from "@/components/PinModal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { formatCurrency } from "@/lib/utils";
-import { CheckCircle, AlertCircle, Loader2, Search, ChevronRight, MoreVertical, Users, ArrowLeft } from "lucide-react";
+import { CheckCircle, AlertCircle, Search, ChevronRight, MoreVertical, Users, ArrowLeft } from "lucide-react";
+import { LogoIcon } from "@/components/LogoLoader";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 
@@ -163,7 +164,7 @@ export default function TransferBytepayPage() {
               />
               <div className="absolute right-0 top-1/2 -translate-y-1/2">
                 {searching
-                  ? <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                  ? <LogoIcon size="xs" />
                   : <Users className="h-4 w-4 text-muted-foreground" />}
               </div>
             </div>

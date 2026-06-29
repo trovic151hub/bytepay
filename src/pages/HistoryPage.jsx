@@ -4,6 +4,7 @@ import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
 import { ArrowLeft, ChevronDown, Download } from "lucide-react";
+import LogoLoader from "@/components/LogoLoader";
 import {
   RiPhoneLine, RiWifiLine, RiFlashlightLine, RiSendPlaneLine,
   RiArrowDownLine, RiBankLine, RiHistoryLine, RiBarChartBoxLine,
@@ -265,7 +266,7 @@ export default function HistoryPage() {
           {/* Title row */}
           <div className="flex items-center justify-between px-4 pt-4 pb-3">
             <div className="flex items-center gap-2">
-              <button onClick={() => setLocation("/dashboard")}
+              <button onClick={() => window.history.back()}
                 className="h-9 w-9 rounded-xl flex items-center justify-center hover:bg-secondary -ml-1">
                 <ArrowLeft className="h-5 w-5 text-foreground" />
               </button>
@@ -332,7 +333,7 @@ export default function HistoryPage() {
         <div className="pb-24">
           {loading ? (
             <div className="flex justify-center py-20">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+              <LogoLoader />
             </div>
           ) : (
             <>
