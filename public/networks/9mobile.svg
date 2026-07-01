@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="0" fill="white"/>
+  <!-- Left teardrop loop -->
+  <path d="M65,50 C40,50 28,70 28,88 C28,110 46,126 68,122 C90,118 100,100 94,80 C88,60 72,54 65,50 Z"
+    fill="none" stroke="#FF5A00" stroke-width="17" stroke-linejoin="round"/>
+  <!-- Right loop connected -->
+  <path d="M94,80 C98,64 112,52 128,52 C148,52 164,66 162,86 C160,106 142,118 124,114"
+    fill="none" stroke="#FF5A00" stroke-width="17" stroke-linecap="round"/>
+  <!-- Vertical stem -->
+  <line x1="65" y1="122" x2="65" y2="178" stroke="#FF5A00" stroke-width="17" stroke-linecap="round"/>
+  <!-- 2 -->
+  <text x="104" y="182" font-family="Arial,sans-serif" font-size="44" font-weight="900" fill="#FF5A00">2</text>
+</svg>

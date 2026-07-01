@@ -92,15 +92,15 @@ export default function SavingsPage() {
 
           {/* CashBox hero */}
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            className="bg-white dark:bg-card rounded-3xl p-5 shadow-sm">
+            className="bg-white dark:bg-card rounded-2xl p-5 pt-11 shadow-sm relative overflow-hidden">
 
-            {/* Top row: pill label + subtitle */}
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-primary font-bold text-sm px-3 py-1 rounded-full border border-primary bg-primary/5">
-                CashBox
-              </span>
-              <span className="text-xs text-muted-foreground">Your available balance with Interest!</span>
-            </div>
+            {/* Pill — card's overflow-hidden clips the left corners to give a tab effect */}
+            <span className="absolute top-1 left-1 text-primary font-bold text-sm px-4 py-1 rounded-tl-lg rounded-br-lg bg-primary/5">
+              CashBox
+            </span>
+
+            {/* Subtitle */}
+            <p className="text-xs text-muted-foreground text-right mb-2">Your available balance with Interest!</p>
 
             {/* Rate */}
             <p className="text-5xl font-black text-green-500 text-center mt-2">20.00%</p>

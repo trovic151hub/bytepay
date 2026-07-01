@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#E40521"/>
+  <!-- Airtel iconic swirl 'a' mark -->
+  <path d="M100,22 C140,18 178,52 172,96 C166,140 128,162 96,154
+           C64,146 36,118 42,84 C48,50 80,30 108,38
+           C136,46 152,76 142,104 C132,132 104,140 88,128"
+    stroke="white" stroke-width="15" fill="none"
+    stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="100" y="188" text-anchor="middle"
+    font-family="Arial,Helvetica,sans-serif"
+    font-size="34" font-weight="bold" fill="white" letter-spacing="1">airtel</text>
+</svg>

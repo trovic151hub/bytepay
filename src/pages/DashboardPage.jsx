@@ -10,41 +10,36 @@ import LogoLoader from "@/components/LogoLoader";
 import {
   Eye, EyeOff, ChevronRight, ArrowUpRight, ArrowDownLeft, PartyPopper,
   Gift, TrendingUp, Smartphone, CreditCard,
+  Phone, ArrowUpDown, Trophy, Zap, ShieldCheck, Bookmark, LayoutGrid,
+  Landmark, User, Vault, Bell, Headphones, CheckCircle2, Coins,
 } from "lucide-react";
-import {
-  RiPhoneLine, RiArrowUpDownLine, RiFootballLine, RiFlashlightLine,
-  RiGift2Line, RiShieldCheckLine, RiBookmarkLine, RiApps2Line,
-  RiBankLine, RiUser3Line, RiSafeLine, RiBankCardLine,
-  RiBellLine, RiHeadphoneLine, RiCheckboxCircleFill, RiArrowRightSLine,
-  RiCoinLine,
-} from "react-icons/ri";
 import Logo from "@/components/Logo";
 import { useBalanceVisibility } from "@/hooks/useBalanceVisibility";
 
 const QUICK_ACTIONS = [
-  { label: "To Bank",    Icon: RiBankLine,    path: "/transfer/bank",    badge: "0 Fee" },
-  { label: "To BytePay", Icon: RiUser3Line,   path: "/transfer/bytepay" },
-  { label: "Savings",    Icon: RiSafeLine,    path: "/savings" },
-  { label: "ATM Card",   Icon: RiBankCardLine, path: "/assets" },
+  { label: "To Bank",    Icon: Landmark,   path: "/transfer/bank",    badge: "0 Fee", bg: "bg-violet-600" },
+  { label: "To BytePay", Icon: User,       path: "/transfer/bytepay",                bg: "bg-violet-600" },
+  { label: "Savings",    Icon: Vault,      path: "/savings",                          bg: "bg-violet-600" },
+  { label: "ATM Card",   Icon: CreditCard, path: "/atm-card",                        bg: "bg-blue-500" },
 ];
 
 const SERVICES = [
-  { label: "Airtime",      path: "/airtime",    Icon: RiPhoneLine,        bg: "bg-blue-500" },
-  { label: "Data",         path: "/data",       Icon: RiArrowUpDownLine,  bg: "bg-green-500" },
-  { label: "Betting",      path: "/betting",    Icon: RiFootballLine,     bg: "bg-emerald-600" },
-  { label: "Electricity",  path: "/electricity",Icon: RiFlashlightLine,   bg: "bg-teal-500" },
-  { label: "Refer & Earn", path: "/reward",     Icon: RiGift2Line,        bg: "bg-violet-600" },
-  { label: "Insurance",    path: "/dashboard",  Icon: RiShieldCheckLine,  bg: "bg-sky-500", tag: "FREE" },
-  { label: "Loan",         path: "/wealth",     Icon: RiBookmarkLine,     bg: "bg-teal-600" },
-  { label: "More",         path: "/dashboard",  Icon: RiApps2Line,        bg: "bg-violet-500" },
+  { label: "Airtime",      path: "/airtime",     Icon: Phone,       bg: "bg-blue-500",    tag: "FREE" },
+  { label: "Data",         path: "/data",        Icon: ArrowUpDown, bg: "bg-cyan-500" },
+  { label: "TV",           path: "/dashboard",   Icon: Smartphone,  bg: "bg-violet-600" },
+  { label: "Electricity",  path: "/electricity", Icon: Zap,         bg: "bg-green-500" },
+  { label: "Refer & Earn", path: "/reward",      Icon: Gift,        bg: "bg-violet-600" },
+  { label: "Insurance",    path: "/dashboard",   Icon: ShieldCheck, bg: "bg-sky-500" },
+  { label: "CashBox",      path: "/savings",     Icon: Coins,       bg: "bg-violet-600" },
+  { label: "More",         path: "/dashboard",   Icon: LayoutGrid,  bg: "bg-violet-500" },
 ];
 
 const BANNERS = [
-  { Icon: RiCoinLine,         iconBg: "bg-gradient-to-br from-amber-400 to-orange-500", title: "Daily Cash Ready!",     sub: "Turn on CashBox Auto-Save & earn",      cta: "Claim" },
-  { Icon: RiPhoneLine,        iconBg: "bg-gradient-to-br from-blue-400 to-indigo-500",  title: "₦100 Free Airtime",     sub: "Always Stay Online",                    cta: "GO" },
-  { Icon: RiGift2Line,        iconBg: "bg-gradient-to-br from-rose-400 to-pink-500",    title: "Get ₦1,500 Bonus",      sub: "Refer a friend and earn instantly",     cta: "Invite" },
-  { Icon: RiShieldCheckLine,  iconBg: "bg-gradient-to-br from-emerald-400 to-teal-500", title: "Zero transfer fees",    sub: "Send to any BytePay user free",         cta: "Send" },
-  { Icon: RiSafeLine,         iconBg: "bg-gradient-to-br from-violet-400 to-purple-500",title: "Earn up to 25% p.a.",   sub: "Lock savings with Mega Monday",         cta: "Save" },
+  { Icon: Coins,         iconBg: "bg-gradient-to-br from-amber-400 to-orange-500", title: "Daily Cash Ready!",     sub: "Turn on CashBox Auto-Save & earn",      cta: "Claim" },
+  { Icon: Phone,        iconBg: "bg-gradient-to-br from-blue-400 to-indigo-500",  title: "₦100 Free Airtime",     sub: "Always Stay Online",                    cta: "GO" },
+  { Icon: Gift,        iconBg: "bg-gradient-to-br from-rose-400 to-pink-500",    title: "Get ₦1,500 Bonus",      sub: "Refer a friend and earn instantly",     cta: "Invite" },
+  { Icon: ShieldCheck,  iconBg: "bg-gradient-to-br from-emerald-400 to-teal-500", title: "Zero transfer fees",    sub: "Send to any BytePay user free",         cta: "Send" },
+  { Icon: Vault,         iconBg: "bg-gradient-to-br from-violet-400 to-purple-500",title: "Earn up to 25% p.a.",   sub: "Lock savings with Mega Monday",         cta: "Save" },
 ];
 
 const WEALTH_PRODUCTS = [
@@ -112,7 +107,7 @@ const PROMO_SLIDES = [
             <p className="text-xs font-semibold text-green-100">to be Won!</p>
             <div className="bg-yellow-400 text-green-900 text-xs font-bold px-4 py-1.5 rounded-full inline-block mt-1.5">Start Your Bet</div>
           </div>
-          <RiFootballLine className="text-5xl text-white/80 shrink-0" />
+          <Trophy className="h-12 w-12 text-white/80 shrink-0" />
         </div>
       </>
     ),
@@ -273,7 +268,7 @@ export default function DashboardPage() {
               <img src={userData.profileImg} alt="avatar" className="h-11 w-11 rounded-full object-cover" />
             ) : (
               <div className="h-11 w-11 rounded-full bg-violet-200 dark:bg-violet-900 flex items-center justify-center">
-                <RiUser3Line className="text-2xl text-white" />
+                <User className="text-2xl text-white" />
               </div>
             )}
             <p className="text-base font-bold text-foreground leading-tight">
@@ -282,10 +277,10 @@ export default function DashboardPage() {
           </Link>
           <div className="flex items-center gap-4">
             <button className="h-6 w-6 flex items-center justify-center text-foreground" data-testid="btn-headphones">
-              <RiHeadphoneLine className="h-5 w-5" />
+              <Headphones className="h-5 w-5" />
             </button>
             <button className="relative h-6 w-6 flex items-center justify-center text-foreground" data-testid="btn-notifications">
-              <RiBellLine className="h-5 w-5" />
+              <Bell className="h-5 w-5" />
               <span className="absolute -top-2 -right-2.5 bg-red-500 text-white text-[9px] font-bold leading-none px-1 py-0.5 rounded-full">
                 99+
               </span>
@@ -306,7 +301,7 @@ export default function DashboardPage() {
             >
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-1.5">
-                  <RiCheckboxCircleFill className="h-4 w-4 text-green-600" />
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
                   <span className="text-sm text-muted-foreground font-medium">Available Balance</span>
                   <button
                     onClick={(e) => { e.stopPropagation(); toggleBalance(); }}
@@ -318,7 +313,7 @@ export default function DashboardPage() {
                   </button>
                 </div>
                 <Link href="/history" onClick={(e) => e.stopPropagation()} className="flex items-center gap-0.5 text-xs text-muted-foreground hover:text-primary" data-testid="link-history">
-                  Transact...n History <RiArrowRightSLine className="h-3.5 w-3.5" />
+                  Transact...n History <ChevronRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
@@ -356,21 +351,25 @@ export default function DashboardPage() {
 
           {/* Quick Actions */}
           <div className="grid grid-cols-4 gap-2.5">
-            {QUICK_ACTIONS.map(({ label, Icon, path, badge }, i) => (
+            {QUICK_ACTIONS.map(({ label, Icon, path, badge, bg }, i) => (
               <motion.button
                 key={path}
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
                 onClick={() => setLocation(path)}
-                className="relative bg-white dark:bg-card rounded-2xl shadow-sm pt-3 pb-3 flex flex-col items-center gap-1.5 overflow-hidden"
+                className="bg-white dark:bg-card rounded-2xl shadow-sm pt-3 pb-3 flex flex-col items-center gap-1.5"
                 data-testid={`action-${label.replace(/\s+/g, "-").toLowerCase()}`}
               >
-                {badge && (
-                  <span className="absolute top-1.5 left-1.5 bg-red-500 text-white text-[8px] font-bold leading-none px-1.5 py-1 rounded-sm rounded-tl-md">
-                    {badge}
-                  </span>
-                )}
-                <Icon className="text-3xl text-primary" />
+                <div className="relative">
+                  {badge && (
+                    <span className="absolute -top-2 -left-1.5 z-10 bg-red-500 text-white text-[8px] font-bold leading-none px-1.5 py-0.5 rounded-sm">
+                      {badge}
+                    </span>
+                  )}
+                  <div className={`h-12 w-12 rounded-2xl ${bg} flex items-center justify-center`}>
+                    <Icon className="h-6 w-6 text-white" strokeWidth={1.5} />
+                  </div>
+                </div>
                 <span className="text-[11px] font-medium text-foreground text-center leading-tight">{label}</span>
               </motion.button>
             ))}
@@ -434,16 +433,18 @@ export default function DashboardPage() {
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.03 }}
                   onClick={() => setLocation(path)}
-                  className="relative flex flex-col items-center gap-1.5"
+                  className="flex flex-col items-center gap-1.5"
                   data-testid={`service-${label.toLowerCase().replace(/\s+/g, "-")}`}
                 >
-                  {tag && (
-                    <span className="absolute -top-1 right-2 bg-orange-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full">
-                      {tag}
-                    </span>
-                  )}
-                  <div className={`h-12 w-12 rounded-2xl ${bg} flex items-center justify-center`}>
-                    <Icon className="text-2xl text-white" />
+                  <div className="relative">
+                    {tag && (
+                      <span className="absolute -top-2 -left-1.5 z-10 bg-orange-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full">
+                        {tag}
+                      </span>
+                    )}
+                    <div className={`h-12 w-12 rounded-2xl ${bg} flex items-center justify-center`}>
+                      <Icon className="h-6 w-6 text-white" strokeWidth={1.5} />
+                    </div>
                   </div>
                   <span className="text-[11px] text-foreground font-medium text-center leading-tight">{label}</span>
                 </motion.button>

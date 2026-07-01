@@ -1,29 +1,28 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { doc, updateDoc, addDoc, collection, serverTimestamp, increment } from "firebase/firestore";
 import bcrypt from "bcryptjs";
 import { db } from "@/firebase";
 import { useAuth } from "@/contexts/AuthContext";
-import PageHeader from "@/components/PageHeader";
 import PinModal from "@/components/PinModal";
-import { Input } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/utils";
-import { CheckCircle, AlertCircle, ChevronDown, User } from "lucide-react";
+import { CheckCircle, AlertCircle, ChevronDown, ChevronRight, ArrowLeft, FileText, User, Ticket } from "lucide-react";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 
 const NETWORKS = [
-  { name: "MTN", bg: "bg-yellow-400", text: "text-yellow-900", short: "MTN" },
-  { name: "Airtel", bg: "bg-red-500", text: "text-white", short: "AIR" },
-  { name: "Glo", bg: "bg-green-600", text: "text-white", short: "GLO" },
-  { name: "9mobile", bg: "bg-emerald-500", text: "text-white", short: "9MB" },
+  { name: "MTN",      logo: "/networks/mtn.svg" },
+  { name: "Airtel",   logo: "/networks/airtel.svg" },
+  { name: "GLO",      logo: "/networks/glo.svg" },
+  { name: "T2 Mobile", logo: "/networks/t2mobile.svg" },
+  { name: "Smile",    logo: "/networks/smile.svg" },
 ];
 
 const AMOUNTS = [
-  { top: 50, pay: 25 }, { top: 100, pay: 50 }, { top: 200, pay: 100 },
-  { top: 500, pay: 250 }, { top: 1000, pay: 639 }, { top: 2000, pay: 1639 },
-  { top: 120, pay: 60 }, { top: 320, pay: 160 }, { top: 520, pay: 260 },
-  { top: 820, pay: 459 }, { top: 1020, pay: 659 }, { top: 1220, pay: 859 },
+  { top: 50,   pay: 25  }, { top: 100,  pay: 50   }, { top: 200,  pay: 100  },
+  { top: 500,  pay: 267 }, { top: 1000, pay: 767  }, { top: 2000, pay: 1767 },
+  { top: 120,  pay: 60  }, { top: 320,  pay: 160  }, { top: 520,  pay: 287  },
+  { top: 820,  pay: 587 }, { top: 1020, pay: 787  }, { top: 1220, pay: 987  },
 ];
 
 export default function AirtimePage() {
@@ -33,7 +32,7 @@ export default function AirtimePage() {
   const [phone, setPhone] = useState(userData?.phoneNumber ?? "");
   const [selected, setSelected] = useState(null);
   const [customAmount, setCustomAmount] = useState("");
-  const [showNetworkPicker, setShowNetworkPicker] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
   const [pinOpen, setPinOpen] = useState(false);
   const [pinLoading, setPinLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -65,7 +64,7 @@ export default function AirtimePage() {
   };
 
   if (status === "success") return (
-    <div className="min-h-screen bg-[#F4F2FA] dark:bg-background flex items-center justify-center px-6">
+    <div className="min-h-screen bg-white dark:bg-background flex items-center justify-center px-6">
       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200 }} className="text-center max-w-[400px] w-full">
         <div className="h-20 w-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="h-10 w-10 text-green-600" />
@@ -75,77 +74,143 @@ export default function AirtimePage() {
           {selected ? `₦${selected.top}` : formatCurrency(finalAmount)} sent to
         </p>
         <p className="text-lg font-semibold mb-6">{phone} ({network.name})</p>
-        <button className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl font-bold mb-3" onClick={() => setLocation("/dashboard")} data-testid="button-back-home">Back to Home</button>
-        <button className="w-full bg-secondary text-foreground py-3.5 rounded-xl font-bold border border-border" onClick={() => { setStatus(null); setSelected(null); setCustomAmount(""); }} data-testid="button-buy-again">Buy Again</button>
+        <button className="w-full bg-primary text-primary-foreground py-3.5 rounded-xl font-bold mb-3" onClick={() => setLocation("/dashboard")}>Back to Home</button>
+        <button className="w-full bg-secondary text-foreground py-3.5 rounded-xl font-bold border border-border" onClick={() => { setStatus(null); setSelected(null); setCustomAmount(""); }}>Buy Again</button>
       </motion.div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#F4F2FA] dark:bg-background">
+    <div className="min-h-screen bg-white dark:bg-background">
       <div className="max-w-[430px] mx-auto">
-        <PageHeader title="Airtime" />
 
-        <div className="px-4 py-3 space-y-3">
-          <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm">
+        {/* Header */}
+        <header className="px-4 py-4 flex items-center justify-between">
+          <button onClick={() => window.history.back()} className="text-foreground">
+            <ArrowLeft className="h-6 w-6" />
+          </button>
+          <h1 className="text-lg font-bold text-foreground">Airtime</h1>
+          <button className="text-foreground">
+            <FileText className="h-5 w-5" />
+          </button>
+        </header>
 
-            {/* Network + Phone Row */}
+        <div className="px-4 space-y-3 pb-10">
+
+          {/* Promo banner */}
+          <div className="rounded-2xl bg-[#DCE8FF] dark:bg-primary/10 overflow-hidden">
+            <p className="text-center text-primary font-bold text-[11px] tracking-widest pt-2.5 uppercase">AIRTIME</p>
+            <div className="flex items-center px-3 pb-3 pt-1 gap-2">
+              {/* Left graphic */}
+              <div className="relative w-20 h-16 shrink-0">
+                <div className="absolute bottom-0 left-1 bg-violet-600 rounded-xl w-14 h-11 flex items-center justify-center shadow-md"
+                  style={{ transform: "rotate(-10deg)" }}>
+                  <span className="text-yellow-300 font-black text-sm">₦100</span>
+                </div>
+                <span className="absolute top-0 right-0 text-xl">🪙</span>
+                <span className="absolute top-3 right-5 text-base">🪙</span>
+              </div>
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <p className="text-primary font-black text-sm leading-tight">Get ₦100 FREE Airtime</p>
+                <p className="text-primary font-semibold text-xs mt-0.5">Always Stay Online</p>
+              </div>
+              {/* GO */}
+              <button className="h-12 w-12 rounded-full bg-yellow-400 flex items-center justify-center shrink-0 shadow-md">
+                <span className="font-black text-sm text-gray-900">GO</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Cashback row */}
+          <div className="flex items-center gap-2 bg-secondary/40 dark:bg-secondary/20 rounded-xl px-3 py-2">
+            <div className="h-8 w-8 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <Ticket className="h-4 w-4 text-primary" />
+            </div>
+            <span className="text-primary font-bold text-sm">₦100</span>
+            <div className="flex-1" />
+            <button className="flex items-center gap-0.5 text-muted-foreground text-xs font-medium">
+              (1) <ChevronRight className="h-3.5 w-3.5" />
+            </button>
+          </div>
+
+          {/* Main card */}
+          <div className="bg-white dark:bg-card rounded-2xl p-4 shadow-sm border border-border/30 relative">
+
+            {/* Network + Phone */}
             <div className="flex items-center gap-3 mb-3">
+              {/* Network selector */}
               <div className="relative">
-                <button onClick={() => setShowNetworkPicker(!showNetworkPicker)}
-                  className={`h-12 w-12 rounded-full ${network.bg} flex items-center justify-center gap-1`}>
-                  <span className={`text-xs font-black ${network.text}`}>{network.short}</span>
-                  <ChevronDown className={`h-3 w-3 ${network.text}`} />
+                <button
+                  onClick={() => setShowPicker(!showPicker)}
+                  className="flex items-center gap-1"
+                >
+                  <img src={network.logo} alt={network.name} className="h-10 w-10 rounded-full object-cover" />
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
                 </button>
-                {showNetworkPicker && (
-                  <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }}
-                    className="absolute top-14 left-0 z-50 bg-white dark:bg-card rounded-xl shadow-xl border border-border overflow-hidden w-36">
-                    {NETWORKS.map((n) => (
-                      <button key={n.name} onClick={() => { setNetwork(n); setShowNetworkPicker(false); }}
-                        className={cn("w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium hover:bg-secondary transition-colors", network.name === n.name && "bg-secondary")}>
-                        <div className={`h-6 w-6 rounded-full ${n.bg} flex items-center justify-center`}>
-                          <span className={`text-[9px] font-black ${n.text}`}>{n.short}</span>
-                        </div>
-                        {n.name}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
+
+                {/* Dropdown */}
+                <AnimatePresence>
+                  {showPicker && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-14 left-0 z-50 bg-white dark:bg-card rounded-2xl shadow-xl border border-border/30 overflow-hidden w-48"
+                    >
+                      {NETWORKS.map((n) => (
+                        <button
+                          key={n.name}
+                          onClick={() => { setNetwork(n); setShowPicker(false); }}
+                          className={cn(
+                            "w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold transition-colors text-foreground border-b border-border/30 last:border-0",
+                            network.name === n.name ? "bg-secondary/50" : "hover:bg-secondary/30"
+                          )}
+                        >
+                          <img src={n.logo} alt={n.name} className="h-9 w-9 rounded-full object-cover shrink-0" />
+                          {n.name}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
-              <div className="flex-1">
-                <Input
-                  type="tel" value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 11))}
-                  className="text-base font-bold border-0 bg-transparent p-0 h-auto focus-visible:ring-0 shadow-none"
-                  placeholder="Enter phone number"
-                  data-testid="input-phone"
-                />
-              </div>
+              {/* Phone input */}
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 11))}
+                className="flex-1 text-xl font-bold bg-transparent outline-none text-foreground placeholder:text-muted-foreground/40"
+                placeholder="Phone number"
+              />
 
-              <button className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
+              <button className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                 <User className="h-4 w-4 text-primary" />
               </button>
             </div>
 
             {/* Cashback note */}
-            <p className="text-xs text-muted-foreground mb-3">
+            <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
               Enjoy up to 4%, maximum ₦60 Cashback on your first 2 {network.name} top-ups daily.
             </p>
 
             <p className="text-sm font-semibold text-foreground mb-2">Top up Airtime</p>
 
-            {/* Amount Grid */}
+            {/* Amount grid */}
             <div className="grid grid-cols-3 gap-2 mb-3">
               {AMOUNTS.map((a) => (
-                <button key={a.top} onClick={() => { setSelected(a); setCustomAmount(""); }}
+                <button
+                  key={a.top}
+                  onClick={() => { setSelected(a); setCustomAmount(""); }}
                   className={cn(
-                    "p-3 rounded-xl border-2 text-left transition-all",
+                    "p-3 rounded-xl border text-left transition-all",
                     selected?.top === a.top
-                      ? "border-primary bg-primary/8"
-                      : "border-border hover:border-primary/40 bg-secondary/30"
+                      ? "border-primary bg-primary/5"
+                      : "border-border/40 bg-secondary/20 hover:border-primary/40"
                   )}
-                  data-testid={`amount-${a.top}`}>
+                >
                   <p className={cn("text-sm font-bold", selected?.top === a.top ? "text-primary" : "text-foreground")}>
                     ₦{a.top.toLocaleString()}
                   </p>
@@ -155,50 +220,42 @@ export default function AirtimePage() {
             </div>
 
             {/* Custom amount */}
-            <div className="flex items-center gap-2 border border-border rounded-xl px-3 py-2">
-              <span className="text-primary font-bold text-sm">₦</span>
+            <div className="flex items-center gap-2 border border-border/40 rounded-full px-4 py-3 bg-secondary/20">
+              <span className="text-muted-foreground font-bold text-sm">₦</span>
               <input
-                type="number" placeholder="50-50,000" value={customAmount}
+                type="number"
+                placeholder="50-50,000"
+                value={customAmount}
                 onChange={(e) => { setCustomAmount(e.target.value); setSelected(null); }}
-                className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
-                data-testid="input-custom-amount"
+                className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground/50 outline-none"
               />
               <button
                 onClick={() => { if (validate()) setPinOpen(true); }}
-                className={cn("px-4 py-1.5 rounded-lg text-sm font-bold transition-colors",
-                  finalAmount > 0 ? "bg-primary text-primary-foreground" : "bg-primary/30 text-primary-foreground/60")}
-                data-testid="button-pay">
+                className={cn(
+                  "px-5 py-1.5 rounded-full text-sm font-bold transition-colors",
+                  finalAmount > 0
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-primary/20 text-primary/40"
+                )}
+              >
                 Pay
               </button>
             </div>
-          </div>
 
-          {formError && (
-            <p className="text-red-500 text-sm bg-red-50 dark:bg-red-950/30 px-3 py-2 rounded-xl flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 shrink-0" />{formError}
-            </p>
-          )}
-
-          {/* Airtime services */}
-          <div className="bg-white dark:bg-card rounded-2xl shadow-sm overflow-hidden">
-            <p className="text-sm font-semibold text-foreground px-4 pt-4 pb-2">Airtime services</p>
-            {[
-              { emoji: "🔄", label: "Airtime Top-up Plan", sub: "Always Stay Online" },
-              { emoji: "🎯", label: "Airtime Group Purchase", sub: "Team up & Enjoy 50% OFF!" },
-              { emoji: "#️⃣", label: "USSD Enquiry", sub: "Check phone balance and more" },
-            ].map(({ emoji, label, sub }, i, arr) => (
-              <button key={label} className={cn("w-full flex items-center gap-3 hover:bg-secondary/50 px-4 py-3 transition-colors text-left", i < arr.length - 1 && "border-b border-border/40")}>
-                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-xl shrink-0">{emoji}</div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-foreground">{label}</p>
-                  <p className="text-xs text-muted-foreground">{sub}</p>
-                </div>
-                <span className="text-muted-foreground text-lg shrink-0">›</span>
-              </button>
-            ))}
+            {formError && (
+              <p className="text-red-500 text-xs mt-2 flex items-center gap-1.5">
+                <AlertCircle className="h-3.5 w-3.5 shrink-0" />{formError}
+              </p>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Overlay to close picker */}
+      {showPicker && (
+        <div className="fixed inset-0 z-40" onClick={() => setShowPicker(false)} />
+      )}
+
       <PinModal isOpen={pinOpen} onClose={() => setPinOpen(false)} onConfirm={handlePinConfirm} loading={pinLoading} />
     </div>
   );
